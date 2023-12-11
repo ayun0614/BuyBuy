@@ -55,36 +55,4 @@ public class AccountController {
 		
 		return "account/navercallback";
 	}
-
-	@RequestMapping(value = "/personalInfo")
-	public void personalInfo(HttpServletRequest request) throws Exception {
-		// 네이버 로그인 접근 토큰; 여기에 복사한 토큰값을 넣어줍니다.
-		String token = "AAAAPD-PZfpOw7nwk1oo3_lKhLCSm3NArZAYsjLy6LGpDSllVElkc9DWO91nTZPWdSAdenJVaeaX-wZ5CaeSNJqipqY";
-		// Bearer 다음에 공백 추가
-		String header = "Bearer " + token;
-
-		try {
-			String apiURL = "https://openapi.naver.com/v1/nid/me";
-			URL url = new URL(apiURL);
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("Authorization", header);
-			int responseCode = con.getResponseCode();
-			BufferedReader br;
-			if (responseCode == 200) { // 정상 호출
-				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			} else { // 에러 발생
-				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-			}
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			while ((inputLine = br.readLine()) != null) {
-				response.append(inputLine);
-			}
-			br.close();
-			System.out.println(response.toString());
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
 }

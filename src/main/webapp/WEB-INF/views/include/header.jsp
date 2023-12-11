@@ -56,7 +56,7 @@
 				</div>
 			</div>
 			<div class="col-md-1 header-item">
-				<button class="header-loginBtn btn">Login</button>
+				<button class="header-loginBtn btn" style="border-color: black;">Login</button>
 			</div>
 		</div>
 	</div>
@@ -76,7 +76,7 @@
 	<div class="header-hover header-overlay header-shadow menu-box">
 		<div class="menu-grid col-md-6"></div>
 		<div class="menu-grid col-md-5">
-			<div  class="menu-item">
+			<div class="menu-item">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuCloth.svg" /> 의류
 			</div>
 			<div class="menu-item">
