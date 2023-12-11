@@ -58,10 +58,6 @@
 				location.href = "${contextPath}/account/check?user=" + $(".login-inputUser").val() + "&password=" + $(".login-inputPass").val();
 			});
 
-			$(".login-kakao").click(function() {
-				alert('카카오');
-			});
-
 			$(".login-findId").click(function() {
 				location.href = "${contextPath}/account/findId";
 			});
@@ -99,9 +95,7 @@
 		</div>
 
 		<div class="login-social">
-			<button class="login-kakao">
-				<img alt="" src="${contextPath }/resources/image/loginKakao.svg" />
-			</button>
+			<a href="${kakaoLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginKakao.svg" /></a>
 			<button id="login-google" class="login-google" onclick="init();">
 				<img alt="" src="${contextPath }/resources/image/loginGoogle.svg" />
 			</button>
