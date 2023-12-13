@@ -9,28 +9,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/main.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<meta charset="UTF-8">
-<title>BuyBuy</title>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		const slideContainer = $(".slide-container");
-		alert(slideContainer);
-	});
-</script>
-</head>
+<!-- Slick Slider CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+<!-- ... (your existing imports) ... -->
 <body>
 	<c:import url="include/header.jsp" />
-	<div class="slide-container container">
-		<div class="slide-box">
-			<ul class="slide-slider">
-				<li><img class="slide-image" src="${contextPath }/resources/image/slideImage1.jpg" alt="" /></li>
-				<li><img class="slide-image" src="${contextPath }/resources/image/slideImage2.jpg" alt="" /></li>
-				<li><img class="slide-image" src="${contextPath }/resources/image/slideImage3.jpg" alt="" /></li>
-			</ul>
+	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<div class="slider-container container">
+		<div class="slider-show">
+			<div>
+				<img class="main-slickImg" alt="" src="${contextPath }/resources/image/slideImage1.jpg">
+			</div>
+			<div>
+				<img class="main-slickImg" alt="" src="${contextPath }/resources/image/slideImage2.jpg">
+			</div>
+			<div>
+				<img class="main-slickImg" alt="" src="${contextPath }/resources/image/slideImage3.jpg">
+			</div>
 		</div>
+		<div class="slick-status"><h3>1</h3><h4>/3</h4></div>
+		<button class="slick-prev prevBtn">Previous</button>
+		<button class="slick-next nextBtn">Next</button>
 	</div>
+
+
+
+	<div class="container">test</div>
+
+	<script>
+		$(document).ready(function() {
+			var slick = $('.slider-show');
+			slick.slick({
+				infinite : true,
+				speed : 500,
+				arrows : true,
+				autoplay : true,
+				autoplaySpeed : 10000,
+				pauseOnHover : true,
+				prevArrow : $('.slick-prev'),
+				nextArrow : $('.slick-next')
+			});
+
+			slick.on('afterChange', function(event, slick, currentSlide) {
+				$('.slick-status h3').html(currentSlide+1);
+			});
+		});
+	</script>
 </body>
 </html>
