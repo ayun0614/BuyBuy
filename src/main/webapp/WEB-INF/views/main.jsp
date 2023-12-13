@@ -13,9 +13,24 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <title>BuyBuy</title>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		const slideContainer = $(".slide-container");
+		alert(slideContainer);
+	});
+</script>
 </head>
 <body>
 	<c:import url="include/header.jsp" />
-	<input type="datetime-local">
+	<div class="slide-container container">
+		<div class="slide-box">
+			<ul class="slide-slider">
+				<li><img class="slide-image" src="${contextPath }/resources/image/slideImage1.jpg" alt="" /></li>
+				<li><img class="slide-image" src="${contextPath }/resources/image/slideImage2.jpg" alt="" /></li>
+				<li><img class="slide-image" src="${contextPath }/resources/image/slideImage3.jpg" alt="" /></li>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>

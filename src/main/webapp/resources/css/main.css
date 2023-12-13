@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+.slide-container {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.slide-image {
+	height: 400px;
+	width: 768px;
+	object-fit: cover;
+}
+
+li{
+	list-style: none;
+}
+
+ul{
+	padding: 0;
+}
