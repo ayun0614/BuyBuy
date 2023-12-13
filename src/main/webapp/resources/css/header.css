@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.header-item {
+	align-items: center;
+	text-align: center;
+}
+
+.header-display {
+	display: flex;
+}
+
+.header-shadow {
+	border: none;
+	-webkit-box-shadow: 0 8px 6px -6px #999;
+	-moz-box-shadow: 0 8px 6px -6px #999;
+	box-shadow: 0 8px 6px -6px #999;
+}
+
+.header-logo {
+	width: 75px;
+	height: 75px;
+	padding: 0px;
+}
+
+.header-box {
+	background: white;
+	padding: 0px;
+}
+
+.header-loginBtn {
+	background: white;
+	border-color: black;
+}
+
+.header-search {
+	margin: auto;
+	display: inline-flex;
+	border-radius: 40px;
+	background-color: rgb(233, 248, 249);
+	overflow: hidden;
+	height: 52px;
+	width: 80%;
+}
+
+.header-search input {
+	background: transparent;
+	border: none;
+	padding: 10px 10px 10px 20px;
+	outline-width: 0px;
+	flex-grow: 1;
+	font-size: large;
+}
+
+.header-search button {
+	border: none;
+	background: no-repeat;
+	margin-right: 20px;
+}
+
+.header-icon {
+	align-items: center;
+	width: 25px;
+	height: 25px;
+}
+
+.header-second {
+	padding-right: 20px;
+	padding-bottom: 7px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	font-size: 22px;
+	font-weight: 500;
+	display: inline-block;
+}
+
+.header-overlay {
+	display: none;
+	position: absolute;
+	background: white;
+	width: 100%;
+}
+
+.menu-icon {
+	align-items: center;
+	width: 35px;
+	height: 35px;
+}
+
+.menu-item {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+.menu-grid {
+	display: grid;
+	position: static;
+}
+
+.menu-box{
+	justify-content: center;
+}
