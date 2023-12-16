@@ -11,6 +11,7 @@ public interface ProductMapper {
 	
 	public void ProductListInsert(Products Products);
 	public List<Products> ProductList();
-	public Products read(int Product_IDX);
-
+	public Products read(int product_idx);
+	public void ProductModify(Products Products);
+	
 }

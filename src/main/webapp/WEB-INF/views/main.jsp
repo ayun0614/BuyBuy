@@ -21,44 +21,12 @@
 
 
 
-<script type="text/javascript">
-        function calculateTimeDifference() {
-            updateTimer();
-            requestAnimationFrame(calculateTimeDifference);
-        }
-
-        function updateTimer() {
-            // Get the selected date and time from the datetime-local input
-            var selectedDateTime = document.getElementById('selectedDateTime').value;
-            document.getElementById('end_Date').value = selectedDateTime;
-            // Get the current date and time
-            var currentDateTime = new Date();
-
-            // Convert the selected date and time to a JavaScript Date object
-            var selectedDate = new Date(selectedDateTime);
-
-            // Calculate the time difference in milliseconds
-            var timeDifference = selectedDate - currentDateTime;
-
-            // Convert the time difference to days, hours, minutes, and seconds
-            var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-            // Update the HTML element with the countdown
-            document.getElementById('timerResult').innerText =
-                '마감일까지 남은 시간: ' + days + '일 ' + hours + '시간 ' + minutes + '분 ' + seconds + '초';
-        }
-
-        document.getElementById('selectedDateTime').addEventListener('change', calculateTimeDifference);
-    </script>
 <script>
     // 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
     function calculateDiscount() {
         // 정가와 판매가 값을 가져옴
-        var regularPrice = parseFloat(document.getElementById('original_Price').value);
-        var salePrice = parseFloat(document.getElementById('discount_Price').value);
+        var regularPrice = parseFloat(document.getElementById('original_price').value);
+        var salePrice = parseFloat(document.getElementById('discount_price').value);
 
         // 정가와 판매가가 유효한 숫자인 경우에만 계산 수행
         if (!isNaN(regularPrice) && !isNaN(salePrice)) {
@@ -66,10 +34,10 @@
             var discount = ((regularPrice - salePrice) / regularPrice) * 100;
 
             // 계산된 할인율을 할인율 입력란에 표시
-            document.getElementById('discount_Rate').value = discount.toFixed(0);
+            document.getElementById('discount_rate').value = discount.toFixed(0);
         } else {
             // 정가나 판매가가 유효한 숫자가 아닌 경우 할인율 입력란을 비움
-            document.getElementById('discount_Rate').value = '';
+            document.getElementById('discount_rate').value = '';
         }
     }
 
@@ -167,7 +135,7 @@
 		<!--  <input type="hidden" name="Product_IDX" value="${ProductList.Product_IDX}" />-->
 			<div class="row" style="max-width: 890px; height: 100px;">
 				<div class="row top text-dark">
-					<input type="text" name="product_Name" id="product_Name"
+					<input type="text" name="product_name" id="product_name"
 						class="form-control" placeholder="제품 이름">
 				</div>
 			</div>
@@ -178,21 +146,16 @@
 				<div class="col-md-6 middle-left"
 					style="height: 389px; display: flex; align-items: center; justify-content: center;">
 					<div class="panel-body">
-						<!-- 실질 파일업로드 할수 있는 인반문자열, 바이너리 데이터 필요 -->
-						<!--  <form action="${contextPath}/memImageUpdate" method="post"
-            enctype="multipart/form-data">-->
 						<input type="hidden" name="memID" value="${mvo.memID}" />
 						<table class="table table-bordered"
 							style="text-align: center; border: 1px solid #dddddd;">
 							<tr>
 								<td><span
-									class="btn btn-default"> 이미지 업로드하세요 <input type="file"
-										name="thumbnail_Img" />
-										
+									class="btn btn-default"> 이미지 업로드하세요 <input type="file" name="thumbnail_img" multiple
+												onchange="previewImages(this)" />			
 								</span></td>
 							</tr>
 						</table>
-						<!--</form>-->
 					</div>
 				</div>
 
@@ -206,32 +169,48 @@
 						<div class="col-md-6">
 							<td style="vertical-align: middle;">등록상태</td> <br> <select
 								id="cars" name="cars" style="width: 185px; height: 28px;">
-								<option value="volvo">마감</option>
-								<option value="saab">판매중</option>
+								<option value="end">마감</option> 
+								<option value="sale">판매중</option>
 							</select>
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">마감일</td> <br>
-							<input type="datetime-local" id="selectedDateTime" name="end_Date"
+							<input type="datetime-local" id="selectedDateTime" name="end_date"
 								onchange="calculateTimeDifference()">
 						</div>
 						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">카테고리</td> <br>
-							<input type="text" />
+							<td style="vertical-align: middle;">카테고리</td> <br> <select
+								id="ctgr_idx" name="ctgr_idx" style="width: 185px; height: 28px;">
+								<option value="1">의류</option>
+								<option value="2">화장품</option>
+								<option value="3">식품</option>
+								<option value="4">생필품</option>
+								<option value="5">홈데코</option>
+								<option value="6">문구</option>
+								<option value="7">취미</option>
+								<option value="8">반려용품</option>
+								<option value="9">컴퓨터</option>
+								<option value="10">모바일</option>
+								<option value="11">가전제품</option>
+								<option value="12">스포츠</option>
+								<option value="13">건강</option>
+								<option value="14">공구</option>
+								<option value="15">기타</option>
+							</select>
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">정가</td> <br>
-							<input type="text" name="original_Price" id="original_Price"
+							<input type="text" name="original_price" id="original_price"
 								onchange="calculateDiscount()" />
 						</div>
 						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">할인가</td> <br>
-							<input type="text" name="discount_Price" id="discount_Price"
+							<td style="width: 50px; vertical-align: middle;">판매가</td> <br>
+							<input type="text" name="discount_price" id="discount_price"
 								onchange="calculateDiscount()" />
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">할인율</td> <br>
-							<input type="text" name="discount_Rate" id="discount_Rate"
+							<input type="text" name="discount_rate" id="discount_rate"
 								onchange="calculateDiscount()" />
 						</div>
 					</div>
@@ -261,23 +240,20 @@
 						<div id="home" class="tab-pane fade in active">
 							<h3>HOME</h3>
 							<div class="panel-body">
-								<!-- 실질 파일업로드 할수 있는 인반문자열 , 바이너리 데이터 필요 -->
-								<!--  <form action="${contextPath}/memImageUpdate" method="post"
-                    enctype="multipart/form-data">-->
 								<input type="hidden" name="memID" value="${mvo.memID }" />
 								<table class="table table-bordered"
+								
 									style="text-align: center; border: 1px solid #dddddd;">
 									<tr>
 										<td colspan="2" id="imagePreviewContainer"></td>
 									</tr>
 									<tr>
-										<td colspan="2"><label class="btn btn-default">
-												이미지 업로드하세요 <input type="file" name="memProfile" multiple
-												onchange="previewImages(this)" />
-										</label></td>
+										<td><span class="btn btn-default"> 이미지 업로드하세요 <input
+												type="file" name="detail_img" multiple
+												onchange="previewImages(this)"/>
+										</span></td>
 									</tr>
 								</table>
-								<!--</form>-->
 							</div>
 						</div>
 						<div id="menu1" class="tab-pane fade">

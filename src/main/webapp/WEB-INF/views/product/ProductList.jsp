@@ -71,23 +71,23 @@
 
 					<c:forEach items="${ProductList}" var="product">
 						<a
-							href="${contextPath}/ProductDetail?product_IDX=${product.product_IDX}">
+							href="${contextPath}/ProductDetail?product_idx=${product.product_idx}">
 							<div class="col-sm-6 col-md-4" style="width: 216px;">
 								<div class="card-ui">
 									<div class="thumbnail">
-										<img src="${contextPath}/resources/upload/${product.thumbnail_Img}"
-											alt="Thumbnail_Img">
+										<img src="${contextPath}/resources/upload/${product.thumbnail_img}"
+											alt="thumbnail_img">
 										<div class="caption">
 											<div style="text-decoration: line-through;">
-												<td>${product.original_Price}</td>
+												<td>${product.original_price}</td>
 											</div>
-											<td>${product.discount_Price}</td>
-											<td>${product.discount_Rate}%</td>
+											<td>${product.discount_price}</td>
+											<td>${product.discount_rate}%</td>
 											<tr>
-												<td>${product.product_Name}</td>
+												<td>${product.product_name}</td>
 											</tr>
-											<td>${product.end_Date}</td>
-											<div id="countdown_${product.product_IDX}"></div>
+											<input type="hidden" id="endDate" value="${product.end_date}">
+											<div id="countdown_${product.product_idx}"></div>
 											<p>
 												<a href="#" class="btn btn-primary" role="button">Button</a>
 												<a href="#" class="btn btn-default" role="button">Button</a>
@@ -99,15 +99,15 @@
 						</a>
 						<script>
         // Set the date we're counting down to
-        var countDownDate_${product.product_IDX} = new Date("${product.end_Date}").getTime();
+        var countDownDate_${product.product_idx} = new Date("${product.end_date}").getTime();
 
         // Update the countdown every 1 second
-        var x_${product.product_IDX} = setInterval(function () {
+        var x_${product.product_idx} = setInterval(function () {
             // Get the current date and time
             var now = new Date().getTime();
 
             // Calculate the remaining time
-            var distance = countDownDate_${product.product_IDX} - now;
+            var distance = countDownDate_${product.product_idx} - now;
 
             // Calculate days, hours, minutes, and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -116,14 +116,14 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the countdown
-            document.getElementById("countdown_${product.product_IDX}").innerHTML =
-                days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            document.getElementById("countdown_${product.product_idx}").innerHTML =
+                days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
 
             // If the countdown is over, display a message
             if (distance < 0) {
-                clearInterval(x_${product.product_IDX});
-                document.getElementById("countdown_${product.product_IDX}").innerHTML =
-                    "EXPIRED";
+                clearInterval(x_${product.product_idx});
+                document.getElementById("countdown_${product.product_idx}").innerHTML =
+                    "공구종료";
             }
         }, 1000);
     </script>

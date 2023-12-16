@@ -7,18 +7,18 @@ import lombok.Data;
 
 @Data
 public class Products {
-	    private int product_IDX;
-	    private String product_Name;
-	    private String ptart_Date;
-	    private String end_Date;
-	    private String thumbnail_Img;  
-	    private int original_Price;
-	    private int discount_Price;
-	    private String discount_Rate;
-	    private String detail_Img;
-	    private String content_State;
-	    private int ctgr_IDX;
-	    private int reg_ID;
+	    private int product_idx;
+	    private String product_name;
+	    private String ptart_date;
+	    private String end_date;
+	    private String thumbnail_img;  
+	    private int original_price;
+	    private int discount_price;
+	    private String discount_rate;
+	    private String detail_img;
+	    private String content_state;
+	    private int ctgr_idx;
+	    private int reg_id;
 
 	}
 

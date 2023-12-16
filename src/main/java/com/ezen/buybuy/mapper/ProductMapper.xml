@@ -4,17 +4,30 @@
 <mapper namespace="com.ezen.buybuy.mapper.ProductMapper">
 
 <insert id="ProductListInsert" parameterType="com.ezen.buybuy.entity.Products">
-		insert into Products(product_Name, original_Price, discount_Price, discount_Rate, thumbnail_Img, end_Date) 
-		values(#{product_Name}, #{original_Price},#{discount_Price}, #{discount_Rate}, #{thumbnail_Img}, #{end_Date})
+		insert into products(product_name, original_price, discount_price, discount_rate, thumbnail_img, end_date, ctgr_idx, detail_img) 
+		values(#{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date}, #{ctgr_idx},#{detail_img})
 	</insert>
 	
 	<select id="ProductList" resultType="com.ezen.buybuy.entity.Products">
-		select *from Products 
+		select *from products
 	</select>
 	
 	<select id="read" resultType="com.ezen.buybuy.entity.Products">
- 		select *from Products where product_IDX=#{product_IDX}
+ 		select *from products where product_idx=#{product_idx}
  	</select>
+ 	
+ 	<update id="ProductModify" parameterType="com.ezen.buybuy.entity.Products">
+    update products set
+    product_name = #{product_name},
+    original_price = #{original_price},
+    discount_price = #{discount_price},
+    discount_rate = #{discount_rate},
+    thumbnail_img = #{thumbnail_img},
+    end_date = #{end_date},
+    detail_img = #{detail_img}
+    where product_idx = #{product_idx}
+</update>
+
 </mapper>
 
    <!--  private int Product_IDX;

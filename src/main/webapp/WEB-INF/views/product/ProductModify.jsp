@@ -23,9 +23,9 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
-	<script>
+<script>
         // Set the date we're counting down to
-        var countDownDate_${product.product_IDX} = new Date("${product.end_date}").getTime();
+        var countDownDate_${product.product_IDX} = new Date("${product.end_Date}").getTime();
 
         // Update the countdown every 1 second
         var x_${product.product_IDX} = setInterval(function () {
@@ -33,7 +33,7 @@
             var now = new Date().getTime();
 
             // Calculate the remaining time
-            var distance = countDownDate_${product.product_idx} - now;
+            var distance = countDownDate_${product.product_IDX} - now;
 
             // Calculate days, hours, minutes, and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -42,17 +42,18 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the countdown
-            document.getElementById("countdown_${product.product_idx}").innerHTML =
+            document.getElementById("countdown_${product.product_IDX}").innerHTML =
                 days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
 
             // If the countdown is over, display a message
             if (distance < 0) {
                 clearInterval(x_${product.product_IDX});
-                document.getElementById("countdown_${product.product_idx}").innerHTML =
+                document.getElementById("countdown_${product.product_IDX}").innerHTML =
                     "공구종료";
             }
         }, 1000);
     </script>
+
 <script>
 	// 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
 	function calculateDiscount() {
@@ -177,6 +178,9 @@ $(document).ready(function () {
         }
     });
 });
+$(".ProductDetailModify").click(function() {
+	location.href = "${contextPath}/product/ProductModify";
+});
 
 	
 
@@ -217,24 +221,18 @@ $(document).ready(function () {
 
 	<div class="container" style="max-width: 900px; height: 100px;">
 		<jsp:include page="../include/header.jsp" />
-
-		<br>
-		<form class="form-inline" method="get"
-			action="${contextPath}/OrderPage">
-			<input type="hidden" id="product_idx" name="product_idx"
-				value="${productDetail.product_idx}" />
+		 <br>
+		<form class="form-inline" method="post" enctype="multipart/form-data"
+			action="${contextPath}/ProductModify?product_idx=${ProductModify.product_idx}">
+			<input type="hidden" name="product_idx" value=${ProductModify.product_idx }>
+			
 			<div class="row" style="max-width: 890px; height: 100px;">
 				<div class="row top text-dark">
-					<input type="text" name="product_Name" readonly id="product_Name"
-						value="${productDetail.product_name }" class="form-control"
+					<input type="text" name="product_name" id="product_name"
+						value="${ProductModify.product_name }" class="form-control"
 						placeholder="제품 이름">
 				</div>
 			</div>
-
-
-
-
-
 			<!-- MIDDLE -->
 			<div class="row middle">
 
@@ -249,13 +247,13 @@ $(document).ready(function () {
 						<input type="hidden" name="memID" value="${mvo.memID}" />
 						<table class="table table-bordered"
 							style="text-align: center; border: 1px solid #dddddd;">
-							<div class="col-sm-6 col-md-4" style="width: 440px; ">
+							<div class="col-sm-6 col-md-4" style="width: 440px;">
 								<div class="card-ui">
-									<div class="thumbnail">
-										<img
-											src="${contextPath}/resources/upload/${productDetail.thumbnail_img}"
-											alt="thumbnail_img">
-									</div>
+									<tr>
+										<td><span class="btn btn-default"> 이미지 업로드하세요 <input
+												type="file" name="thumbnail_img" />
+										</span></td>
+									</tr>
 								</div>
 							</div>
 
@@ -282,29 +280,47 @@ $(document).ready(function () {
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">마감일</td> <br>
-							<input type="text" id="selectedDateTime" name="end_date" readonly
-								onchange="calculateTimeDifference()" value="${productDetail.end_date }" >
+							<input type="datetime-local" id="selectedDateTime"
+								name="end_date" onchange="calculateTimeDifference()"
+								value="${ProductModify.end_date }">
 						</div>
 						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">카테고리</td> <br>
-							<input type="text" />
+							<td style="vertical-align: middle;">카테고리</td> <br> <select
+								id="ctgr_idx" name="ctgr_idx"
+								style="width: 185px; height: 28px;">
+								<option value="1">의류</option>
+								<option value="2">화장품</option>
+								<option value="3">식품</option>
+								<option value="4">생필품</option>
+								<option value="5">홈데코</option>
+								<option value="6">문구</option>
+								<option value="7">취미</option>
+								<option value="8">반려용품</option>
+								<option value="9">컴퓨터</option>
+								<option value="10">모바일</option>
+								<option value="11">가전제품</option>
+								<option value="12">스포츠</option>
+								<option value="13">건강</option>
+								<option value="14">공구</option>
+								<option value="15">기타</option>
+							</select>
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">정가</td> <br>
 							<input type="text" name="original_price" id="original_price"
-								readonly value="${productDetail.original_price }"
+								value="${ProductModify.original_price }"
 								onchange="calculateDiscount()" />
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">할인가</td> <br>
 							<input type="text" name="discount_price" id="discount_price"
-								value="${productDetail.discount_price }" readonly
+								value="${ProductModify.discount_price }"
 								onchange="calculateDiscount()" />
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">할인율</td> <br>
 							<input type="text" name="discount_rate" id="discount_rate"
-								value="${productDetail.discount_rate }" readonly
+								value="${ProductModify.discount_rate }" readonly
 								onchange="calculateDiscount()" />
 						</div>
 
@@ -315,7 +331,7 @@ $(document).ready(function () {
 					</div>
 					<div class="row middle-right-2 text-dark">
 						<div class="col-12">
-						<input type="text" id="end_date" name="end_date" value="${productDetail.end_date}">
+							<input type="text" id="endDate" value="${ProductModify.end_date}">
 						</div>
 					</div>
 					<div class="row middle-right-3 text-dark">
@@ -325,13 +341,11 @@ $(document).ready(function () {
 								class="minus">-</a> <span id="result">1</span> <a href="#"
 								class="plus">+</a>
 							</span>
-							<div id="discountPriceDisplay"></div>
+
 						</div>
 
 						<input type="submit" class="btn btn-primary btn-sm pull-right"
-							value="주문하기" />
-							<a href="${contextPath}/ProductModify?product_idx=${productDetail.product_idx}">상품정보수정</a><br>
-							<a href="${contextPath}/ProductDelete?product_idx=${productDetail.product_idx}">상품삭제</a>
+							value="수정완료" />
 
 					</div>
 
@@ -367,9 +381,11 @@ $(document).ready(function () {
 										<td colspan="2" id="imagePreviewContainer"></td>
 									</tr>
 									<div class="thumbnail">
-										<img
-											src="${contextPath}/resources/upload/${productDetail.detail_img}"
-											alt="detail_img">
+										<tr>
+											<td><span class="btn btn-default"> 이미지 업로드하세요 <input
+													type="file" name="detail_img" />
+											</span></td>
+										</tr>
 									</div>
 								</table>
 								<!--</form>-->
