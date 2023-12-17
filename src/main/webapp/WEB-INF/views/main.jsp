@@ -82,7 +82,7 @@
 	<div class="product-container container">
 		<h3 class="product-header">신규 등록 상품</h3>
 		<div class="product-flex">
-			<div class="product-content" onclick="location.href='${contextPath}/product/content'">
+			<div class="product-content">
 				<img class="product-image" alt="" src="${contextPath }/resources/image/product-empty.jpg">
 				<h1></h1>
 				<h2></h2>
@@ -91,7 +91,7 @@
 				<h4></h4>
 				<h5></h5>
 			</div>
-			<div class="product-content" onclick="location.href='${contextPath}/product/content'">
+			<div class="product-content">
 				<img class="product-image" alt="" src="${contextPath }/resources/image/product-empty.jpg">
 				<h1></h1>
 				<h2></h2>
