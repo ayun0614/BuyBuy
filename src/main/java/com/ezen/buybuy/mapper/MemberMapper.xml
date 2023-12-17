@@ -8,16 +8,20 @@
 	
 
  <insert id="insert" parameterType="com.ezen.buybuy.entity.Members">
-      INSERT INTO Members(name, member_id, password, password2, phone, zipcode, addr)
-        VALUES(#{name},#{member_id},#{password},#{password2},#{phone},#{zipcode},#{addr})
+      INSERT INTO members(name, member_id, password,phone, email,zipcode, addr)
+        VALUES(#{name},#{member_id},#{password},#{phone},#{email},#{zipcode},#{addr})
   </insert>
     
 	<select id="check" parameterType="com.ezen.buybuy.entity.Members" resultType="com.ezen.buybuy.entity.Members">
-		select * from Members where member_id=#{member_id} and password=#{password}
+		select * from members where member_id=#{member_id} and password=#{password}
 	</select>
 	
 	<select id="registerCheck" resultType="com.ezen.buybuy.entity.Members">
-		select * from Members where member_id=#{member_id}
+		select * from members where member_id=#{member_id}
+	</select>
+	
+		<select id="emailCheck" resultType="int">
+		select count(*) from members where email=#{email}
 	</select>
 
 </mapper>

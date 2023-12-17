@@ -59,4 +59,13 @@ CREATE TABLE Members (
 
 
 	SHOW TABLES
-select * from  Members
+select * from  members
+
+select count(*) from members where email='hoccoma.naver.com';
+
+
+DELETE FROM members WHERE email = 'hoccoma@gmail.com';
+DELETE FROM members WHERE email = 'hoccoma@naver.com';
+
+
+DELETE FROM members;

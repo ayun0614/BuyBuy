@@ -11,4 +11,5 @@ public interface MemberMapper {
 	public Members check(Members m);
 	public void insert(Members mem);
 	public Members registerCheck(String member_id);
+	public int emailCheck(String email);
 }
