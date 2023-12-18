@@ -133,7 +133,7 @@
 <body>
 
 	<div class="container" style="max-width: 900px; height: 100px;">
-		<jsp:include page="include/header.jsp" />
+		<jsp:include page="../include/header.jsp" />
 
 		<br>
 		<form action="${contextPath}/ProductListInsert" method="post"

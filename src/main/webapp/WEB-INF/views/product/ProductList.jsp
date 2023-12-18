@@ -62,6 +62,7 @@
 
 	<div class="container" style="max-width: 900px; height: 100px;">
 		<jsp:include page="../include/header.jsp" />
+		<a href="${contextPath}/ProductListInsert">게시글 등록</a>
 		<br>
 
 		<div class="row middle">

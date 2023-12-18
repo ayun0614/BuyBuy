@@ -185,6 +185,7 @@
 				<div class="header-pop header-second">인기</div>
 				<div class="header-new header-second">신규</div>
 				<div class="header-soon header-second">마감임박</div>
+				<a href="${contextPath}/ProductList">게시판리스트</a>
 			</div>
 		</div>
 	</div>

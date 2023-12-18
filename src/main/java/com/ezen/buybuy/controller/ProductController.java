@@ -43,6 +43,12 @@ public class ProductController {
 
 	@Autowired
 	ProductMapper productMapper;
+	
+	@GetMapping("/ProductListInsert")
+	public String ProductListInsert() {
+		return "product/ProductInsert";
+		
+	}
 
 	@PostMapping("/ProductListInsert")
 	public String ProductListInsert(HttpServletRequest request, HttpSession session, RedirectAttributes rttr)
