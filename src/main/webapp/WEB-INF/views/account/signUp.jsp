@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -8,16 +7,11 @@
 <title>Bootstrap Example</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
 	
@@ -314,142 +308,97 @@ function autoHyphen2(target) {
 	    .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
 	    .replace(/(\-{1,2})$/g, "");
 	}
-	
-
-
-	
-
-
-
-
-
-
-
-
-
-   
-    
-
-    
-   
-    
-    
-    
   </script>
 </head>
 <body>
 	<div class="container">
 		<jsp:include page="../include/header.jsp" />
-		<h2></h2>
-		<div class="panel panel-default">
-			<div class="panel-heading">회원가입</div>
-			<div class="panel-body">
-				<form action="${contextPath }/account/insert" method="post"
-					onsubmit="return validateForm()">
+		<form action="${contextPath }/account/insert" method="post" onsubmit="return validateForm()">
+			<div class="panel panel-default">
+				<div class="panel-heading">회원가입</div>
+				<div class="panel-body">
+
 					<div class="form-group">
-						<label for="name">이름</label> <input id="name" name="name"
-							class="form-control" type="text" maxlength="20"
-							placeholder="이름을 입력하세요." onkeyup="nameCheck ()"
+						<label for="name">이름</label>
+						<input id="name" name="name" class="form-control" type="text" maxlength="20" placeholder="이름을 입력하세요." onkeyup="nameCheck ()"
 					</div>
 					<div class="form-group">
 						<label for="member_id">아이디</label>
 						<div class="input-group">
 							<!-- Bootstrap input group 사용 -->
-							<input id="member_id" name="member_id" class="form-control"
-								maxlength="20" placeholder="아이디를 입력하세요."> <span
-								class="input-group-btn">
-								<button type="button" class="btn btn-primary"
-									onclick="registerCheck()">중복확인</button>
+							<input id="member_id" name="member_id" class="form-control" maxlength="20" placeholder="아이디를 입력하세요.">
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-primary" onclick="registerCheck()">중복확인</button>
 							</span>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="password">비밀번호 </label> <input id="password"
-							name="password" onkeyup="passwordCheck()" class="form-control"
-							type="password" maxlength="20" placeholder="비밀번호를 입력하세요." /><span
+						<label for="password">비밀번호 </label>
+						<input id="password" name="password" onkeyup="passwordCheck()" class="form-control" type="password" maxlength="20" placeholder="비밀번호를 입력하세요." />
+						<span
 							<!-- 아이콘 추가 -->
 						</span>
-
 					</div>
 
 					<div class="form-group">
-						<label for="password2">비밀번호 확인</label> <input id="password2"
-							name="password2" onkeyup="passwordCheck()" class="form-control"
-							type="password" maxlength="20" placeholder="비밀번호를 입력하세요." /> <span
-							id="passMessage" style="color: red"></span>
+						<label for="password2">비밀번호 확인</label>
+						<input id="password2" name="password2" onkeyup="passwordCheck()" class="form-control" type="password" maxlength="20" placeholder="비밀번호를 입력하세요." />
+						<span id="passMessage" style="color: red"></span>
 					</div>
 					<div class="form-group">
-						<label for="phone">전화번호</label> <input id="phone" name="phone"
-							type="text" class="form-control" oninput="autoHyphen2(this)"
-							maxlength="13" placeholder="전화번호를 입력하세요">
+						<label for="phone">전화번호</label>
+						<input id="phone" name="phone" type="text" class="form-control" oninput="autoHyphen2(this)" maxlength="13" placeholder="전화번호를 입력하세요">
 					</div>
 
 					<tr class="email">
 						<th><label for="useremail">이메일</label></th>
 						<td>
 							<div class="input-group">
-								<input id="email" type="text" name="email"
-									title="이메일 주소를 입력해주세요." required class="form-control "
-									placeholder="이메일 주소를 입력하세요." /> <span class="input-group-btn">
-									<span id="emailChk" class="btn btn-primary">인증번호 보내기</span>
+								<input id="email" type="text" name="email" title="이메일 주소를 입력해주세요." required class="form-control " placeholder="이메일 주소를 입력하세요." />
+								<span class="input-group-btn"> <span id="emailChk" class="btn btn-primary">인증번호 보내기</span>
 								</span>
 							</div>
 							<div>
-								<input id="email2" type="text" name="email2" title="인증번호 입력"
-									disabled required class="form-control"
-									placeholder=" 인증번호를 입력하세요." /> <span id="emailChk2"
-									class="btn btn-primary">이메일인증</span>
-							</div> <span class="point successEmailChk">이메일 입력 후 인증번호 보내기를
-								해주십시오.</span> <input type="hidden" id="emailDoubleChk" />
+								<input id="email2" type="text" name="email2" title="인증번호 입력" disabled required class="form-control" placeholder=" 인증번호를 입력하세요." />
+								<span id="emailChk2" class="btn btn-primary">이메일인증</span>
+							</div> <span class="point successEmailChk">이메일 입력 후 인증번호 보내기를 해주십시오.</span> <input type="hidden" id="emailDoubleChk" />
 							<p class="tip">아이디 비밀번호 분실 시 필요한 정보이므로, 정확하게 기입해 주십시오.</p>
 						</td>
 					</tr>
-
-
 
 					<div class="form-group">
 						<label for="address">주소</label>
 						<div class="input-group">
 							<!-- Bootstrap input-group 사용 -->
-							<input type="text" id="sample6_postcode" class="form-control"
-								name="zipcode" placeholder="우편번호"> <span
-								class="input-group-btn">
-								<button class="btn btn-primary" type="button"
-									onclick="sample6_execDaumPostcode()">주소찾기</button>
+							<input type="text" id="sample6_postcode" class="form-control" name="zipcode" placeholder="우편번호">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button" onclick="sample6_execDaumPostcode()">주소찾기</button>
 							</span>
 						</div>
 
 					</div>
-			</div>
-			<div class="address-field">
-				<input type="text" id="sample6_address" name="addr"
-					class="form-control" placeholder="주소">
-			</div>
-			<div class="address-field">
-				<input type="text" id="sample6_detailAddress" name="addr"
-					class="form-control" placeholder="상세주소">
-			</div>
-			<div class="address-field">
-				<input type="text" id="sample6_extraAddress" name="addr"
-					class="form-control" placeholder="참고항목">
-			</div>
-		</div>
-
-
-		</td>
-		</tr>
-
-		<div class="form-group">
-			<tr height="50">
-
-				<div style="width: 1100px; margin: 0 auto;">
-					<input id="registerButton" type="submit" maxlength="20"
-						value="회원가입" class="btn btn-primary btn-block" >
-
 				</div>
-				</form>
-		</div>
+				<div class="address-field">
+					<input type="text" id="sample6_address" name="addr" class="form-control" placeholder="주소">
+				</div>
+				<div class="address-field">
+					<input type="text" id="sample6_detailAddress" name="addr" class="form-control" placeholder="상세주소">
+				</div>
+				<div class="address-field">
+					<input type="text" id="sample6_extraAddress" name="addr" class="form-control" placeholder="참고항목">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<tr height="50">
+
+					<div style="width: 1100px; margin: 0 auto;">
+						<input id="registerButton" type="submit" maxlength="20" value="회원가입" class="btn btn-primary btn-block">
+
+					</div>
+			</div>
+		</form>
 		<!--  다이얼로그창(모달) -->
 		<!-- Modal -->
 		<div id="myModal" class="modal fade" role="dialog">
@@ -480,14 +429,13 @@ function autoHyphen2(target) {
 					</div>
 					<div class="modal-body">
 						<p>${msg}</p>
-					</div> 
+					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

@@ -32,11 +32,8 @@ public class JoinController {
 
 	@RequestMapping("/insert")
 	public String insert(Members mem) {
-
 		memberMapper.insert(mem);
-
 		return "account/login";
-
 	}
 
 	@RequestMapping("/registerCheck")
@@ -50,8 +47,7 @@ public class JoinController {
 
 	@RequestMapping("/check")
 	public String memLogin(Members m, RedirectAttributes rttr, HttpSession session) {
-		if (m.getMember_id() == null || m.getMember_id().isEmpty() || m.getPassword() == null
-				|| m.getPassword().isEmpty()) {
+		if (m.getMember_id() == null || m.getMember_id().isEmpty() || m.getPassword() == null || m.getPassword().isEmpty()) {
 			rttr.addFlashAttribute("msgType", "실패");
 			rttr.addFlashAttribute("msg", "값을 모두 입력하세요");
 			return "redirect:/account/login";
@@ -81,13 +77,13 @@ public class JoinController {
 	@ResponseBody
 	public String mailCheck(@RequestParam("email") String email) throws Exception {
 		int m = memberMapper.emailCheck(email);
-		System.out.println("email :"+email+"\ncount :"+m);
+		System.out.println("email :" + email + "\ncount :" + m);
 		if (m > 0) {
 			System.out.println("using_email");
 			return "using_email";
 		} else {
 			int serti = (int) ((Math.random() * (99999 - 10000 + 1)) + 10000);
-			
+
 			String from = "buybuy@naver.com";// 보내는 이 메일주소
 			String to = email;
 			String title = "buybuy 회원가입시 필요한 인증번호 입니다.";
@@ -104,7 +100,7 @@ public class JoinController {
 				e.printStackTrace();
 				return "error";
 			}
-			System.out.println("======="+serti);
+			System.out.println("=======" + serti);
 			return String.valueOf(serti);
 		}
 	}

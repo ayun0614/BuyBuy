@@ -71,14 +71,15 @@
 			});
 		});
 	</script>
-<script>
-    // 서버에서 전달된 메시지가 있는지 확인하여 모달을 표시합니다.
-    <% if (request.getAttribute("msgType") != null && request.getAttribute("msg") != null) { %>
-        $(document).ready(function() {
-            $('#messageModal').modal('show');
-        });
-    <% } %>
-</script>
+	<script>
+		// 서버에서 전달된 메시지가 있는지 확인하여 모달을 표시합니다.
+	<%if (request.getAttribute("msgType") != null && request.getAttribute("msg") != null) {%>
+		$(document).ready(function() {
+			$('#messageModal').modal('show');
+		});
+	<%}%>
+		
+	</script>
 
 	<div class="login-box">
 		<div class="login-logo">
@@ -118,23 +119,23 @@
 			<button class="login-signUp">회원가입</button>
 		</div>
 	</div>
-<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="messageModalLabel">${msgType}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>${msg}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="messageModalLabel">${msgType}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>${msg}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

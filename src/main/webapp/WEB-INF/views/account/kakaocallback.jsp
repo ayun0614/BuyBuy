@@ -23,8 +23,8 @@
 </script>
 </head>
 <body>
-	<input id = "id" type="text"/>
-	<input id = "nickname" type="text"/>
-	<img id = "image" height="100" alt="">
+	<input id="id" type="text" />
+	<input id="nickname" type="text" />
+	<img id="image" height="100" alt="">
 </body>
 </html>
