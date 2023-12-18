@@ -12,6 +12,10 @@
 		$(".header-loginBtn").click(function() {
 			location.href = "${contextPath}/account/login";
 		});
+		
+		$(".header-logoutBtn").click(function() {
+			location.href = "${contextPath}/account/logout";
+		});
 
 		$(".header-searchBtn").click(function() {
 			location.href = "${contextPath}/include/search?word=" + $(".header-searchInput").val();
@@ -56,7 +60,13 @@
 				</div>
 			</div>
 			<div class="col-md-1 header-item">
-				<button class="header-loginBtn btn" style="border-color: black;">Login</button>
+				 <c:if test="${empty mvo}">
+				 <button class="header-loginBtn btn" style="border-color: black;">Login</button>
+         </c:if>
+                  <c:if test="${!empty mvo}">
+                   <button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
+                   </c:if>
+                   
 			</div>
 		</div>
 	</div>

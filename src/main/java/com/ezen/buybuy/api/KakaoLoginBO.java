@@ -40,7 +40,6 @@ public class KakaoLoginBO {
 		codeRequestUrl += "&client_id=" + CLIENT_ID;
 		codeRequestUrl += "&redirect_uri=" + REDIRECT_URI;
 		codeRequestUrl += "&state=" + state;
-
 		return codeRequestUrl;
 	}
 
