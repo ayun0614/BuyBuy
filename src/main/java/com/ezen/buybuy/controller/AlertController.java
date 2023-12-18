@@ -24,12 +24,6 @@ public class AlertController {
 	@Autowired 
 	AlertMapper alertMapper ;
 	
-	@RequestMapping("/main")
-	public String main(Members m,@RequestParam(value = "member_id", defaultValue = "aa") String member_id,Alert a, RedirectAttributes rttr, HttpSession session) {
-		List<Alert> ao = alertMapper.AlertList(member_id);
-		session.setAttribute("ao", ao);
-		return "main";
-	}
 	//1번페이지
 	@RequestMapping("/alertUpdate")
 	public String alertUpdate(Alert a) {
@@ -54,11 +48,10 @@ public class AlertController {
 	
 	@RequestMapping("/checkForUpdates")
 	@ResponseBody
-	public ResponseEntity<List<Alert>> checkForUpdates(Members m,@RequestParam(value = "member_id", defaultValue = "aa") String member_id,HttpSession session) {
+	public ResponseEntity<List<Alert>> checkForUpdates(@RequestParam(value = "member_id") String member_id, HttpSession session) {
 	    // memID를 기반으로 최신 알림을 가져옵니다.
-		Members mvo = alertMapper.Login(m);
-		
-		session.setAttribute("mvo", mvo);
+	    Members mvo = alertMapper.Login(new Members());
+	    session.setAttribute("mvo", mvo);
 	    List<Alert> ao = alertMapper.AlertList(member_id);
 
 	    // 최신 알림을 JSON으로 반환
