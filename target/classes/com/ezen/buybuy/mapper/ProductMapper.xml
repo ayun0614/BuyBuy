@@ -27,7 +27,9 @@
     detail_img = #{detail_img}
     where product_idx = #{product_idx}
 </update>
-
+  <delete id="ProductDelete" parameterType="int">
+        delete from products where product_idx = #{product_idx}
+    </delete>
 </mapper>
 
    <!--  private int Product_IDX;

@@ -15,6 +15,8 @@ CREATE TABLE Products (
 	    	);
 select *from products;
 
-delete from products where product_idx >7
+ update Products set
+    original_Price =11 
+    where product_IDX =7;
 
 drop table Products;

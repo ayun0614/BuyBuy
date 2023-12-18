@@ -19,6 +19,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
+	
 	<beans:bean id="naverLoginBO" class="com.ezen.buybuy.api.NaverLoginBO"/>
 
 	<context:component-scan base-package="com.ezen.buybuy.controller" />

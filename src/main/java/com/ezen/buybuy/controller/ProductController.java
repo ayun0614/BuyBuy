@@ -2,12 +2,20 @@ package com.ezen.buybuy.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.buybuy.mapper.ProductMapper;
@@ -198,21 +209,92 @@ public class ProductController {
 			return "redirect:/ProductList";
 	}
 	
-
-	/*@PostMapping("/ProductModify")
-	public String ProductModify(@ModelAttribute Products products) {
-		System.out.println(products);
-	
-		 
-		productMapper.ProductModify(products);
-	
-
+	@GetMapping("/ProductDelete")
+	public String productDelete(@RequestParam("product_idx") int product_idx, RedirectAttributes rttr) {
+		productMapper.ProductDelete(product_idx);
+		
 		return "redirect:/ProductList";
-
-	}*/
+	}
 	
+	@RequestMapping("/uploadImage")
+	public class ImageUploadController {
 
+	    @PostMapping
+	    public ResponseEntity<Object> handleImageUpload(MultipartFile upload) {
+	        try {
+	            if (!upload.isEmpty()) {
+	                // 디렉토리가 없다면 생성
+	                Path uploadDir = Paths.get("uploads");
+	                if (!Files.exists(uploadDir)) {
+	                    Files.createDirectories(uploadDir);
+	                }
 
+	                // 파일 이름을 고유하게 만들기
+	                String originalFileName = upload.getOriginalFilename();
+	                String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFileName;
 
+	                // 파일 저장 경로
+	                Path filePath = uploadDir.resolve(uniqueFileName);
+
+	                // 파일 저장
+	                Files.copy(upload.getInputStream(), filePath);
+
+	                // ResponseEntity로 JSON 응답 반환
+	                return ResponseEntity.ok()
+	                        .body("{\"uploaded\": 1, \"fileName\": \"" + uniqueFileName + "\", \"url\": \"/uploads/" + uniqueFileName + "\"}");
+	            } else {
+	                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	                        .body("{\"uploaded\": 0, \"error\": \"File is empty\"}");
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                    .body("{\"uploaded\": 0, \"error\": \"" + e.getMessage() + "\"}");
+	        }
+	    }
+	}
+	
+	
 
 }
+	
+	/*@PostMapping("/uploadImage")
+    public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        // 이미지를 저장할 디렉토리 경로
+        String uploadDir = "C:/upload/ckupload";  // 예: "C:/uploads/"
+
+        try {
+            // 업로드 디렉토리가 없으면 생성
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            // 파일 저장
+            String fileName = file.getOriginalFilename();
+            String filePath = uploadDir + fileName;
+            File dest = new File(filePath);
+            file.transferTo(dest);
+            
+            
+
+            // CKEditor에서 요구하는 형식으로 응답
+            modelAndView.addObject("uploaded", 1);
+            modelAndView.addObject("fileName", fileName);
+            modelAndView.addObject("url", "/resources/upload/" + fileName);
+        } catch (IOException e) {
+            modelAndView.addObject("uploaded", 0);
+            modelAndView.addObject("error", e.getMessage());
+        }
+
+        modelAndView.setViewName("jsonView");  // ViewResolver에 의해 JSON 응답으로 변환
+
+        return modelAndView;
+    }*/
+	
+
+
+
+

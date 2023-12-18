@@ -330,8 +330,8 @@ $(document).ready(function () {
 
 						<input type="submit" class="btn btn-primary btn-sm pull-right"
 							value="주문하기" />
-							<a href="${contextPath}/ProductModify?product_idx=${productDetail.product_idx}">상품정보수정</a><br>
-							<a href="${contextPath}/ProductDelete?product_idx=${productDetail.product_idx}">상품삭제</a>
+							<a href="${contextPath}/ProductModify?product_idx=${productDetail.product_idx}">상품정보수정</a>
+							<a href="${contextPath}/ProductDelete?product_idx=${productDetail.product_idx}">삭제</a>
 
 					</div>
 

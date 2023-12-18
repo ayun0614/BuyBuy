@@ -13,5 +13,6 @@ public interface ProductMapper {
 	public List<Products> ProductList();
 	public Products read(int product_idx);
 	public void ProductModify(Products Products);
+	public void ProductDelete(int product_idx);
 	
 }
