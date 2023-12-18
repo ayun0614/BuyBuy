@@ -19,9 +19,10 @@
         <beans:property name="prefix" value="/WEB-INF/views/" />
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
-    
-    <beans:bean id="naverLoginBO" class="com.ezen.buybuy.api.NaverLoginBO"/>
-    <beans:bean id="kakaoLoginBO" class="com.ezen.buybuy.api.KakaoLoginBO"/>
+
+	<beans:bean id="naverLoginBO" class="com.ezen.buybuy.api.NaverLoginBO" />
+	<beans:bean id="kakaoLoginBO" class="com.ezen.buybuy.api.KakaoLoginBO" />
+	<beans:bean id="googleLoginBO" class="com.ezen.buybuy.api.GoogleLoginBO" />
 
     <!-- Mail Sender Bean -->
     <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

@@ -6,9 +6,55 @@
 <link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/header.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+#notification {
+	display: none;
+	position: fixed;
+	background-color: white;
+	color: black;
+	padding: 15px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-height: 300px;
+	overflow: auto;
+	z-index: 999; 
+}
 
+#notificationDot {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 5px;
+	height: 5px;
+	background-color: red;
+	border-radius: 50%;
+	display: none;
+}
+
+#bell {
+	background: none;
+	border: none;
+	position: relative;
+}
+
+.grayed {
+	background-color: #f2f2f2; /*이거 회색임*/
+}
+
+#notificationTable {
+	width: 100%;
+	border-collapse: collapse;
+	 
+}
+</style>
 <script>
 	$(document).ready(function() {
+		showNotification();
+
+		setInterval(function() {
+			showNotification();
+		}, 5000);
+		
 		$(".header-loginBtn").click(function() {
 			location.href = "${contextPath}/account/login";
 		});
@@ -43,8 +89,59 @@
 			$(".header-overlay").css("display", "flex");
 		}, function() {
 			$(".header-overlay").css("display", "none");
-		});
+		});   
 	});
+	function showNotification() {
+        var notification = document.getElementById("notification");
+        var notificationDot = document.getElementById("notificationDot");
+
+        var hasNotification = false;
+		
+        $.ajax({
+            type: "GET",
+            url: "${contextPath}/checkForUpdates",
+            data: {
+                member_id:$("#member_id").val(),
+            },
+            success: function (notifications) {
+                updateNotifications(notifications);
+            },
+            error: function (error) {
+                console.error("Error fetching notifications:", error);
+            }
+        });
+
+        function updateNotifications(notifications) {
+            var notificationTable = $("#notificationTable");
+            notificationTable.empty(); 
+
+            notifications.forEach(function (ao) {
+                var row = $("<tr>");
+                var url = ao.a_url;
+
+                row.append("<td><a href='"+"${contextPath}/"+ao.a_url +"?member_id="+$("#member_id").val() + "&a_idx=" + ao.a_idx + "'>" + ao.a_title  + "</a></td>");
+                row.append("<br>");
+                row.append("<td>" + ao.msg + "</td>");
+                row.append("<br>");
+                row.addClass(ao.a_state  === 0 ? "grayed" : "");
+                notificationTable.append(row);
+            });
+
+            notifications.forEach(function (ao) {
+                var aostate = ao.a_state;
+                if (aostate === 1) {
+                    hasNotification = true;
+                }
+            });
+
+            notificationDot.style.display = (hasNotification) ? "block" : "none";
+        }
+    }
+	function showNotification1() {
+        var notification = document.getElementById("notification");
+
+        notification.style.display = (notification.style.display === "block") ? "none" : "block";
+    }
 </script>
 
 <div class="header-shadow">
@@ -64,7 +161,15 @@
 				 <button class="header-loginBtn btn" style="border-color: black;">Login</button>
          </c:if>
                   <c:if test="${!empty mvo}">
+                  <input type="hidden" id="member_id" name=member_id value="${mvo.member_id }"/>
                    <button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
+                   <button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
+						<div id="notification">
+							<table id="notificationTable"></table>
+						</div>
+						<div id="notificationDot"></div>
+						
+					</button>
                    </c:if>
                    
 			</div>
