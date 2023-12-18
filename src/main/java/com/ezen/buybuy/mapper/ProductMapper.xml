@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen.buybuy.mapper.ProductMapper">
+
+<insert id="ProductListInsert" parameterType="com.ezen.buybuy.entity.Products">
+		insert into products(product_name, original_price, discount_price, discount_rate, thumbnail_img, end_date, ctgr_idx, detail_img) 
+		values(#{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date}, #{ctgr_idx},#{detail_img})
+	</insert>
+	
+	<select id="ProductList" resultType="com.ezen.buybuy.entity.Products">
+		select *from products
+	</select>
+	
+	<select id="read" resultType="com.ezen.buybuy.entity.Products">
+ 		select *from products where product_idx=#{product_idx}
+ 	</select>
+ 	
+ 	<update id="ProductModify" parameterType="com.ezen.buybuy.entity.Products">
+    update products set
+    product_name = #{product_name},
+    original_price = #{original_price},
+    discount_price = #{discount_price},
+    discount_rate = #{discount_rate},
+    thumbnail_img = #{thumbnail_img},
+    end_date = #{end_date},
+    detail_img = #{detail_img}
+    where product_idx = #{product_idx}
+</update>
+  <delete id="ProductDelete" parameterType="int">
+        delete from products where product_idx = #{product_idx}
+    </delete>
+</mapper>
+
+   <!--  private int Product_IDX;
+	    private String Product_Name;
+	    private String Start_Date;
+	    private String End_Date;
+	    private String Thumbnail_Img;  
+	    private int Original_Price;
+	    private int Discount_Price;
+	    private String Discount_Rate;
+	    private String Detail_Img;
+	    private String Content_State;
+	    private int Ctgr_IDX;
+	    private int Reg_ID;-->
