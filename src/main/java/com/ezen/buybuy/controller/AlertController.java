@@ -11,10 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.buybuy.entity.Alert;
-import com.ezen.buybuy.entity.Members;
 import com.ezen.buybuy.mapper.AlertMapper;
 
 
@@ -49,7 +47,6 @@ public class AlertController {
 	@RequestMapping("/checkForUpdates")
 	@ResponseBody
 	public ResponseEntity<List<Alert>> checkForUpdates(@RequestParam(value = "member_id") String member_id, HttpSession session) {
-
 	    List<Alert> ao = alertMapper.AlertList(member_id);
 
 	    // 최신 알림을 JSON으로 반환

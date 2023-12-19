@@ -104,8 +104,6 @@ public class GoogleLoginBO {
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Bearer " + token);
 
-			int responseCode = conn.getResponseCode();
-
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line = "";
 

@@ -14,15 +14,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	
-	
     // 이메일 보내기 버튼 클릭 시
     $("#registerButton").attr("disabled", true);
-    
-    
     $("#emailChk").click(function(){
-    	
-    	
     	var email = $("#email").val();
 
         if (email === "") {
@@ -57,9 +51,6 @@ $(document).ready(function(){
             },
         });
     });
-    
-    
-
     // 인증 번호 확인 버튼 클릭 시
     $("#emailChk2").click(function(){
         if($("#email2").val() === code){
@@ -77,13 +68,6 @@ $(document).ready(function(){
         }
     });
 });
-
-
-
-
-
-
-
   function sample6_execDaumPostcode() {
       new daum.Postcode({
           oncomplete: function(data) {
@@ -216,7 +200,6 @@ $(document).ready(function(){
 	}
 });
 
-
 function registerCheck() {
     var member_id = $("#member_id").val();
     
@@ -247,9 +230,6 @@ function registerCheck() {
     });
 }
 
-
-
-
 function passwordCheck() {
     var memPass1 = $("#password").val();
     var memPass2 = $("#password2").val();
@@ -261,7 +241,6 @@ function passwordCheck() {
         $("#memPassword").val(memPass1);
     }
 }
-
 
 function validateForm() {
     var name = document.getElementById("name").value;
@@ -289,8 +268,6 @@ function validateForm() {
 
         return true; // 폼 제출 허용
     }
-    
-    
     	
     var emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(email)) {
@@ -300,7 +277,6 @@ function validateForm() {
 
     return true; // 폼 제출 허용
 }
-
 
 function autoHyphen2(target) {
 	  target.value = target.value

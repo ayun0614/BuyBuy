@@ -1,4 +1,5 @@
 package com.ezen.buybuy.entity;
+
 import java.util.Date;
 import lombok.Data;
 
@@ -9,5 +10,5 @@ public class Reply {
 	private String member_id;
 	private String content;
 	private Date content_date;
-	
+	private int r1state;
 }

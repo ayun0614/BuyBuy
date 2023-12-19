@@ -17,7 +17,7 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	max-height: 300px;
 	overflow: auto;
-	z-index: 999; 
+	z-index: 999;
 }
 
 #notificationDot {
@@ -44,7 +44,6 @@
 #notificationTable {
 	width: 100%;
 	border-collapse: collapse;
-	 
 }
 </style>
 <script>
@@ -54,11 +53,11 @@
 		setInterval(function() {
 			showNotification();
 		}, 5000);
-		
+
 		$(".header-loginBtn").click(function() {
 			location.href = "${contextPath}/account/login";
 		});
-		
+
 		$(".header-logoutBtn").click(function() {
 			location.href = "${contextPath}/account/logout";
 		});
@@ -89,58 +88,59 @@
 			$(".header-overlay").css("display", "flex");
 		}, function() {
 			$(".header-overlay").css("display", "none");
-		});   
+		});
 	});
 	function showNotification() {
-        var notification = document.getElementById("notification");
-        var notificationDot = document.getElementById("notificationDot");
+		var notification = document.getElementById("notification");
+		var notificationDot = document.getElementById("notificationDot");
 
-        var hasNotification = false;
-        
-        
-        $.ajax({
-            type: "GET",
-            url: "${contextPath}/checkForUpdates",
-            data: { member_id: "${mvo.member_id}" },
-            success: function (notifications) {
-                updateNotifications(notifications);
-            },
-            error: function (error) {
-                console.error("Error fetching notifications:", error);
-            }
-        });
+		var hasNotification = false;
 
-        function updateNotifications(notifications) {
-            var notificationTable = $("#notificationTable");
-            notificationTable.empty(); 
+		$.ajax({
+			type : "GET",
+			url : "${contextPath}/checkForUpdates",
+			data : {
+				member_id : "${mvo.member_id}"
+			},
+			success : function(notifications) {
+				updateNotifications(notifications);
+			},
+			error : function(error) {
+				console.error("Error fetching notifications:", error);
+			}
+		});
 
-            notifications.forEach(function (ao) {
-                var row = $("<tr>");
-                var url = ao.a_url;
+		function updateNotifications(notifications) {
+			var notificationTable = $("#notificationTable");
+			notificationTable.empty();
 
-                row.append("<td><a href='"+"${contextPath}/"+ao.a_url +"?member_id="+$("#member_id").val() + "&a_idx=" + ao.a_idx + "'>" + ao.a_title  + "</a></td>");
-                row.append("<br>");
-                row.append("<td>" + ao.msg + "</td>");
-                row.append("<br>");
-                row.addClass(ao.a_state  === 0 ? "grayed" : "");
-                notificationTable.append(row);
-            });
+			notifications.forEach(function(ao) {
+				var row = $("<tr>");
+				var url = ao.a_url;
 
-            notifications.forEach(function (ao) {
-                var aostate = ao.a_state;
-                if (aostate === 1) {
-                    hasNotification = true;
-                }
-            });
+				row.append("<td><a href='" + "${contextPath}/" + ao.a_url + "?member_id=" + $("#member_id").val() + "&a_idx=" + ao.a_idx + "'>" + ao.a_title + "</a></td>");
+				row.append("<br>");
+				row.append("<td>" + ao.msg + "</td>");
+				row.append("<br>");
+				row.addClass(ao.a_state === 0 ? "grayed" : "");
+				notificationTable.append(row);
+			});
 
-            notificationDot.style.display = (hasNotification) ? "block" : "none";
-        }
-    }
+			notifications.forEach(function(ao) {
+				var aostate = ao.a_state;
+				if (aostate === 1) {
+					hasNotification = true;
+				}
+			});
+
+			notificationDot.style.display = (hasNotification) ? "block" : "none";
+		}
+	}
 	function showNotification1() {
-        var notification = document.getElementById("notification");
+		var notification = document.getElementById("notification");
 
-        notification.style.display = (notification.style.display === "block") ? "none" : "block";
-    }
+		notification.style.display = (notification.style.display === "block") ? "none" : "block";
+	}
 </script>
 
 <div class="header-shadow">
@@ -156,28 +156,27 @@
 				</div>
 			</div>
 			<div class="col-md-1 header-item">
-				 <c:if test="${empty mvo}">
-				 <button class="header-loginBtn btn" style="border-color: black;">Login</button>
-         </c:if>
-    
-                   <c:if test="${!empty mvo}">
-                   <button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
-                   
-                   <!-- 회원수정 -->
-                   <a href="${contextPath}/account/membermodify?member_id=${mvo.member_id}">개인정보수정</a>
-                   </c:if>
-                          
-			</div>
+				<c:if test="${empty mvo}">
+					<button class="header-loginBtn btn" style="border-color: black;">Login</button>
+				</c:if>
+
 				<c:if test="${!empty mvo}">
-					
-					<button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
-						<div id="notification">
-							<table id="notificationTable"></table>
-						</div>
-						<div id="notificationDot"></div>
-						
-					</button>
-				</c:if>   
+					<button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
+
+					<!-- 회원수정 -->
+					<a href="${contextPath}/account/membermodify?member_id=${mvo.member_id}">개인정보수정</a>
+				</c:if>
+
+			</div>
+			<c:if test="${!empty mvo}">
+
+				<button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
+					<div id="notification">
+						<table id="notificationTable"></table>
+					</div>
+					<div id="notificationDot"></div>
+				</button>
+			</c:if>
 		</div>
 	</div>
 
@@ -190,62 +189,61 @@
 				<div class="header-pop header-second">인기</div>
 				<div class="header-new header-second">신규</div>
 				<div class="header-soon header-second">마감임박</div>
-				<a href="${contextPath }/ProductList">게시글리스트</a>
 			</div>
 		</div>
 	</div>
 	<div class="header-hover header-overlay header-shadow menu-box">
 		<div class="menu-grid col-md-6"></div>
 		<div class="menu-grid col-md-5">
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=1'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuCloth.svg" /> 의류
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=2'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuCosmetics.svg" /> 화장품
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=3'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuFood.svg" /> 식품
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=4'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuDaily.svg" /> 생필품
 			</div>
 		</div>
 		<div class="menu-grid col-md-5">
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=5'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuDeco.svg" /> 홈데코
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=6'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuPencil.svg" /> 문구
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=7'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuHobby.svg" /> 취미
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=8'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuPet.svg" /> 반려동물
 			</div>
 		</div>
 		<div class="menu-grid col-md-5">
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=9'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuComputer.svg" /> 컴퓨터
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=10'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuMobile.svg" /> 모바일
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=11'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuTv.svg" /> 가전제품
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=12'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuSport.svg" /> 스포츠
 			</div>
 		</div>
 		<div class="menu-grid col-md-5">
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=13'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuHealth.svg" /> 건강
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=14'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuTools.svg" /> 공구
 			</div>
-			<div class="menu-item">
+			<div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=15'">
 				<img class="menu-icon" alt="" src="${contextPath }/resources/image/menuOthers.svg" /> 기타
 			</div>
 			<div class="menu-item">

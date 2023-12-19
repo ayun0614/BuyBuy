@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -8,20 +7,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <title>Bootstrap Example</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
 <script>
         // Set the date we're counting down to
@@ -158,6 +151,7 @@ function calculateDiscount() {
 $(document).ready(function () {
     // Get the initial value of the result
     var result = parseInt($("#result").text());
+    $('#ctgr_idx').val(${ProductModify.ctgr_idx});
 
     // Handle the plus button click
     $(".plus").on("click", function () {
@@ -181,11 +175,6 @@ $(document).ready(function () {
 $(".ProductDetailModify").click(function() {
 	location.href = "${contextPath}/product/ProductModify";
 });
-
-	
-
-	
-</script>
 </script>
 
 <style>
@@ -218,76 +207,52 @@ $(".ProductDetailModify").click(function() {
 </style>
 
 <body>
-
+	<jsp:include page="../include/header.jsp" />
 	<div class="container" style="max-width: 900px; height: 100px;">
-		<jsp:include page="../include/header.jsp" />
-		 <br>
-		<form class="form-inline" method="post" enctype="multipart/form-data"
-			action="${contextPath}/ProductModify?product_idx=${ProductModify.product_idx}">
+
+		<br>
+		<form class="form-inline" method="post" enctype="multipart/form-data" action="${contextPath}/product/ProductModify?product_idx=${ProductModify.product_idx}">
 			<input type="hidden" name="product_idx" value=${ProductModify.product_idx }>
-			
+
 			<div class="row" style="max-width: 890px; height: 100px;">
 				<div class="row top text-dark">
-					<input type="text" name="product_name" id="product_name"
-						value="${ProductModify.product_name }" class="form-control"
-						placeholder="제품 이름">
+					<input type="text" name="product_name" id="product_name" value="${ProductModify.product_name }" class="form-control" placeholder="제품 이름">
 				</div>
 			</div>
-			<!-- MIDDLE -->
 			<div class="row middle">
-
-
-				<div class="col-md-6 middle-left"
-					style="height: 422px; display: flex; align-items: center; justify-content: center;">
+				<div class="col-md-6 middle-left" style="height: 422px; display: flex; align-items: center; justify-content: center;">
 					<div class="panel-body">
-						<!-- 실질 파일업로드 할수 있는 인반문자열, 바이너리 데이터 필요 -->
-						<!--  <form action="${contextPath}/memImageUpdate" method="post"
-            enctype="multipart/form-data">-->
-
-						<input type="hidden" name="memID" value="${mvo.memID}" />
-						<table class="table table-bordered"
-							style="text-align: center; border: 1px solid #dddddd;">
+						<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
 							<div class="col-sm-6 col-md-4" style="width: 440px;">
 								<div class="card-ui">
 									<tr>
-										<td><span class="btn btn-default"> 이미지 업로드하세요 <input
-												type="file" name="thumbnail_img" />
+										<td><span class="btn btn-default"> 이미지 업로드하세요 <input type="file" name="thumbnail_img" />
 										</span></td>
 									</tr>
 								</div>
 							</div>
-
 						</table>
 						<!--</form>-->
 					</div>
 				</div>
-
 				<div class="col-md-6 middle-right text-dark">
-
 					<div class="row middle-right-1">
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
-							<input type="text" value="${mvo.memName}" readonly />
-
+							<input type="text" value="${mvo.name}" readonly />
 						</div>
 						<div class="col-md-6">
-							<td style="vertical-align: middle;">등록상태</td> <br> <select
-								id="cars" name="cars" style="width: 185px; height: 28px;">
+							<td style="vertical-align: middle;">등록상태</td> <br> <select id="cars" name="cars" style="width: 185px; height: 28px;">
 								<option value="volvo">마감</option>
 								<option value="saab">판매중</option>
 							</select>
-
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">마감일</td> <br>
-							<input type="datetime-local" id="selectedDateTime"
-								name="end_date" onchange="calculateTimeDifference()"
-								value="${ProductModify.end_date }">
+							<input type="datetime-local" id="selectedDateTime" name="end_date" onchange="calculateTimeDifference()" value="${ProductModify.end_date }">
 						</div>
 						<div class="col-md-6">
-							<td style="vertical-align: middle;">카테고리</td> <br> <select
-								id="ctgr_idx" name="ctgr_idx"
-								style="width: 185px; height: 28px;">
+							<td style="vertical-align: middle;">카테고리</td> <br> <select id="ctgr_idx" name="ctgr_idx" style="width: 185px; height: 28px;">
 								<option value="1">의류</option>
 								<option value="2">화장품</option>
 								<option value="3">식품</option>
@@ -307,27 +272,16 @@ $(".ProductDetailModify").click(function() {
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">정가</td> <br>
-							<input type="text" name="original_price" id="original_price"
-								value="${ProductModify.original_price }"
-								onchange="calculateDiscount()" />
+							<input type="text" name="original_price" id="original_price" value="${ProductModify.original_price }" onchange="calculateDiscount()" />
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">할인가</td> <br>
-							<input type="text" name="discount_price" id="discount_price"
-								value="${ProductModify.discount_price }"
-								onchange="calculateDiscount()" />
+							<input type="text" name="discount_price" id="discount_price" value="${ProductModify.discount_price }" onchange="calculateDiscount()" />
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">할인율</td> <br>
-							<input type="text" name="discount_rate" id="discount_rate"
-								value="${ProductModify.discount_rate }" readonly
-								onchange="calculateDiscount()" />
+							<input type="text" name="discount_rate" id="discount_rate" value="${ProductModify.discount_rate }" readonly onchange="calculateDiscount()" />
 						</div>
-
-
-
-
-
 					</div>
 					<div class="row middle-right-2 text-dark">
 						<div class="col-12">
@@ -335,27 +289,16 @@ $(".ProductDetailModify").click(function() {
 						</div>
 					</div>
 					<div class="row middle-right-3 text-dark">
-
 						<div class="num">
-							<span>수량</span> <span class="count"> <a href="#"
-								class="minus">-</a> <span id="result">1</span> <a href="#"
-								class="plus">+</a>
+							<span>수량</span> <span class="count"> <a href="#" class="minus">-</a> <span id="result">1</span> <a href="#" class="plus">+</a>
 							</span>
-
 						</div>
-
-						<input type="submit" class="btn btn-primary btn-sm pull-right"
-							value="수정완료" />
-
+						<input type="submit" class="btn btn-primary btn-sm pull-right" value="수정완료" />
 					</div>
-
 				</div>
-
-
 			</div>
 			<hr>
 			상품상세
-
 			<div class="row bottom text-dark">
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs">
@@ -366,37 +309,24 @@ $(".ProductDetailModify").click(function() {
 					<div class="tab-content">
 						<div id="home" class="tab-pane fade in active">
 							<h3>HOME</h3>
-
-
-
 							<div class="panel-body">
-								<!-- 실질 파일업로드 할수 있는 인반문자열 , 바이너리 데이터 필요 -->
-								<!--  <form action="${contextPath}/memImageUpdate" method="post"
-						enctype="multipart/form-data">-->
-
-								<input type="hidden" name="memID" value="${mvo.memID }" />
-								<table class="table table-bordered"
-									style="text-align: center; border: 1px solid #dddddd;">
+								<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
 									<tr>
 										<td colspan="2" id="imagePreviewContainer"></td>
 									</tr>
 									<div class="thumbnail">
 										<tr>
-											<td><span class="btn btn-default"> 이미지 업로드하세요 <input
-													type="file" name="detail_img" />
+											<td><span class="btn btn-default"> 이미지 업로드하세요 <input type="file" name="detail_img" />
 											</span></td>
 										</tr>
 									</div>
 								</table>
 								<!--</form>-->
 							</div>
-
-
 						</div>
 						<div id="menu1" class="tab-pane fade">
 							<h3>게시판</h3>
 							<p>Some content in menu 1.</p>
-
 						</div>
 						<div id="menu2" class="tab-pane fade">
 							<h3>공지사항</h3>
@@ -404,24 +334,9 @@ $(".ProductDetailModify").click(function() {
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
 			</div>
 			<br>
 		</form>
 	</div>
-
-
-
-
-
 </body>
-
 </html>
