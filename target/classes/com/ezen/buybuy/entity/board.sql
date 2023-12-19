@@ -177,3 +177,9 @@ VALUES (2, 'user01', 1, "16700", now(),'닉네임01','010-2315-1231', '20131', '
 
 delete from orders
 
+select * from reviewproducts
+
+select * from products as p INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx where p.member_id = 'dealer01'
+
+select p.product_idx, p.product_name, p.start_date, p.end_date, p.thumbnail_img, p.original_price, p.discount_price, p.discount_rate, p.detail_img, p.content_state, p.ctgr_idx, p.member_id, r.view_count from products as p INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx where p.member_id = 'dealer01'
+

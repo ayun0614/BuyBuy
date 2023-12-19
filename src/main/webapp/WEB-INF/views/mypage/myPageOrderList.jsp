@@ -197,7 +197,7 @@ $(document).ready(function(){
 			list += "<td style = 'font-size:24px; font-weight: 700;'>"+ obj.product_name +"</td>";
 			list += "</tr>";
 			list += "<tr>";
-			list += "<td style = 'font-size:15px;'>구매수"+ obj.order_pcs +"개</td>";
+			list += "<td style = 'font-size:15px;'>구매 수 "+ obj.order_pcs +"개</td>";
 			list += "</tr>";
 			list += "<tr><td></td></tr>";
 			list += "<tr><td></td></tr>";

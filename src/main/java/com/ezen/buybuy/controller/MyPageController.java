@@ -49,7 +49,7 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("/myPagePostingProduct")
-	public String myPagePostingProduct(@RequestParam("product_idx") int product_idx) {
+	public String myPagePostingProduct() {
 		return "mypage/myPagePostingProduct"; 
 	}
 	

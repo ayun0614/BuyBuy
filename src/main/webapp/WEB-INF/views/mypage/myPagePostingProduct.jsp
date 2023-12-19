@@ -126,7 +126,7 @@ function createView(data){
 		list += "<h4 class='panel-title'> ";
 		list += "<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+obj.product_idx+"' style = 'text-decoration:none;'>";
 		list += "<div class = 'productInfoBox'>";
-		list += "<div class = 'productInfoImg'></div></a>";
+		list += "<div class = 'productInfoImg'>"+obj.thumbnail_img+"</div></a>";
 		list += "<div>";
 		list += "<table class = 'productInfoTbl'>"; 
 		list += "<tr class = 'productInfoTr'>";
@@ -141,7 +141,7 @@ function createView(data){
 		list += "</tr>";
 		list += "<tr class = 'productInfoTr'><td></td></tr>";
 		list += "<tr class = 'productInfoTr'>";
-		list += "<td class = 'productInfoTd' colspan = '2' align='right'>"+ obj.original_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',') +"원</td>";
+		list += "<td class = 'productInfoTd' colspan = '2' align='right'><del>"+ obj.original_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',') +"<del>원</td>";
 		list += "</tr>";
 		list += "<tr class = 'productInfoTr'>";
 		list += "<td class = 'productInfoTd' colspan = '2' align='right' style = 'font-size:24px; font-weight: 700; color:red;'><b>"+ obj.discount_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',') +"원</b></td>";
