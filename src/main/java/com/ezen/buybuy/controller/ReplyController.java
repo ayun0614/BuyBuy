@@ -19,12 +19,12 @@ public class ReplyController {
 	public String reply(Reply r,RedirectAttributes rttr,Reply3 r3) {
 		replyMapper.replyinsert(r);
 		rttr.addAttribute("product_idx", r3.getProduct_idx());
-		return "redirect:/ProductDetail";
+		return "redirect:/product/ProductDetail";
 	}
 	@RequestMapping("/reply2")
 	public String reply2(Reply2 r,RedirectAttributes rttr,Reply3 r3) {
 		replyMapper.replyinsert2(r);
 		rttr.addAttribute("product_idx", r3.getProduct_idx());
-		return "redirect:/ProductDetail";
+		return "redirect:/product/ProductDetail";
 	}
 }

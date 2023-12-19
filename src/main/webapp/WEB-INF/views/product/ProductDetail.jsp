@@ -361,8 +361,8 @@ function reply(replyFormId) {
                         <input type="text" id="content" name="content" placeholder="댓글을 입력해주세요" class="form-control">
                         <button type="submit" id="replyInsertBtn" class="btn btn-default">댓글 입력</button>
                     </form>
-                    <div class="container">
-                        <table class="table table-hover" style="width:88%">
+                    
+                        <table class="table table-hover">
                             <tbody>
                                 <c:forEach items="${ro3}" var="ro3" varStatus="loop">
                                     <tr>
@@ -407,7 +407,7 @@ function reply(replyFormId) {
                                 </c:forEach>
                             </tbody>
                         </table>
-                    </div>
+                    
 						</div>
 					</div>
 				</div>

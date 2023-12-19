@@ -222,7 +222,6 @@ $(".ProductDetailModify").click(function() {
 			<div class="row middle">
 				<div class="col-md-6 middle-left" style="height: 422px; display: flex; align-items: center; justify-content: center;">
 					<div class="panel-body">
-						<input type="hidden" name="memID" value="${mvo.memID}" />
 						<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
 							<div class="col-sm-6 col-md-4" style="width: 440px;">
 								<div class="card-ui">
@@ -240,7 +239,7 @@ $(".ProductDetailModify").click(function() {
 					<div class="row middle-right-1">
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
-							<input type="text" value="${mvo.memName}" readonly />
+							<input type="text" value="${mvo.name}" readonly />
 						</div>
 						<div class="col-md-6">
 							<td style="vertical-align: middle;">등록상태</td> <br> <select id="cars" name="cars" style="width: 185px; height: 28px;">
@@ -311,7 +310,6 @@ $(".ProductDetailModify").click(function() {
 						<div id="home" class="tab-pane fade in active">
 							<h3>HOME</h3>
 							<div class="panel-body">
-								<input type="hidden" name="memID" value="${mvo.memID }" />
 								<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
 									<tr>
 										<td colspan="2" id="imagePreviewContainer"></td>
