@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -29,12 +30,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.buybuy.mapper.MemberMapper;
 import com.ezen.buybuy.mapper.ProductMapper;
+import com.ezen.buybuy.mapper.ReplyMapper;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 
-import com.ezen.buybuy.entity.Products;
 
 import com.ezen.buybuy.entity.*;
 
@@ -43,6 +45,9 @@ public class ProductController {
 
 	@Autowired
 	ProductMapper productMapper;
+	
+	@Autowired
+	ReplyMapper replyMapper;
 
 	@PostMapping("/ProductListInsert")
 	public String ProductListInsert(HttpServletRequest request, HttpSession session, RedirectAttributes rttr)
@@ -120,13 +125,24 @@ public class ProductController {
 	public String ProductList(Model m) {
 		List<Products> ProductList = productMapper.ProductList();
 		m.addAttribute("ProductList", ProductList);
+		
 		return "product/ProductList";
 	}
 
 	@GetMapping("/ProductDetail")
-	public String read(@RequestParam("product_idx") int product_idx, Model model) {
+	public String read(@RequestParam("product_idx") int product_idx, Model model,Reply r,Reply2 r2,Reply3 r3, HttpSession session) {
 		Products productDetail = productMapper.read(product_idx);
 		model.addAttribute("productDetail", productDetail);
+		
+		List<Reply> ro=replyMapper.replyselet(r);
+		List<Reply2> ro2=replyMapper.replyselet2(r2);
+		List<Reply3> ro3=replyMapper.replytotal(r3);
+		List<Reply3> ro4=replyMapper.replytotal2(r3);
+
+		session.setAttribute("ro", ro);
+		session.setAttribute("ro2", ro2);
+		session.setAttribute("ro3", ro3);
+		session.setAttribute("ro4", ro4);
 		return "product/ProductDetail";
 	}
 

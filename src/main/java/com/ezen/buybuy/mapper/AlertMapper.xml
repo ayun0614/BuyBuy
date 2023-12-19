@@ -6,7 +6,7 @@
 <mapper namespace="com.ezen.buybuy.mapper.AlertMapper">
 	
 	<select id="Login" parameterType="com.ezen.buybuy.entity.Members" resultType="com.ezen.buybuy.entity.Members">
-		select* from members where member_id='aa'
+		select* from members where member_id=#{member_id}
 	</select>
 	
 	
