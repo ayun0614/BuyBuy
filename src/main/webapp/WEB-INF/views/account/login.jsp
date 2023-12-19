@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
 	<script>
 		$(document).ready(function() {
 			$(".login-main").click(function() {
@@ -72,9 +71,7 @@
 		</div>
 
 		<div class="login-social">
-			<a href="${kakaoLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginKakao.svg" /></a>
-			<a href="${googleLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginGoogle.svg" /></a>
-			<a href="${naverLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginNaver.svg" /></a>
+			<a href="${kakaoLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginKakao.svg" /></a> <a href="${googleLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginGoogle.svg" /></a> <a href="${naverLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginNaver.svg" /></a>
 		</div>
 
 		<div class="login-help">

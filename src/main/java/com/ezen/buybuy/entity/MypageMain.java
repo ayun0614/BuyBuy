@@ -6,10 +6,8 @@ import lombok.Data;
 
 @Data
 public class MypageMain {
-
 	private String member_id;
 	private int status;
-	
 	private String password;
 	private String name;
 	private String nickname;
@@ -22,9 +20,5 @@ public class MypageMain {
 	private String profileImg;
 	private Date join_date;
 	private String account_status;
-	
 	private int applydealer_status;
-
-
-
 }

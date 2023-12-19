@@ -1,33 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
 <html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script
-	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-<script
-	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
-
-
-
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 <script>
     // 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
     function calculateDiscount() {
@@ -95,7 +81,6 @@
                 reader.readAsDataURL(file);
             }
         }
-
         // 이미지 추가 버튼을 숨김
         document.getElementById('imageUploadBtn').style.display = 'none';
     }
@@ -131,135 +116,7 @@
 </style>
 
 <body>
-
-	<div class="container" style="max-width: 900px; height: 100px;">
-		<jsp:include page="include/header.jsp" />
-
-		<br>
-		<form action="${contextPath}/ProductListInsert" method="post"
-			enctype="multipart/form-data">
-
-
-			<!--  <input type="hidden" name="Product_IDX" value="${ProductList.Product_IDX}" />-->
-			<div class="row" style="max-width: 890px; height: 100px;">
-				<div class="row top text-dark">
-					<input type="text" name="product_name" id="product_name"
-						class="form-control" placeholder="제품 이름">
-				</div>
-			</div>
-
-			<!-- MIDDLE -->
-			<div class="row middle">
-
-				<div class="col-md-6 middle-left"
-					style="height: 389px; display: flex; align-items: center; justify-content: center;">
-					<div class="panel-body">
-						<input type="hidden" name="memID" value="${mvo.memID}" />
-						<table class="table table-bordered"
-							style="text-align: center; border: 1px solid #dddddd;">
-							<tr>
-								<td><span class="btn btn-default"> 이미지 업로드하세요 <input
-										type="file" name="thumbnail_img" multiple
-										onchange="previewImages(this)" />
-								</span></td>
-							</tr>
-						</table>
-					</div>
-				</div>
-
-				<div class="col-md-6 middle-right text-dark">
-
-					<div class="row middle-right-1">
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
-							<input type="text" value="${mvo.memName}" readonly />
-						</div>
-						<div class="col-md-6">
-							<td style="vertical-align: middle;">등록상태</td> <br> <select
-								id="cars" name="cars" style="width: 185px; height: 28px;">
-								<option value="end">마감</option>
-								<option value="sale">판매중</option>
-							</select>
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">마감일</td> <br>
-							<input type="datetime-local" id="selectedDateTime"
-								name="end_date" onchange="calculateTimeDifference()">
-						</div>
-						<div class="col-md-6">
-							<td style="vertical-align: middle;">카테고리</td> <br> <select
-								id="ctgr_idx" name="ctgr_idx"
-								style="width: 185px; height: 28px;">
-								<option value="1">의류</option>
-								<option value="2">화장품</option>
-								<option value="3">식품</option>
-								<option value="4">생필품</option>
-								<option value="5">홈데코</option>
-								<option value="6">문구</option>
-								<option value="7">취미</option>
-								<option value="8">반려용품</option>
-								<option value="9">컴퓨터</option>
-								<option value="10">모바일</option>
-								<option value="11">가전제품</option>
-								<option value="12">스포츠</option>
-								<option value="13">건강</option>
-								<option value="14">공구</option>
-								<option value="15">기타</option>
-							</select>
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">정가</td> <br>
-							<input type="text" name="original_price" id="original_price"
-								onchange="calculateDiscount()" />
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">판매가</td> <br>
-							<input type="text" name="discount_price" id="discount_price"
-								onchange="calculateDiscount()" />
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">할인율</td> <br>
-							<input type="text" name="discount_rate" id="discount_rate"
-								onchange="calculateDiscount()" />
-						</div>
-					</div>
-					<div class="row middle-right-2 text-dark">
-						<div class="col-12">
-							<div class="row middle-right-2 text-dark">
-								<div class="col-12" id="timerResult"></div>
-							</div>
-						</div>
-					</div>
-					<div class="row middle-right-3 text-dark">
-						<div class="col-12">RANDOM</div>
-					</div>
-				</div>
-			</div>
-			<hr>
-			상품상세
-
-			<div class="row bottom text-dark">
-				<div class="panel panel-default">
-					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#home">상품상세</a></li>
-						<li><a data-toggle="tab" href="#menu1">판매자정보</a></li>
-						<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
-					</ul>
-					<div class="tab-content">
-						<div id="home" class="tab-pane fade in active">
-							<div class="panel-body">
-								<input type="hidden" name="memID" value="${mvo.memID }" />
-								<table class="table table-bordered"
-									style="text-align: center; border: 1px solid #dddddd;">
-									<tr>
-										<td colspan="2" id="imagePreviewContainer"></td>
-									</tr>
-									<tr>
-										<form action="#" method="post" enctype="multipart/form-data">
-											<textarea name="text" id="editor"></textarea>
-										</form>
-
-										<script>
+	<script>
         ClassicEditor
             .create(
                 document.querySelector('#editor'),
@@ -281,9 +138,111 @@
                 console.error(error);
             });
     </script>
-										<td><span class="btn btn-default"> 이미지 업로드하세요 <input
-												type="file" name="detail_img" multiple
-												onchange="previewImages(this)" />
+
+	<div class="container" style="max-width: 900px; height: 100px;">
+		<jsp:include page="include/header.jsp" />
+
+		<br>
+		<form action="${contextPath}/ProductListInsert" method="post" enctype="multipart/form-data">
+			<div class="row" style="max-width: 890px; height: 100px;">
+				<div class="row top text-dark">
+					<input type="text" name="product_name" id="product_name" class="form-control" placeholder="제품 이름">
+				</div>
+			</div>
+			<div class="row middle">
+				<div class="col-md-6 middle-left" style="height: 389px; display: flex; align-items: center; justify-content: center;">
+					<div class="panel-body">
+						<input type="hidden" name="memID" value="${mvo.memID}" />
+						<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
+							<tr>
+								<td><span class="btn btn-default"> 이미지 업로드하세요 <input type="file" name="thumbnail_img" multiple onchange="previewImages(this)" />
+								</span></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-6 middle-right text-dark">
+					<div class="row middle-right-1">
+						<div class="col-md-6">
+							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
+							<input type="text" value="${mvo.memName}" readonly />
+						</div>
+						<div class="col-md-6">
+							<td style="vertical-align: middle;">등록상태</td> <br> <select id="cars" name="cars" style="width: 185px; height: 28px;">
+								<option value="end">마감</option>
+								<option value="sale">판매중</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<td style="width: 50px; vertical-align: middle;">마감일</td> <br>
+							<input type="datetime-local" id="selectedDateTime" name="end_date" onchange="calculateTimeDifference()">
+						</div>
+						<div class="col-md-6">
+							<td style="vertical-align: middle;">카테고리</td> <br> <select id="ctgr_idx" name="ctgr_idx" style="width: 185px; height: 28px;">
+								<option value="1">의류</option>
+								<option value="2">화장품</option>
+								<option value="3">식품</option>
+								<option value="4">생필품</option>
+								<option value="5">홈데코</option>
+								<option value="6">문구</option>
+								<option value="7">취미</option>
+								<option value="8">반려용품</option>
+								<option value="9">컴퓨터</option>
+								<option value="10">모바일</option>
+								<option value="11">가전제품</option>
+								<option value="12">스포츠</option>
+								<option value="13">건강</option>
+								<option value="14">공구</option>
+								<option value="15">기타</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<td style="width: 50px; vertical-align: middle;">정가</td> <br>
+							<input type="text" name="original_price" id="original_price" onchange="calculateDiscount()" />
+						</div>
+						<div class="col-md-6">
+							<td style="width: 50px; vertical-align: middle;">판매가</td> <br>
+							<input type="text" name="discount_price" id="discount_price" onchange="calculateDiscount()" />
+						</div>
+						<div class="col-md-6">
+							<td style="width: 50px; vertical-align: middle;">할인율</td> <br>
+							<input type="text" name="discount_rate" id="discount_rate" onchange="calculateDiscount()" />
+						</div>
+					</div>
+					<div class="row middle-right-2 text-dark">
+						<div class="col-12">
+							<div class="row middle-right-2 text-dark">
+								<div class="col-12" id="timerResult"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row middle-right-3 text-dark">
+						<div class="col-12">RANDOM</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			상품상세
+			<div class="row bottom text-dark">
+				<div class="panel panel-default">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#home">상품상세</a></li>
+						<li><a data-toggle="tab" href="#menu1">판매자정보</a></li>
+						<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="home" class="tab-pane fade in active">
+							<div class="panel-body">
+								<input type="hidden" name="memID" value="${mvo.memID }" />
+								<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
+									<tr>
+										<td colspan="2" id="imagePreviewContainer"></td>
+									</tr>
+									<tr>
+										<form action="#" method="post" enctype="multipart/form-data">
+											<textarea name="text" id="editor"></textarea>
+										</form>
+										<td><span class="btn btn-default"> 이미지 업로드하세요 <input type="file" name="detail_img" multiple onchange="previewImages(this)" />
 										</span></td>
 									</tr>
 								</table>
@@ -302,8 +261,7 @@
 			</div>
 			<br>
 			<div style="text-align: center" width="300px";>
-				<input type="submit" class="btn btn-primary btn-sm pull-right"
-					value="등록하기" />
+				<input type="submit" class="btn btn-primary btn-sm pull-right" value="등록하기" />
 			</div>
 		</form>
 	</div>

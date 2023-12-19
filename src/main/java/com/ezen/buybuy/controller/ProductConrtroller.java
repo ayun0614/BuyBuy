@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ezen.buybuy.entity.Members;
-import com.ezen.buybuy.entity.OrderInfo;
 import com.ezen.buybuy.entity.Product;
 import com.ezen.buybuy.mapper.MemberInfoMapper;
 
@@ -26,6 +25,4 @@ public class ProductConrtroller {
 		session.setAttribute("moo", p);
 		return "product/productBuy";
 	} 
-
-	
 }

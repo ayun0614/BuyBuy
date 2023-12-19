@@ -11,24 +11,27 @@ import com.ezen.buybuy.entity.OrderInfo;
 import com.ezen.buybuy.entity.Orders;
 import com.ezen.buybuy.entity.Product;
 
-
 @Mapper
 public interface MemberInfoMapper {
 
 	public Members mypageInfo(String member_id);
+
 	public Product productInfo();
+
 	public MypageMain dealerRequestInfo(String member_id);
+
 	public MyPageCNT mypageCnt(String member_id);
-	
+
 	public List<Orders> mypageOrderList(String member_id);
-	
-	public void deliStatusUpdate(Orders ord); 
-	
+
+	public void deliStatusUpdate(Orders ord);
+
 	public void dealerRequest(String member_id);
-	
+
 	public List<Orders> mypagePostingList(String member_id);
+
 	public OrderInfo mypageOrderInfo(String member_id);
-	
+
 	public void deliUpdate(Orders ord);
-	
-} 
+
+}

@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class Product {
-	
 	private String product_name;
 	private Date start_date;
 	private Date end_date;
@@ -18,5 +17,4 @@ public class Product {
 	private String content_state;
 	private String ctgr_idx;
 	private String member_id; 
-
 }

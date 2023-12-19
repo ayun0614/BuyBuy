@@ -51,18 +51,14 @@
 	display: none;
 }
 </style>
-
 </head>
-
 <body>
 	<jsp:include page="../include/header.jsp" />
 	<div class="container" style="max-width: 900px; height: 100px;">
 		<br>
 		<div class="row middle">
 			<div class="container" style="max-width: 900px; height: 700px;">
-
 				<div class="col-12 mx-auto">
-
 					<c:forEach items="${ProductList}" var="product">
 						<a href="${contextPath}/product/ProductDetail?product_idx=${product.product_idx}">
 							<div class="col-sm-6 col-md-4" style="width: 216px;">
@@ -81,8 +77,7 @@
 											<input type="hidden" id="endDate" value="${product.end_date}">
 											<div id="countdown_${product.product_idx}"></div>
 											<p>
-												<a href="#" class="btn btn-primary" role="button">Button</a>
-												<a href="#" class="btn btn-default" role="button">Button</a>
+												<a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a>
 											</p>
 										</div>
 									</div>
@@ -120,17 +115,13 @@
 					        }, 1000);
 					    </script>
 					</c:forEach>
-
 				</div>
-
 			</div>
 		</div>
 		<button class="load-more">Load More</button>
 	</div>
-
 	<script>
         $('.card-ui').slice(0, 8).show(); // 처음 페이지에 보여지는 사진 개수
-
         $('.load-more').click(function () {
             $('.card-ui:hidden').slice(0, 4).fadeIn();
             if ($('.card-ui:hidden').length == 0) {
@@ -139,5 +130,4 @@
         })
     </script>
 </body>
-
 </html>

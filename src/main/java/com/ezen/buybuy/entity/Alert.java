@@ -3,8 +3,7 @@ package com.ezen.buybuy.entity;
 import lombok.Data;
 
 @Data
-public class Alert
- {
+public class Alert {
 	private int a_idx;
 	private String a_title;
 	private String msg;
@@ -12,5 +11,3 @@ public class Alert
 	private String a_url;
 	private int a_state;
 }
-
-
