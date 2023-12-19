@@ -33,20 +33,24 @@ import com.ezen.buybuy.mapper.ProductMapper;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-
 import com.ezen.buybuy.entity.Products;
 
 import com.ezen.buybuy.entity.*;
 
 @Controller
+@RequestMapping("/product/*")
 public class ProductController {
 
 	@Autowired
 	ProductMapper productMapper;
 
+	@GetMapping("/test")
+	public void Test() {
+		System.out.println("test");
+	}
+
 	@PostMapping("/ProductListInsert")
-	public String ProductListInsert(HttpServletRequest request, HttpSession session, RedirectAttributes rttr)
-			throws IOException {
+	public String ProductListInsert(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) throws IOException {
 
 		MultipartRequest multi = null;
 		int fileSize = 40 * 1024 * 1024; // 10MB
@@ -63,7 +67,7 @@ public class ProductController {
 			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
 				newProThumbnail = thumbnailFile.getName();
 			} else {
-				return "redirect:/ProductList";
+				return "redirect:product/ProductList";
 			}
 		}
 
@@ -74,10 +78,10 @@ public class ProductController {
 			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
 				newProDetail = detailFile.getName();
 			} else {
-				return "redirect:/ProductList";
+				return "redirect:product/ProductList";
 			}
 		}
- 
+
 		// 이미지를 db에 업데이트
 		Products mvo = new Products();
 		mvo.setThumbnail_img(newProThumbnail);
@@ -112,14 +116,20 @@ public class ProductController {
 		rttr.addFlashAttribute("msgType", "성공");
 		rttr.addFlashAttribute("msg", "사진이 등록되었습니다.");
 
-		return "redirect:/ProductList";
+		return "redirect:product/ProductList";
 
 	}
 
 	@GetMapping("/ProductList")
-	public String ProductList(Model m) {
-		List<Products> ProductList = productMapper.ProductList();
-		m.addAttribute("ProductList", ProductList);
+	public String ProductList(Model m, @RequestParam(value = "ctgr_idx", defaultValue = "0") int ctgr_idx) {
+		List<Products> productList;
+		
+		if (ctgr_idx != 0) {
+			productList = productMapper.ProductListCtgr(ctgr_idx);
+		} else {
+			productList = productMapper.ProductList();
+		}
+		m.addAttribute("ProductList", productList);
 		return "product/ProductList";
 	}
 
@@ -136,7 +146,7 @@ public class ProductController {
 		model.addAttribute("ProductOrder", ProductOrder);
 		return "product/OrderPage";
 	}
-	
+
 	@GetMapping("/ProductModify")
 	public String Modify(@RequestParam("product_idx") int product_idx, Model model) {
 		Products productModify = productMapper.read(product_idx);
@@ -145,156 +155,139 @@ public class ProductController {
 	}
 
 	@PostMapping("/ProductModify")
-	public String ProductModify(@RequestParam("product_idx") int product_idx,HttpServletRequest request, HttpSession session, RedirectAttributes rttr) throws IOException {
-		 
+	public String ProductModify(@RequestParam("product_idx") int product_idx, HttpServletRequest request, HttpSession session,
+			RedirectAttributes rttr) throws IOException {
+
 		MultipartRequest multi = null;
-		    int fileSize = 40 * 1024 * 1024;
-		    String sPath = request.getRealPath("resources/upload");
-		    multi = new MultipartRequest(request, sPath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
-		    String newProThumbnail = "";
-		    String newProDetail = "";
-		    
-		    File thumbnailFile = multi.getFile("thumbnail_img");
-		    if (thumbnailFile != null) {
-		        String ext = thumbnailFile.getName().substring(thumbnailFile.getName().lastIndexOf(".") + 1);
-		        ext = ext.toUpperCase();
-		        if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
-		            String old = productMapper.read(Integer.parseInt(multi.getParameter("product_idx"))).getThumbnail_img(); 
-		            File oldFile = new File(sPath + "/" + old);
-		            
-		            if (oldFile.exists()) {
-		                oldFile.delete();
-		            }
-		            newProThumbnail = thumbnailFile.getName();
-		        } else {
-		            if (thumbnailFile.exists()) {
-		                thumbnailFile.delete();
-		            }
-		            return "redirect:/ProductModify";
-		        }
-		    }
+		int fileSize = 40 * 1024 * 1024;
+		String sPath = request.getRealPath("resources/upload");
+		multi = new MultipartRequest(request, sPath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+		String newProThumbnail = "";
+		String newProDetail = "";
 
-		    File detailFile = multi.getFile("detail_img");
-		    if (detailFile != null) {
-		        String ext = detailFile.getName().substring(detailFile.getName().lastIndexOf(".") + 1);
-		        ext = ext.toUpperCase();
-		        if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
-		            String old = productMapper.read(Integer.parseInt(multi.getParameter("product_idx"))).getDetail_img(); 
-		            File oldFile = new File(sPath + "/" + old);
-		            if (oldFile.exists()) {
-		                oldFile.delete();
-		            }
-		            newProDetail = detailFile.getName();
-		        } else {
-		            if (detailFile.exists()) {
-		                detailFile.delete();
-		            }
-		            return "redirect:/ProductModify";
-		        }
-		    }
+		File thumbnailFile = multi.getFile("thumbnail_img");
+		if (thumbnailFile != null) {
+			String ext = thumbnailFile.getName().substring(thumbnailFile.getName().lastIndexOf(".") + 1);
+			ext = ext.toUpperCase();
+			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
+				String old = productMapper.read(Integer.parseInt(multi.getParameter("product_idx"))).getThumbnail_img();
+				File oldFile = new File(sPath + "/" + old);
 
-		    Products mvo = new Products();
-		    mvo.setThumbnail_img(newProThumbnail);
-		    mvo.setDetail_img(newProDetail);
-		    mvo.setProduct_idx(Integer.parseInt(multi.getParameter("product_idx")));
-		    mvo.setProduct_name(multi.getParameter("product_name"));
-		    mvo.setEnd_date(multi.getParameter("end_date"));
-		    mvo.setDiscount_rate(multi.getParameter("discount_rate"));
-		    mvo.setOriginal_price(Integer.parseInt(multi.getParameter("original_price")));
-			mvo.setDiscount_price(Integer.parseInt(multi.getParameter("discount_price")));
-			mvo.setCtgr_idx(Integer.parseInt(multi.getParameter("ctgr_idx")));
-			
-	
-			productMapper.ProductModify(mvo);
-			return "redirect:/ProductList";
+				if (oldFile.exists()) {
+					oldFile.delete();
+				}
+				newProThumbnail = thumbnailFile.getName();
+			} else {
+				if (thumbnailFile.exists()) {
+					thumbnailFile.delete();
+				}
+				return "redirect:product/ProductModify";
+			}
+		}
+
+		File detailFile = multi.getFile("detail_img");
+		if (detailFile != null) {
+			String ext = detailFile.getName().substring(detailFile.getName().lastIndexOf(".") + 1);
+			ext = ext.toUpperCase();
+			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
+				String old = productMapper.read(Integer.parseInt(multi.getParameter("product_idx"))).getDetail_img();
+				File oldFile = new File(sPath + "/" + old);
+				if (oldFile.exists()) {
+					oldFile.delete();
+				}
+				newProDetail = detailFile.getName();
+			} else {
+				if (detailFile.exists()) {
+					detailFile.delete();
+				}
+				return "redirect:product/ProductModify";
+			}
+		}
+
+		Products mvo = new Products();
+		mvo.setThumbnail_img(newProThumbnail);
+		mvo.setDetail_img(newProDetail);
+		mvo.setProduct_idx(Integer.parseInt(multi.getParameter("product_idx")));
+		mvo.setProduct_name(multi.getParameter("product_name"));
+		mvo.setEnd_date(multi.getParameter("end_date"));
+		mvo.setDiscount_rate(multi.getParameter("discount_rate"));
+		mvo.setOriginal_price(Integer.parseInt(multi.getParameter("original_price")));
+		mvo.setDiscount_price(Integer.parseInt(multi.getParameter("discount_price")));
+		mvo.setCtgr_idx(Integer.parseInt(multi.getParameter("ctgr_idx")));
+		System.out.println(mvo.getCtgr_idx());
+
+		productMapper.ProductModify(mvo);
+		return "redirect:/product/ProductList";
 	}
-	
+
 	@GetMapping("/ProductDelete")
 	public String productDelete(@RequestParam("product_idx") int product_idx, RedirectAttributes rttr) {
 		productMapper.ProductDelete(product_idx);
-		
-		return "redirect:/ProductList";
+
+		return "redirect:product/ProductList";
 	}
-	
+
 	@RequestMapping("/uploadImage")
 	public class ImageUploadController {
 
-	    @PostMapping
-	    public ResponseEntity<Object> handleImageUpload(MultipartFile upload) {
-	        try {
-	            if (!upload.isEmpty()) {
-	                // 디렉토리가 없다면 생성
-	                Path uploadDir = Paths.get("uploads");
-	                if (!Files.exists(uploadDir)) {
-	                    Files.createDirectories(uploadDir);
-	                }
+		@PostMapping
+		public ResponseEntity<Object> handleImageUpload(MultipartFile upload) {
+			try {
+				if (!upload.isEmpty()) {
+					// 디렉토리가 없다면 생성
+					Path uploadDir = Paths.get("uploads");
+					if (!Files.exists(uploadDir)) {
+						Files.createDirectories(uploadDir);
+					}
 
-	                // 파일 이름을 고유하게 만들기
-	                String originalFileName = upload.getOriginalFilename();
-	                String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFileName;
+					// 파일 이름을 고유하게 만들기
+					String originalFileName = upload.getOriginalFilename();
+					String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFileName;
 
-	                // 파일 저장 경로
-	                Path filePath = uploadDir.resolve(uniqueFileName);
+					// 파일 저장 경로
+					Path filePath = uploadDir.resolve(uniqueFileName);
 
-	                // 파일 저장
-	                Files.copy(upload.getInputStream(), filePath);
+					// 파일 저장
+					Files.copy(upload.getInputStream(), filePath);
 
-	                // ResponseEntity로 JSON 응답 반환
-	                return ResponseEntity.ok()
-	                        .body("{\"uploaded\": 1, \"fileName\": \"" + uniqueFileName + "\", \"url\": \"/uploads/" + uniqueFileName + "\"}");
-	            } else {
-	                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                        .body("{\"uploaded\": 0, \"error\": \"File is empty\"}");
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                    .body("{\"uploaded\": 0, \"error\": \"" + e.getMessage() + "\"}");
-	        }
-	    }
+					// ResponseEntity로 JSON 응답 반환
+					return ResponseEntity.ok()
+							.body("{\"uploaded\": 1, \"fileName\": \"" + uniqueFileName + "\", \"url\": \"/uploads/" + uniqueFileName + "\"}");
+				} else {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"uploaded\": 0, \"error\": \"File is empty\"}");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"uploaded\": 0, \"error\": \"" + e.getMessage() + "\"}");
+			}
+		}
 	}
-	
-	
 
 }
-	
-	/*@PostMapping("/uploadImage")
-    public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file) {
-        ModelAndView modelAndView = new ModelAndView();
 
-        // 이미지를 저장할 디렉토리 경로
-        String uploadDir = "C:/upload/ckupload";  // 예: "C:/uploads/"
-
-        try {
-            // 업로드 디렉토리가 없으면 생성
-            File dir = new File(uploadDir);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            // 파일 저장
-            String fileName = file.getOriginalFilename();
-            String filePath = uploadDir + fileName;
-            File dest = new File(filePath);
-            file.transferTo(dest);
-            
-            
-
-            // CKEditor에서 요구하는 형식으로 응답
-            modelAndView.addObject("uploaded", 1);
-            modelAndView.addObject("fileName", fileName);
-            modelAndView.addObject("url", "/resources/upload/" + fileName);
-        } catch (IOException e) {
-            modelAndView.addObject("uploaded", 0);
-            modelAndView.addObject("error", e.getMessage());
-        }
-
-        modelAndView.setViewName("jsonView");  // ViewResolver에 의해 JSON 응답으로 변환
-
-        return modelAndView;
-    }*/
-	
-
-
-
-
+/*
+ * @PostMapping("/uploadImage") public ModelAndView
+ * handleFileUpload(@RequestParam("file") MultipartFile file) { ModelAndView
+ * modelAndView = new ModelAndView();
+ * 
+ * // 이미지를 저장할 디렉토리 경로 String uploadDir = "C:/upload/ckupload"; // 예:
+ * "C:/uploads/"
+ * 
+ * try { // 업로드 디렉토리가 없으면 생성 File dir = new File(uploadDir); if (!dir.exists())
+ * { dir.mkdirs(); }
+ * 
+ * // 파일 저장 String fileName = file.getOriginalFilename(); String filePath =
+ * uploadDir + fileName; File dest = new File(filePath); file.transferTo(dest);
+ * 
+ * 
+ * 
+ * // CKEditor에서 요구하는 형식으로 응답 modelAndView.addObject("uploaded", 1);
+ * modelAndView.addObject("fileName", fileName); modelAndView.addObject("url",
+ * "/resources/upload/" + fileName); } catch (IOException e) {
+ * modelAndView.addObject("uploaded", 0); modelAndView.addObject("error",
+ * e.getMessage()); }
+ * 
+ * modelAndView.setViewName("jsonView"); // ViewResolver에 의해 JSON 응답으로 변환
+ * 
+ * return modelAndView; }
+ */
