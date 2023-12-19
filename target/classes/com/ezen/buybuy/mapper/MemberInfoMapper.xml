@@ -43,8 +43,7 @@
 	</select>
 	
 	<insert id="dealerRequest" parameterType="com.ezen.buybuy.entity.ApplyDealerACT">
-		insert into applydealeraccount
-		values(#{member_id}, 1) 
+		insert into applydealeraccount(member_id) values(#{member_id}) 
 	</insert>
 	
 	<update id="deliUpdate" parameterType="com.ezen.buybuy.entity.Orders">

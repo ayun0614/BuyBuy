@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ezen.buybuy.entity.ApplyDealerACT;
 import com.ezen.buybuy.entity.Orders;
 import com.ezen.buybuy.mapper.MemberInfoMapper;
 
@@ -42,8 +43,8 @@ public class RestMyPageController {
 	}
 	
 	@PutMapping("/dealerRequest")
-	public void dealerRequest(String member_id) {
-		memberInfoMapper.dealerRequest(member_id); 
+	public void dealerRequest(@RequestBody ApplyDealerACT act) {
+		memberInfoMapper.dealerRequest(act);  
 	}
 	
 	@PutMapping("/deliUpdate")

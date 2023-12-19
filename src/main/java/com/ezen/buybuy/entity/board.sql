@@ -133,9 +133,12 @@ create table reviewproducts(
 
 create table applydealeraccount(
   member_id VARCHAR(255),
-  status int,
   foreign key(member_id) references members(member_id)
 );
+
+select * from applydealeraccount
+
+drop table applydealeraccount
 
 insert into applydealeraccount
 values('bb', 1)
@@ -210,6 +213,30 @@ INNER JOIN products as p ON p.product_idx = o.product_idx
 INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx 
 where p.member_id = 'dealer01' group by o.product_idx
 
+insert into alert(a_title,msg,member_id,a_url,a_state)
+values('댓글','달렸습니다',
+(select DISTINCT p.member_id
+from reply as r inner join products as p 
+on r.product_idx=p.product_idx
+where p.product_idx=1),
+'alertUpdate',1);
+
+select * from alert
+
+select DISTINCT p.member_id
+from reply as r inner join products as p 
+on r.product_idx=p.product_idx
+where p.product_idx=1
+
+select p.member_id
+from reply as r inner join products as p 
+on r.product_idx=p.product_idx
+where r.reply_idx=33
+
+
 select * from products where member_id = 'dealer01'
 
 select * from orders
+
+select * from applydealeraccount
+delete from applydealeraccount

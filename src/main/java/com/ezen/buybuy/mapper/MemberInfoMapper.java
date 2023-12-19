@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ezen.buybuy.entity.ApplyDealerACT;
 import com.ezen.buybuy.entity.Members;
 import com.ezen.buybuy.entity.MyPageCNT;
 import com.ezen.buybuy.entity.MypageMain;
@@ -24,7 +25,7 @@ public interface MemberInfoMapper {
 	
 	public void deliStatusUpdate(Orders ord); 
 	
-	public void dealerRequest(String member_id);
+	public void dealerRequest(ApplyDealerACT act);
 	
 	public List<Orders> mypagePostingList(String member_id);
 	public OrderInfo mypageOrderInfo(String member_id);
