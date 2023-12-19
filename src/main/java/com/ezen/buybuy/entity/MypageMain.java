@@ -1,11 +1,15 @@
 package com.ezen.buybuy.entity;
 
 import java.sql.Date;
+
 import lombok.Data;
 
 @Data
-public class Members {
+public class MypageMain {
+
 	private String member_id;
+	private int status;
+	
 	private String password;
 	private String name;
 	private String nickname;
@@ -18,5 +22,9 @@ public class Members {
 	private String profileImg;
 	private Date join_date;
 	private String account_status;
+	
 	private int applydealer_status;
+
+
+
 }
