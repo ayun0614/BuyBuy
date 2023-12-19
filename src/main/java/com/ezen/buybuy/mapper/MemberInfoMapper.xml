@@ -8,6 +8,11 @@
 	<select id="mypageInfo" resultType="com.ezen.buybuy.entity.Members">
 		select * from members where member_id='user01'
 	</select>
+	
+	<select id="productInfo" resultType="com.ezen.buybuy.entity.Product">
+		select * from products where product_idx = 2
+	</select>
+	
 	<select id="dealerRequestInfo" resultType="com.ezen.buybuy.entity.MypageMain">
 		select * from applydealeraccount as a INNER JOIN members as m ON a.member_id = m.member_id where a.member_id='user01'
 	</select>
@@ -18,7 +23,7 @@
 	
 	
 	<select id="mypageOrderInfo" resultType="com.ezen.buybuy.entity.OrderInfo">
-		select * from orders as o INNER JOIN products as p ON o.product_idx = p.product_idx INNER JOIN members as m ON m.member_id = o.member_id where o.member_id = 'user01' and o.order_num = 2
+		select * from orders as o INNER JOIN products as p ON o.product_idx = p.product_idx INNER JOIN members as m ON m.member_id = o.member_id where m.member_id = 'user01' and o.order_num = '8'
 	</select>
 	
 	<select id="mypageOrderList" resultType="com.ezen.buybuy.entity.MyPageOrder">
@@ -35,11 +40,12 @@
 	
 	<insert id="dealerRequest" parameterType="com.ezen.buybuy.entity.ApplyDealerACT">
 		insert into applydealeraccount
-		values('user01', 1) 
+		values(#{member_id}, 1) 
 	</insert>
 	
 	<update id="deliUpdate" parameterType="com.ezen.buybuy.entity.Orders">
 		update orders set deli_name=#{deli_name},deli_phone=#{deli_phone},deli_zipcode=#{deli_zipcode},deli_addr=#{deli_addr},deli_detailaddr=#{deli_detailaddr} where member_id = 'user01'
 	</update>
+	
 	 
 </mapper>

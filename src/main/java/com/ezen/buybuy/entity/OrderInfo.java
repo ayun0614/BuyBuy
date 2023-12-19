@@ -15,6 +15,9 @@ public class OrderInfo {
 	
 	private String name; // 회원
 	private String phone; // 회원
+	private int zipcode;
+	private String addr;
+	private String detailaddr;
 	
 	private String deli_name; // 주문
 	private String deli_phone; // 주문

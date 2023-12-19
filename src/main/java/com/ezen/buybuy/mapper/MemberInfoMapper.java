@@ -9,12 +9,14 @@ import com.ezen.buybuy.entity.MyPageCNT;
 import com.ezen.buybuy.entity.MypageMain;
 import com.ezen.buybuy.entity.OrderInfo;
 import com.ezen.buybuy.entity.Orders;
+import com.ezen.buybuy.entity.Product;
 
 
 @Mapper
 public interface MemberInfoMapper {
 
 	public Members mypageInfo(String member_id);
+	public Product productInfo();
 	public MypageMain dealerRequestInfo(String member_id);
 	public MyPageCNT mypageCnt(String member_id);
 	

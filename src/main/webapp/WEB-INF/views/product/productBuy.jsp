@@ -294,28 +294,41 @@ $(document).ready(function(){
 		 $("#buyerInfoTelInput").show();
 		 $("#buyerInfoAdrSpan").hide();
 		 $(".buyerInfoAdrInputDiv").show();
+		 
+		 
+		 
 	})
 	
 	$("#buyerInfoUpdateAfBtn").click(function() {
-
-		 $("#buyerInfoUpdateBeBtn").show();
-		 $("#buyerInfoUpdateAfBtn").hide();
-		 $("#buyerInfoNameSpan").show();
-		 $("#buyerInfoTelSpan").show();
-		 $("#buyerInfoNameInput").hide();
-		 $("#buyerInfoTelInput").hide();
-		 $("#buyerInfoAdrSpan").show();
-		 $(".buyerInfoAdrInputDiv").hide();
-		 // 수정 완료 버튼
-		 // update문 추가
-		 
-
+		
+		
 		 var deli_name = $("#buyerInfoNameInput").val();
 		 var deli_phone = $("#buyerInfoTelInput").val();
 		 var deli_zipcode = $("#sample6_postcode").val();
 		 var deli_addr = $("#sample6_address").val();
 		 var deli_detailaddr = $("#sample6_detailAddress").val();
 		 
+
+		 $("#buyerInfoUpdateBeBtn").show();
+		 $("#buyerInfoUpdateAfBtn").hide();
+		 
+		 $("span#buyerInfoNameSpan").text(deli_name); 
+		 $("#buyerInfoNameSpan").show();
+		 
+		 $("span#buyerInfoTelSpan").text(deli_phone); 
+		 $("#buyerInfoTelSpan").show();
+		 
+		 $("#buyerInfoNameInput").hide();
+		 $("#buyerInfoTelInput").hide();
+		 
+		 $("span#buyerInfoAdrSpan").text(deli_zipcode + " " + deli_addr + " " + deli_detailaddr); 
+		 $("#buyerInfoAdrSpan").show();
+		 $(".buyerInfoAdrInputDiv").hide();
+		 // 수정 완료 버튼
+		 
+		
+		 /*
+		 기존 update문 
 			$.ajax({  
 				url:"mypage/deliUpdate",
 				type:"put",
@@ -328,6 +341,7 @@ $(document).ready(function(){
 					alert("error");
 				}
 			});
+		 */
 		 
 	})
 	
@@ -343,11 +357,11 @@ $(document).ready(function(){
 		<img src="" class = "myInfoImg""/>
 		</div>
 		<div class = "productInfoBox2"> 
-			<div style = "font-weight: 900; font-size: 22px;">${mo.product_name }</div>
+			<div style = "font-weight: 900; font-size: 22px;">${moo.product_name }</div>
 			<br>
-			<div style = "font-size: 12px;">수량 ${mo.order_pcs }개</div>
+			<div style = "font-size: 12px;">수량 개</div>
 			<br><br>
-			<div style = "font-weight: 900; font-size: 18px;"><fmt:formatNumber value="${mo.discount_price }" pattern="#,##0" />원</div>
+			<div style = "font-weight: 900; font-size: 18px;"><fmt:formatNumber value="${moo.discount_price }" pattern="#,##0" />원</div>
 		</div>
 	</div>
 	<hr class = "hrSec"> 
@@ -375,8 +389,8 @@ $(document).ready(function(){
 			<tr class = "userInfoTr">
 				<td style = "width: 105px;">받는 사람</td>
 				<td style = "width: 105px;" class = "userInfoTd">
-				<span id = "buyerInfoNameSpan">${mo.deli_name }</span>
-				<input type="text" class="form-control" id = "buyerInfoNameInput" value = "${mo.deli_name }">
+				<span id = "buyerInfoNameSpan">${mo.name }</span>
+				<input type="text" class="form-control" id = "buyerInfoNameInput" value = "">
 				</td>
 				<td align = "right">
 					<button type="button" class="btn btn-default" id = "buyerInfoUpdateBeBtn">수정</button>
@@ -386,21 +400,21 @@ $(document).ready(function(){
 			<tr class = "userInfoTr"> 
 				<td style = "width:105px;">전화번호</td> 
 				<td class = "userInfoTd">
-				<span id = "buyerInfoTelSpan">${mo.deli_phone }</span>
-				<input type="text" class="form-control" id = "buyerInfoTelInput" value = "${mo.deli_phone }">
+				<span id = "buyerInfoTelSpan">${mo.phone }</span>
+				<input type="text" class="form-control" id = "buyerInfoTelInput" value = "">
 				</td>
 			</tr>
 			<tr class = "userInfoTr"> 
 				<td style = "width: 105px;">주소</td>
 				<td class = "userInfoTd" style = "width: 500px;">
-					<span id = "buyerInfoAdrSpan">${mo.deli_zipcode } &nbsp ${mo.deli_addr } &nbsp ${mo.deli_detailaddr }</span>
+					<span id = "buyerInfoAdrSpan">${mo.zipcode } &nbsp ${mo.addr } &nbsp ${mo.detailaddr }</span>
 					<div class = "buyerInfoAdrInputDiv">
 						<br>
-						<div class = "buyerInfoAdrInputGroup"><input type="text" id="sample6_postcode" class="form-control" placeholder="우편번호" value = "${mo.deli_zipcode }">
+						<div class = "buyerInfoAdrInputGroup"><input type="text" id="sample6_postcode" class="form-control" placeholder="우편번호" value = "">
 						<button onclick="sample6_execDaumPostcode()" class="btn">우편번호 찾기</button>
 						</div>
-						<input type="text" id="sample6_address" class="form-control" placeholder="주소" value = "${mo.deli_addr }">
-						<input type="text" id="sample6_detailAddress" class="form-control" placeholder="상세주소" value = "${mo.deli_detailaddr }">
+						<input type="text" id="sample6_address" class="form-control" placeholder="주소" value = "${mo.addr }">
+						<input type="text" id="sample6_detailAddress" class="form-control" placeholder="상세주소" value = "${mo.detailaddr }">
 						<input type="text" id="sample6_extraAddress" class="form-control" placeholder="참고항목"> 
 					</div>
 				</td>
@@ -428,11 +442,11 @@ $(document).ready(function(){
 		<table class = "userInfoTbl" style = "width:800px;">
 			<tr class = "userInfoTr">
 				<td>상품 가격</td>
-				<td style = "text-align:right"><fmt:formatNumber value="${mo.original_price }" pattern="#,##0" />원</td>
+				<td style = "text-align:right"><fmt:formatNumber value="${moo.original_price }" pattern="#,##0" />원</td>
 			</tr>
 			<tr class = "userInfoTr"> 
 				<td>할인</td>
-				<td style = "text-align:right">- <fmt:formatNumber value="${mo.original_price-mo.discount_price }" pattern="#,##0" />원</td>
+				<td style = "text-align:right">- <fmt:formatNumber value="${moo.original_price-moo.discount_price }" pattern="#,##0" />원</td>
 			</tr>
 			<tr class = "userInfoTr"> 
 				<td>배송비</td>
@@ -441,7 +455,7 @@ $(document).ready(function(){
 
 			<tr class = "userInfoTr"> 
 				<td class = "lastPayTextTd">총 결제 금액</td>
-				<td class = "lastPayTd"><fmt:formatNumber value="${mo.total_price }" pattern="#,##0" />원</td>
+				<td class = "lastPayTd"><fmt:formatNumber value="${moo.discount_price }" pattern="#,##0" />원</td>
 			</tr>
 		</table>
 	</div>

@@ -175,11 +175,24 @@ VALUES (1, 'user01', 2, "21600", now(),'닉네임01','010-2315-1231', '20131', '
 INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
 VALUES (2, 'user01', 1, "16700", now(),'닉네임01','010-2315-1231', '20131', '서울특별시 마포구 연희대로 15', '무슨 아파트', '문앞에 놔주세요', '무통장 결제', '배송중');
 
-delete from orders
+select * from orders
+select * from products
 
 select * from reviewproducts
 
 select * from products as p INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx where p.member_id = 'dealer01'
 
 select p.product_idx, p.product_name, p.start_date, p.end_date, p.thumbnail_img, p.original_price, p.discount_price, p.discount_rate, p.detail_img, p.content_state, p.ctgr_idx, p.member_id, r.view_count from products as p INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx where p.member_id = 'dealer01'
+
+select * from orders as o INNER JOIN products as p ON o.product_idx = p.product_idx INNER JOIN members as m ON m.member_id = o.member_id where m.member_id = 'user01' and o.order_num = '8'
+
+select * from products as p INNER JOIN members as m ON m.member_id = p.member_id where m.member_id = 'user01' and p.product_idx = '2'
+
+select * from products where product_idx = 2
+select * from members where member_id = 'user01'
+
+
+
+
+
 

@@ -128,6 +128,7 @@ $(document).ready(function(){
 
 	$('#dealerChangeReq').click(function(){
 		
+		var id = '${mo.member_id }';
 		
 		if('${mo.account_type}' === 'dealer') {
 			alert("판매자 계정입니다.");
@@ -137,12 +138,14 @@ $(document).ready(function(){
 			$.ajax({
 				url:"mypage/dealerRequest",
 				type:"put",
-				data:$("#member_idReq").val(),
-				success:function(){
-					alert("신청이 완료되었습니다.");
+				data:id,
+				success:function(data){
+					alert(id);
+					console.log(id);
 				}, 
-				error:function(){
+				error:function(data){
 					alert("이미 신청한 계정입니다.");
+					console.log(id);
 				}
 			});	
 			
