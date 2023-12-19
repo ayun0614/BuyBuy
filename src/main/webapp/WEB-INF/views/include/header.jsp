@@ -88,59 +88,58 @@
 			$(".header-overlay").css("display", "flex");
 		}, function() {
 			$(".header-overlay").css("display", "none");
-		});
+		});   
 	});
 	function showNotification() {
-		var notification = document.getElementById("notification");
-		var notificationDot = document.getElementById("notificationDot");
+        var notification = document.getElementById("notification");
+        var notificationDot = document.getElementById("notificationDot");
 
-		var hasNotification = false;
+        var hasNotification = false;
+        
+        
+        $.ajax({
+            type: "GET",
+            url: "${contextPath}/checkForUpdates",
+            data: { member_id: "${mvo.member_id}" },
+            success: function (notifications) {
+                updateNotifications(notifications);
+            },
+            error: function (error) {
+                console.error("Error fetching notifications:", error);
+            }
+        });
 
-		$.ajax({
-			type : "GET",
-			url : "${contextPath}/checkForUpdates",
-			data : {
-				member_id : $("#member_id").val(),
-			},
-			success : function(notifications) {
-				updateNotifications(notifications);
-			},
-			error : function(error) {
-				console.error("Error fetching notifications:", error);
-			}
-		});
+        function updateNotifications(notifications) {
+            var notificationTable = $("#notificationTable");
+            notificationTable.empty(); 
 
-		function updateNotifications(notifications) {
-			var notificationTable = $("#notificationTable");
-			notificationTable.empty();
+            notifications.forEach(function (ao) {
+                var row = $("<tr>");
+                var url = ao.a_url;
 
-			notifications.forEach(function(ao) {
-				var row = $("<tr>");
-				var url = ao.a_url;
+                row.append("<td><a href='"+"${contextPath}/"+ao.a_url +"?member_id="+$("#member_id").val() + "&a_idx=" + ao.a_idx + "'>" + ao.a_title  + "</a></td>");
+                row.append("<br>");
+                row.append("<td>" + ao.msg + "</td>");
+                row.append("<br>");
+                row.addClass(ao.a_state  === 0 ? "grayed" : "");
+                notificationTable.append(row);
+            });
 
-				row.append("<td><a href='" + "${contextPath}/" + ao.a_url + "?member_id=" + $("#member_id").val() + "&a_idx=" + ao.a_idx + "'>" + ao.a_title + "</a></td>");
-				row.append("<br>");
-				row.append("<td>" + ao.msg + "</td>");
-				row.append("<br>");
-				row.addClass(ao.a_state === 0 ? "grayed" : "");
-				notificationTable.append(row);
-			});
+            notifications.forEach(function (ao) {
+                var aostate = ao.a_state;
+                if (aostate === 1) {
+                    hasNotification = true;
+                }
+            });
 
-			notifications.forEach(function(ao) {
-				var aostate = ao.a_state;
-				if (aostate === 1) {
-					hasNotification = true;
-				}
-			});
-
-			notificationDot.style.display = (hasNotification) ? "block" : "none";
-		}
-	}
+            notificationDot.style.display = (hasNotification) ? "block" : "none";
+        }
+    }
 	function showNotification1() {
-		var notification = document.getElementById("notification");
+        var notification = document.getElementById("notification");
 
-		notification.style.display = (notification.style.display === "block") ? "none" : "block";
-	}
+        notification.style.display = (notification.style.display === "block") ? "none" : "block";
+    }
 </script>
 
 <div class="header-shadow">
@@ -156,22 +155,27 @@
 				</div>
 			</div>
 			<div class="col-md-1 header-item">
-				<c:if test="${empty mvo}">
-					<button class="header-loginBtn btn" style="border-color: black;">Login</button>
-				</c:if>
+				 <c:if test="${empty mvo}">
+				 <button class="header-loginBtn btn" style="border-color: black;">Login</button>
+         </c:if>
+    
+                   <c:if test="${!empty mvo}">
+                   <button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
+                   
+                   <!-- 회원수정 -->
+                   <a href="${contextPath}/account/membermodify?member_id=${mvo.member_id}">개인정보수정</a>
+                   </c:if>
+                          
+			</div>
 				<c:if test="${!empty mvo}">
-					<input type="hidden" id="member_id" name=member_id value="${mvo.member_id }" />
-					<button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
+					
 					<button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
 						<div id="notification">
 							<table id="notificationTable"></table>
 						</div>
 						<div id="notificationDot"></div>
-
 					</button>
-				</c:if>
-
-			</div>
+				</c:if>   
 		</div>
 	</div>
 

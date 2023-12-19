@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
@@ -7,16 +9,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
 <title>Bootstrap Example</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
-<script>
+	<script>
         // Set the date we're counting down to
         var countDownDate_${product.product_IDX} = new Date("${product.end_date}").getTime();
 
@@ -45,7 +53,6 @@
                     "공구종료";
             }
         }, 1000);
-
 
 	// 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
 	function calculateDiscount() {
@@ -172,9 +179,13 @@ $(document).ready(function () {
     });
 });
 
-	
+function reply(replyFormId) {
+    $("#" + replyFormId).toggle();
+}
 
+	
 </script>
+
 
 <style>
 .top, .middle-left, .middle-right, .middle-right-1, .middle-right-2,
@@ -208,8 +219,6 @@ $(document).ready(function () {
 <body>
 	<jsp:include page="../include/header.jsp" />
 	<div class="container" style="max-width: 900px; height: 100px;">
-
-
 		<br>
 		<form class="form-inline" method="get" action="${contextPath}/OrderPage">
 			<input type="hidden" id="product_idx" name="product_idx" value="${productDetail.product_idx}" />
@@ -218,27 +227,23 @@ $(document).ready(function () {
 					<input type="text" name="product_Name" readonly id="product_Name" value="${productDetail.product_name }" class="form-control" placeholder="제품 이름">
 				</div>
 			</div>
-
-
-
-
-
 			<!-- MIDDLE -->
 			<div class="row middle">
 
-
-				<div class="col-md-6 middle-left" style="height: 422px; display: flex; align-items: center; justify-content: center;">
+				<div class="col-md-6 middle-left"
+					style="height: 422px; display: flex; align-items: center; justify-content: center;">
 					<div class="panel-body">
 						<!-- 실질 파일업로드 할수 있는 인반문자열, 바이너리 데이터 필요 -->
 						<!--  <form action="${contextPath}/memImageUpdate" method="post"
             enctype="multipart/form-data">-->
-
-						<input type="hidden" name="memID" value="${mvo.memID}" />
-						<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
-							<div class="col-sm-6 col-md-4" style="width: 440px;">
+						<table class="table table-bordered"
+							style="text-align: center; border: 1px solid #dddddd;">
+							<div class="col-sm-6 col-md-4" style="width: 440px; ">
 								<div class="card-ui">
 									<div class="thumbnail">
-										<img src="${contextPath}/resources/upload/${productDetail.thumbnail_img}" alt="thumbnail_img">
+										<img
+											src="${contextPath}/resources/upload/${productDetail.thumbnail_img}"
+											alt="thumbnail_img">
 									</div>
 								</div>
 							</div>
@@ -253,11 +258,11 @@ $(document).ready(function () {
 					<div class="row middle-right-1">
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
-							<input type="text" value="${mvo.memName}" readonly />
-
+							<input type="text" value="${mvo.name}" readonly />
 						</div>
 						<div class="col-md-6">
-							<td style="vertical-align: middle;">등록상태</td> <br> <select id="cars" name="cars" style="width: 185px; height: 28px;">
+							<td style="vertical-align: middle;">등록상태</td> <br> <select
+								id="cars" name="cars" style="width: 185px; height: 28px;">
 								<option value="volvo">마감</option>
 								<option value="saab">판매중</option>
 							</select>
@@ -298,11 +303,6 @@ $(document).ready(function () {
 							<td style="width: 50px; vertical-align: middle;">할인율</td> <br>
 							<input type="text" name="discount_rate" id="discount_rate" value="${productDetail.discount_rate }" readonly onchange="calculateDiscount()" />
 						</div>
-
-
-
-
-
 					</div>
 					<div class="row middle-right-2 text-dark">
 						<div class="col-12">
@@ -310,25 +310,18 @@ $(document).ready(function () {
 						</div>
 					</div>
 					<div class="row middle-right-3 text-dark">
-
 						<div class="num">
 							<span>수량</span> <span class="count"> <a href="#" class="minus">-</a> <span id="result">1</span> <a href="#" class="plus">+</a>
 							</span>
 							<div id="discountPriceDisplay"></div>
 						</div>
-
 						<input type="submit" class="btn btn-primary btn-sm pull-right" value="주문하기" />
 						<a href="${contextPath}/product/ProductModify?product_idx=${productDetail.product_idx}">상품정보수정</a> <a href="${contextPath}/product/ProductDelete?product_idx=${productDetail.product_idx}">삭제</a>
-
 					</div>
-
 				</div>
-
-
 			</div>
 			<hr>
 			상품상세
-
 			<div class="row bottom text-dark">
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs">
@@ -339,16 +332,12 @@ $(document).ready(function () {
 					<div class="tab-content">
 						<div id="home" class="tab-pane fade in active">
 							<h3>HOME</h3>
-
-
-
 							<div class="panel-body">
 								<!-- 실질 파일업로드 할수 있는 인반문자열 , 바이너리 데이터 필요 -->
 								<!--  <form action="${contextPath}/memImageUpdate" method="post"
 						enctype="multipart/form-data">-->
-
-								<input type="hidden" name="memID" value="${mvo.memID }" />
-								<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
+								<table class="table table-bordered"
+									style="text-align: center; border: 1px solid #dddddd;">
 									<tr>
 										<td colspan="2" id="imagePreviewContainer"></td>
 									</tr>
@@ -358,38 +347,72 @@ $(document).ready(function () {
 								</table>
 								<!--</form>-->
 							</div>
-
-
 						</div>
 						<div id="menu1" class="tab-pane fade">
 							<h3>게시판</h3>
 							<p>Some content in menu 1.</p>
-
 						</div>
+						</form>
 						<div id="menu2" class="tab-pane fade">
-							<h3>공지사항</h3>
-							<p>Some content in menu 2.</p>
+							<h3>상품 문의</h3>
+							<form id="replyForm" action="${contextPath }/reply" method="post" style="padding: 10px">
+							<input type="hidden" id="product_idx" name="product_idx" value="${productDetail.product_idx }"/>
+							<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }"/>
+                        <input type="text" id="content" name="content" placeholder="댓글을 입력해주세요" class="form-control">
+                        <button type="submit" id="replyInsertBtn" class="btn btn-default">댓글 입력</button>
+                    </form>
+                    <div class="container">
+                        <table class="table table-hover" style="width:88%">
+                            <tbody>
+                                <c:forEach items="${ro3}" var="ro3" varStatus="loop">
+                                    <tr>
+									    <td rowspan="2" style="height: 68px; display: flex; align-items: center;">
+									        <div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 7px;">
+									            <img src="https://th.bing.com/th/id/OIP.t31yu1KhzSofEN6wHWN3BgHaHa?w=187&h=187&c=7&r=0&o=5&pid=1.7" alt="프로필 이미지" style="width: 100%; height: 100%; object-fit: cover;">
+									        </div>
+									        <div style="display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 5px;">
+									            <div>${ro3.member_id} <fmt:formatDate value="${ro3.content_date}" pattern="yyyy-MM-dd HH:mm" /></div>
+									            <div>${ro3.content}</div>
+									        </div>
+									        <div style="margin-left: auto;"><button type="button" class="btn btn-default" onclick="reply('reply2Form${loop.index}')" style="" >답글 입력</button></div>
+									    </td>
+									</tr>   
+                                    <!-- 대댓글 -->
+                                  	<c:forEach items="${ro4}" var="ro4">
+									    <c:if test="${ro4.reply_idx eq ro3.reply_idx}">
+									        <tr>
+									            <td style="height: 68px; display: flex; align-items: center;">
+									                <div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 7px; margin-left: 35px;">
+									                    <img src="https://th.bing.com/th/id/OIP.t31yu1KhzSofEN6wHWN3BgHaHa?w=187&h=187&c=7&r=0&o=5&pid=1.7" alt="프로필 이미지" style="width: 100%; height: 100%; object-fit: cover;">
+									                </div>
+									                <div style="display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 5px; ">
+									                    <div>${ro4.member_id} <fmt:formatDate value="${ro4.content2_date}" pattern="yyyy-MM-dd HH:mm" /></div>
+									                    <div>${ro4.content2}</div>
+									                </div>
+									            </td>
+									        </tr>
+									    </c:if>
+									</c:forEach>
+                                    <tr id="reply2Form${loop.index}" style="display: none;">  
+                                        <td>
+                                           <form action="${contextPath }/reply2" method="post">
+                                           	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }"/>
+                                           	<input type="hidden" id="reply_idx" name="reply_idx" value="${ro3.reply_idx }"/>
+                                           	<input type="hidden" id="product_idx" name="product_idx" value="${productDetail.product_idx }"/>
+                                               <input type="text" name="content2" id="content2" placeholder="답글을 입력해주세요" class="form-control">
+                                               <button type="submit" class="btn btn-default">입력</button>
+                                           </form>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
 			</div>
 			<br>
-		</form>
 	</div>
-
-
-
-
-
 </body>
-
 </html>

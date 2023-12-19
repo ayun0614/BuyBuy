@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
-
 <mapper namespace="com.ezen.buybuy.mapper.MemberMapper">
-	
-	
-
  <insert id="insert" parameterType="com.ezen.buybuy.entity.Members">
       INSERT INTO members(name, member_id, password,phone, email,zipcode, addr)
         VALUES(#{name},#{member_id},#{password},#{phone},#{email},#{zipcode},#{addr})
   </insert>
-    
 	<select id="check" parameterType="com.ezen.buybuy.entity.Members" resultType="com.ezen.buybuy.entity.Members">
 		select * from members where member_id=#{member_id} and password=#{password}
 	</select>
-	
 	<select id="registerCheck" resultType="com.ezen.buybuy.entity.Members">
 		select * from members where member_id=#{member_id}
 	</select>
-	
-		<select id="emailCheck" resultType="int">
+	<select id="emailCheck" resultType="int">
 		select count(*) from members where email=#{email}
 	</select>
-
 </mapper>

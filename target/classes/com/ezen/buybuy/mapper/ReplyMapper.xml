@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen.buybuy.mapper.ReplyMapper">
+	
+ 	<insert id="replyinsert" parameterType="com.ezen.buybuy.entity.Reply">
+ 	
+		insert into reply(member_id, product_idx,content, content_date)
+		values (#{member_id}, #{product_idx},#{content}, now())
+		
+ 	</insert>
+ 	
+ 	<select id="replyselet" resultType="com.ezen.buybuy.entity.Reply">
+ 		select * from reply order by reply_idx desc
+ 	</select>
+ 	
+ 	<insert id="replyinsert2" parameterType="com.ezen.buybuy.entity.Reply2">
+   insert into reply2(member_id, reply_idx,content2, content2_date,product_idx)
+		values (#{member_id}, #{reply_idx},#{content2}, now(),#{product_idx})
+	</insert>
+	
+	<select id="replyselet2" resultType="com.ezen.buybuy.entity.Reply2">
+ 		select * from reply2 
+ 	</select>
+ 	
+ 	<select id="replytotal" resultType="com.ezen.buybuy.entity.Reply3">
+ 	select m.*, r.* from reply as r inner join members as m on r.member_id=m.member_id where r.product_idx=#{product_idx} order by reply_idx desc 
+	 	
+ 	</select>
+ 	
+ 	<select id="replytotal2" resultType="com.ezen.buybuy.entity.Reply3">
+ 	select m.*, r2.* from reply2 as r2 inner join members as m on r2.member_id=m.member_id 
+	 	
+ 	</select>
+ 	
+ 	 	
+
+</mapper>

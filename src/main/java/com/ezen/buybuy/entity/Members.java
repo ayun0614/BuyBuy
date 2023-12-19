@@ -16,8 +16,4 @@ public class Members {
 	private String profileimg;
 	private String join_date;
 	private String account_status; 
-
-	
-	
-	
 }
