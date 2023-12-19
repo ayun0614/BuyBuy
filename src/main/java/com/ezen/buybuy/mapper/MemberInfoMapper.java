@@ -20,7 +20,7 @@ public interface MemberInfoMapper {
 	
 	public List<Orders> mypageOrderList(String member_id);
 	
-	public void deliStatusUpdate(int order_num); 
+	public void deliStatusUpdate(Orders ord); 
 	
 	public void dealerRequest(String member_id);
 	

@@ -50,7 +50,7 @@ insert into products(product_name,start_date,end_date,original_price,discount_pr
 		values("겨울 양말 10개 세트",now(),"2023-12-24 12:14:00","19,900","10,800","46%","판매중","cc")
 
 insert into products(product_name,start_date,end_date,original_price,discount_price,discount_rate,content_state, member_id)
-		values("온열 진동 마사지 매트",now(),"2023-12-21 12:11:00","24,900","16,700","33%","배송중","cc")
+		values("온열 진동 마사지 매트",now(),"2023-12-21 12:11:00","24900","16700","33%","배송중","cc")
 
 insert into products(product_name,start_date,end_date,original_price,discount_price,discount_rate,content_state, member_id)
 		values("밤쌀당 알밤 밤식빵 (1+1)",now(),"2024-01-24 06:12:00","17400","11400","32%","배송완료","cc")
@@ -102,7 +102,7 @@ VALUES (2, 'cc', 1, "16,700", now(),'팬텀','010-2315-1231', '20131', '서울�
 INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
 VALUES (3, 'bb', 1, "11400", now(),'팬텀','010-2315-1231', '20131', '서울특별시 마포구 연희대로 15', '무슨 아파트', '문앞에 놔주세요', '무통장 결제', '배송 완료');
 
-update orders set status = '배송중' where member_id = 'bb' and order_num = 4
+update orders set status = '주문 완료' where member_id = 'bb' and order_num = 2
 
 select * from products;
 select * from orders;
@@ -156,10 +156,24 @@ select * from products as p INNER JOIN reviewproducts as r ON p.product_idx = r.
 update orders set status = '주문 완료' where order_num = 4
 select * from orders
 
+delete from orders where order_num = 4
+select * from orders
+
+
 select * from applydealeraccount as a INNER JOIN members as m ON a.member_id = m.member_id where a.member_id='bb'
 delete from applydealeraccount where member_id = 'bb'
 
 ALTER TABLE applydealeraccount ADD UNIQUE KEY(member_id)
 select * from applydealeraccount
 delete from applydealeraccount
+
+select * from members
+
+INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
+VALUES (1, 'user01', 2, "21600", now(),'닉네임01','010-2315-1231', '20131', '서울특별시 마포구 연희대로 15', '무슨 아파트', '문앞에 놔주세요', '카드 결제', '주문 완료');
+
+INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
+VALUES (2, 'user01', 1, "16700", now(),'닉네임01','010-2315-1231', '20131', '서울특별시 마포구 연희대로 15', '무슨 아파트', '문앞에 놔주세요', '무통장 결제', '배송중');
+
+delete from orders
 

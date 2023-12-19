@@ -146,13 +146,14 @@ $(document).ready(function(){
 		});
 		*/
 		
-		var status = $('#sta'+order_num).val();
 		
 		$.ajax({  
 			url:"mypage/statusUpdate",
 			type:"put",
-			data:JSON.stringify({"order_num":order_num, "status":status}), 
-			success:function(){ 
+			contentType:'application/json;charset=utf-8',
+			data: JSON.stringify(order_num),
+			dataType : 'JSON',
+			success:function(data){ 
 				alert('취소 신청이 완료되었습니다.');
 				location.reload();
 			},
