@@ -31,4 +31,6 @@ public interface MemberInfoMapper {
 	
 	public void deliUpdate(Orders ord);
 	
+	public void productBuy(Orders ord);
+	
 } 

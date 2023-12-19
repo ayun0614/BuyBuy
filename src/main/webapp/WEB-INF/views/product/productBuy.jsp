@@ -70,6 +70,31 @@ IMP.init(userCode);
 
 function requestPay() {
 	
+	var deli_name = $("#buyerInfoNameInput").val();
+	var deli_phone = $("#buyerInfoTelInput").val();
+	var deli_zipcode = $("#sample6_postcode").val();
+	var deli_addr = $("#sample6_address").val();
+	var deli_detailaddr = $("#sample6_detailAddress").val();
+	var deli_memo = $("#memo option:selected").val();
+	var pay_type = $("input[name='optradio']:checked").val();
+	
+	var total = $("td.lastPayTd").html();
+	var regex = /[^0-9]/g;
+	var total_price = total.replace(regex, "");
+
+	$.ajax({  
+		url:"mypage/productBuy",
+		type:"put",
+		contentType:'application/json;charset=utf-8',
+		data:JSON.stringify({"total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
+		success:function(){ 
+			alert("성공");
+		},
+		error:function(){
+			alert("error");
+		}
+	});
+	
 	if($("#cardpay").is(':checked')) {
 		IMP.request_pay({
 		    pg: "html5_inicis",
@@ -260,6 +285,7 @@ hr{
 <script type = "text/javascript">
 $(document).ready(function(){
 	
+	
 	$("#sample6_extraAddress").hide();
 	$(".paymentRadioDiv").hide();
 	$("#buyBtn").attr("disabled", true);
@@ -426,10 +452,10 @@ $(document).ready(function(){
 				<td class = "userInfoTd" colspan = "3"> 
 				<label for="memo" class = "delMemoLabel">
 					<select class="form-control" id="memo" style = "width: 700px;">  
-					    <option>문앞에 놔 주세요</option>
-					    <option>벨 눌러주세요</option>
-					    <option>어쩌구</option>  
-					    <option>저쩌구</option>
+					    <option value = "문앞에 놔 주세요">문앞에 놔 주세요</option>
+					    <option value = "벨 눌러주세요">벨 눌러주세요</option>
+					    <option value = "배송 전에 연락 주세요">배송 전에 연락 주세요</option>  
+					    <option value = "경비실에 맡겨 주세요">경비실에 맡겨 주세요</option>
 				 	</select>
 				</label>
 			  </td>
@@ -455,7 +481,7 @@ $(document).ready(function(){
 
 			<tr class = "userInfoTr"> 
 				<td class = "lastPayTextTd">총 결제 금액</td>
-				<td class = "lastPayTd"><fmt:formatNumber value="${moo.discount_price }" pattern="#,##0" />원</td>
+				<td class = "lastPayTd"><fmt:formatNumber value="${moo.discount_price*3}" pattern="#,##0" />원</td>
 			</tr>
 		</table>
 	</div>
@@ -463,10 +489,10 @@ $(document).ready(function(){
 	<div class = "userInfoSubText">결제 수단</div>
 	<div class = "userInfoBox">
 		<div class = "paymentRadioGroup">
-			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "cardpay" value = "cardpay">&nbsp카드 결제</label>
-			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "passBookpay" value = "passBookpay">&nbsp무통장 입금</label>
-			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "tosspay" value = "tosspay">&nbsp토스페이</label>
-			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivShow" id = "giftCardpay" value = "giftCardpay">&nbsp문화상품권</label>
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "cardpay" value = "카드 결제">&nbsp카드 결제</label>
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "passBookpay" value = "무통장 입금">&nbsp무통장 입금</label>
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "tosspay" value = "토스페이">&nbsp토스페이</label>
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivShow" id = "giftCardpay" value = "문화상품권">&nbsp문화상품권</label>
 		</div>
 	</div> 
 

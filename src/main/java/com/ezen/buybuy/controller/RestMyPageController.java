@@ -25,7 +25,7 @@ public class RestMyPageController {
 	MemberInfoMapper memberInfoMapper;
 	
 	@GetMapping("/all")
-	public List<Orders> boardList(String member_id) {
+	public List<Orders> orderList(String member_id) {
 		List<Orders> li = memberInfoMapper.mypageOrderList(member_id);
 		return li;
 	}
@@ -42,7 +42,7 @@ public class RestMyPageController {
 	}
 	
 	@PutMapping("/dealerRequest")
-	public void boardInsert(String member_id) {
+	public void dealerRequest(String member_id) {
 		memberInfoMapper.dealerRequest(member_id); 
 	}
 	
@@ -51,6 +51,11 @@ public class RestMyPageController {
 		memberInfoMapper.deliUpdate(ord);
 		return ord;
 	}	
+	
+	@PutMapping("/productBuy")
+	public void productBuy(@RequestBody Orders ord) {
+		memberInfoMapper.productBuy(ord);
+	}
 	
 
 }

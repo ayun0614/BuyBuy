@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="productInfo" resultType="com.ezen.buybuy.entity.Product">
-		select * from products where product_idx = 2
+		select * from products where product_idx = 3
 	</select>
 	
 	<select id="dealerRequestInfo" resultType="com.ezen.buybuy.entity.MypageMain">
@@ -35,7 +35,11 @@
 	</update>
 	
 	<select id="mypagePostingList" resultType="com.ezen.buybuy.entity.MyPagePosting">
-		select * from products as p INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx where p.member_id = 'dealer01'
+		select p.product_name, sum(order_pcs) as cnt, p.member_id, p.product_idx, r.view_count, p.thumbnail_img, p.end_date, p.original_price, p.discount_price
+		from orders as o
+		INNER JOIN products as p ON p.product_idx = o.product_idx
+		INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx 
+		where p.member_id = 'dealer01' group by o.product_idx
 	</select>
 	
 	<insert id="dealerRequest" parameterType="com.ezen.buybuy.entity.ApplyDealerACT">
@@ -46,6 +50,11 @@
 	<update id="deliUpdate" parameterType="com.ezen.buybuy.entity.Orders">
 		update orders set deli_name=#{deli_name},deli_phone=#{deli_phone},deli_zipcode=#{deli_zipcode},deli_addr=#{deli_addr},deli_detailaddr=#{deli_detailaddr} where member_id = 'user01'
 	</update>
+	
+	<insert id="productBuy" parameterType="com.ezen.buybuy.entity.Orders">
+		INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
+		VALUES (3, 'user01', 3, #{total_price}, now(), #{deli_name}, #{deli_phone}, #{deli_zipcode}, #{deli_addr}, #{deli_detailaddr}, #{deli_memo}, #{pay_type}, '주문 완료');
+	</insert>
 	
 	 
 </mapper>

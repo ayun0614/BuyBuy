@@ -79,6 +79,8 @@ CREATE TABLE orders (
 );
 
 
+INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
+VALUES (3, 'user01', 3, #{total_price}, now(), #{deli_name}, #{deli_phone}, #{deli_zipcode}, #{deli_addr}, #{deli_detailaddr}, #{deli_memo}, #{pay_type}, '주문 완료');
 
 
 
@@ -191,8 +193,23 @@ select * from products as p INNER JOIN members as m ON m.member_id = p.member_id
 select * from products where product_idx = 2
 select * from members where member_id = 'user01'
 
+INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
+VALUES (1, 'user02', 1, "16700", now(),'닉네임02','010-2315-1231', '20131', '서울특별시 마포구 연희대로 15', '무슨 아파트', '문앞에 놔주세요', '무통장 결제', '배송 완료');
+INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
+VALUES (6, 'user02', 2, "16700", now(),'닉네임02','010-2315-1231', '20131', '서울특별시 마포구 연희대로 15', '무슨 아파트', '문앞에 놔주세요', '무통장 결제', '배송 완료');
 
 
 
+select (select sum(order_pcs) from orders group by product_idx) as '구매수량' from products where member_id = 'dealer01'
 
+select * from products as p INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx where p.member_id = 'dealer01'
 
+select p.product_name, sum(order_pcs) as cnt, p.member_id, p.product_idx, r.view_count, p.thumbnail_img, p.end_date, p.original_price, p.discount_price
+from orders as o
+INNER JOIN products as p ON p.product_idx = o.product_idx
+INNER JOIN reviewproducts as r ON p.product_idx = r.product_idx 
+where p.member_id = 'dealer01' group by o.product_idx
+
+select * from products where member_id = 'dealer01'
+
+select * from orders

@@ -10,6 +10,9 @@ import lombok.Data;
 @Data
 public class MyPagePosting {
 	
+	private int cnt;
+	private int order_pcs;
+	private String member_name;
 	private String member_id;
 	private int product_idx;
 	

@@ -169,7 +169,7 @@ function createView(data){
 		list += "<td class = 'panelProductInfoTd'>"+ obj.product_idx +"</td>";
 		list += "<td class = 'panelProductInfoTd' style = 'width: 400px;'>"+ obj.product_name +"</td>";
 		list += "<td class = 'panelProductInfoTd'>"+ obj.member_id +"</td>";
-		list += "<td class = 'panelProductInfoTd'>"+ +"</td>";
+		list += "<td class = 'panelProductInfoTd'>"+ obj.cnt +"</td>";
 		list += "<td class = 'panelProductInfoTd'>"+ obj.view_count +"</td>";
 		list += "</tr>";
 		list += "</tbody>";
