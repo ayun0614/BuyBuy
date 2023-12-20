@@ -40,8 +40,6 @@ public class KakaoLoginBO {
 		codeRequestUrl += "&client_id=" + CLIENT_ID;
 		codeRequestUrl += "&redirect_uri=" + REDIRECT_URI;
 		codeRequestUrl += "&state=" + state;
-		System.out.println(codeRequestUrl);
-
 		return codeRequestUrl;
 	}
 
@@ -85,9 +83,6 @@ public class KakaoLoginBO {
 
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Bearer " + token);
-
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode :" + responseCode);
 
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line = "";

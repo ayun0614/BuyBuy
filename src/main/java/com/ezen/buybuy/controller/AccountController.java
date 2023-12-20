@@ -1,12 +1,7 @@
 package com.ezen.buybuy.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ezen.buybuy.api.GoogleLoginBO;
 import com.ezen.buybuy.api.KakaoLoginBO;
 import com.ezen.buybuy.api.NaverLoginBO;
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -26,6 +22,7 @@ public class AccountController {
 
 	private NaverLoginBO naverLoginBO;
 	private KakaoLoginBO kakaoLoginBO;
+	private GoogleLoginBO googleLoginBO;
 	private String apiResult = null;
 
 	@Autowired
@@ -37,14 +34,21 @@ public class AccountController {
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
 		this.naverLoginBO = naverLoginBO;
 	}
+	
+	@Autowired
+	private void setGoogleLoginBO(GoogleLoginBO googleLoginBO) {
+		this.googleLoginBO = googleLoginBO;
+	}
 
 	@GetMapping("/login")
 	public String login(Model model, HttpSession session) throws Exception {
 		// 네이버 인증 URL생성을 위한 BO에 getAuthorizationUrl 메소드 호출
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 		String kakaoAuthUrl = kakaoLoginBO.requestCode(session);
+		String googleAuthUrl = googleLoginBO.requestCode(session);
 		model.addAttribute("naverLoginUrl", naverAuthUrl);
 		model.addAttribute("kakaoLoginUrl", kakaoAuthUrl);
+		model.addAttribute("googleLoginUrl", googleAuthUrl);
 
 		return "account/login";
 	}
@@ -57,6 +61,16 @@ public class AccountController {
 		model.addAttribute("result", apiResult);
 		
 		return "account/kakaocallback";
+	}
+	
+	@RequestMapping("/googleCallBack")
+	public String googleCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
+			throws IOException {
+		String token = googleLoginBO.requestToken(session, code, state);
+		apiResult = googleLoginBO.requestProfile(token);
+		model.addAttribute("result", apiResult);
+		
+		return "account/googlecallback";
 	}
 
 	@RequestMapping("/naverCallBack")

@@ -141,6 +141,7 @@ function requestPay() {
 		alert("결제 수단을 선택해 주세요.");
 		 
 	}
+	
 
 }
 </script>

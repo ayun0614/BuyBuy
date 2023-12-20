@@ -39,10 +39,8 @@ public class MyPageController {
 	} 
 	
 	@RequestMapping(value = "/myPageOrderInfo", method = RequestMethod.GET)
-	public String myPageOrderInfo(String member_id, Model mo, OrderInfo oi, HttpSession session, HttpServletRequest request) {
-		oi = memberInfoMapper.mypageOrderInfo(member_id);
-		String order_num = request.getParameter("order_num");
-		mo.addAttribute("order_num", order_num);
+	public String myPageOrderInfo(@RequestParam("order_num") int order_num, String member_id, Model mo, OrderInfo oi, HttpSession session, HttpServletRequest request) {
+		oi = memberInfoMapper.mypageOrderInfo(order_num);
 		session.setAttribute("mo", oi);
 		//m.addAttribute("member_id", member_id);
 		return "mypage/myPageOrderInfo"; 
@@ -52,5 +50,4 @@ public class MyPageController {
 	public String myPagePostingProduct() {
 		return "mypage/myPagePostingProduct"; 
 	}
-	
 }

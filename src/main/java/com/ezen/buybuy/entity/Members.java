@@ -1,7 +1,6 @@
 package com.ezen.buybuy.entity;
 
 import java.sql.Date;
-
 import lombok.Data;
 
 @Data
@@ -19,6 +18,5 @@ public class Members {
 	private String profileImg;
 	private Date join_date;
 	private String account_status;
-
 	private int applydealer_status;
 }

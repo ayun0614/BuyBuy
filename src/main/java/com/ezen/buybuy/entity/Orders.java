@@ -1,7 +1,6 @@
 package com.ezen.buybuy.entity;
 
 import java.sql.Date;
-
 import lombok.Data;
 
 @Data
@@ -19,5 +18,4 @@ public class Orders {
 	private String deli_memo;
 	private String pay_type;
 	private String status;
-
 }
