@@ -32,4 +32,6 @@ public interface AlertMapper {
 	
 	public void reply2alert(Alert a);
 	
+	public void orderalert(Alert a);
+	
 }

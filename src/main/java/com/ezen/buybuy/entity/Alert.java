@@ -12,4 +12,5 @@ public class Alert {
 	private int a_state;
 	private int product_idx;
 	private int reply_idx;
+	private String thumbnail_img;
 }

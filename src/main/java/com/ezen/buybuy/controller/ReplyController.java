@@ -25,6 +25,7 @@ public class ReplyController {
 	public String reply(Alert a,Reply r,RedirectAttributes rttr,Reply3 r3,@RequestParam("product_idx") int product_idx) {
 		replyMapper.replyinsert(r);
 		alertMapper.replyalert(a);
+		alertMapper.orderalert(a);
 		a.setProduct_idx(product_idx);
 		rttr.addAttribute("product_idx", r3.getProduct_idx());
 		System.out.println(r3.getProduct_idx());

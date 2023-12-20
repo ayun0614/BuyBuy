@@ -360,7 +360,8 @@ function reply(replyFormId) {
 								</div>
 								<div style="margin-left: auto;">
 									<c:if test="${ro3.member_id eq mvo.member_id and ro3.r1state ne 0}">			
-									<button type="button" class="btn btn-danger" onclick="location.href='${contextPath}/replydelete?reply_idx=${ro3.reply_idx }&product_idx=${ro3.product_idx}'">삭제</button>
+									<button type="button" class="btn btn-danger" onclick="location.href='${contextPath}/replydelete?reply_idx=${ro3.reply_idx }&product_idx=${ro3.product_idx}'">삭제</button></c:if>
+									<c:if test="${ro3.r1state ne 0}">	
 									<button type="button" class="btn btn-default" onclick="reply('reply2Form${loop.index}')" style="">답글 입력</button></c:if>
 								</div>
 							</td>
