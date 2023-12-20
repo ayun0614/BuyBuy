@@ -57,15 +57,6 @@ CREATE TABLE Members (
     account_status ENUM('ACTIVE', 'INACTIVE') DEFAULT 'ACTIVE'
 );
 
+select * from alert;
 
-	SHOW TABLES
-select * from  members
-
-select count(*) from members where email='hoccoma.naver.com';
-
-
-DELETE FROM members WHERE email = 'hoccoma@gmail.com';
-DELETE FROM members WHERE email = 'hoccoma@naver.com';
-
-
-DELETE FROM members;
+insert into alert(a_title,msg,member_id,a_url,a_state) values ('구매완료','구매되었습니다','user02','alertUpdate',1);

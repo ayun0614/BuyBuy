@@ -47,6 +47,7 @@
 }
 </style>
 <script>
+
 	$(document).ready(function() {
 		showNotification();
 
@@ -117,8 +118,9 @@
 			notifications.forEach(function(ao) {
 				var row = $("<tr>");
 				var url = ao.a_url;
+				 
 
-				row.append("<td><a href='" + "${contextPath}/" + ao.a_url + "?member_id=" + $("#member_id").val() + "&a_idx=" + ao.a_idx + "'>" + ao.a_title + "</a></td>");
+				row.append("<td><a href='" + "${contextPath}/" + ao.a_url + "?member_id=" + $("#member_id").val() + "&a_idx=" + ao.a_idx+"&product_idx="+ao.product_idx+ "'>" + ao.a_title + "</a></td>");
 				row.append("<br>");
 				row.append("<td>" + ao.msg + "</td>");
 				row.append("<br>");
@@ -169,7 +171,7 @@
 
 			</div>
 			<c:if test="${!empty mvo}">
-
+				<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }" />
 				<button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
 					<div id="notification">
 						<table id="notificationTable"></table>
