@@ -7,18 +7,23 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/login.css" />
+<link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/signIn.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <title>BuyBuy</title>
 </head>
-
 <body>
 	<script>
 		$(document).ready(function() {
 			$(".login-main").click(function() {
 				location.href = "${contextPath}/";
+			});
+			
+			$(".login-inputPass").keydown(function(e){
+				if(e.keyCode == 13){
+					location.href = "${contextPath}/account/check?member_id=" + $(".login-inputUser").val() + "&password=" + $(".login-inputPass").val();
+				}
 			});
 
 			$(".login-btnLogin").click(function() {
@@ -47,7 +52,6 @@
 	<%}%>
 		
 	</script>
-
 	<div class="login-box">
 		<div class="login-logo">
 			<button class="login-main">
@@ -63,17 +67,21 @@
 			<label for="password">PW</label>
 			<input id="password" name="password" class="login-inputPass form form-control" type="password" placeholder="비밀번호">
 		</div>
-
 		<button class="login-btnLogin btn" type="submit">로그인</button>
-
 		<div class="login-bar">
 			<img alt="" src="${contextPath }/resources/image/loginBar.png" />
 		</div>
-
 		<div class="login-social">
-			<a href="${kakaoLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginKakao.svg" /></a> <a href="${googleLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginGoogle.svg" /></a> <a href="${naverLoginUrl }"><img height="75" src="${contextPath }/resources/image/loginNaver.svg" /></a>
+			<a href="${contextPath }/account/kakaoLogin">
+				<img height="75" src="${contextPath }/resources/image/loginKakao.svg" />
+			</a>
+			<a href="${contextPath }/account/googleLogin">
+				<img height="75" src="${contextPath }/resources/image/loginGoogle.svg" />
+			</a>
+			<a href="${contextPath }/account/naverLogin">
+				<img height="75" src="${contextPath }/resources/image/loginNaver.svg" />
+			</a>
 		</div>
-
 		<div class="login-help">
 			<button class="login-findId">아이디 찾기</button>
 			<h5>|</h5>

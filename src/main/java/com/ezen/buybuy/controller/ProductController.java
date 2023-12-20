@@ -23,10 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.buybuy.entity.Members;
+import com.ezen.buybuy.entity.Product;
 import com.ezen.buybuy.entity.Products;
 import com.ezen.buybuy.entity.Reply;
 import com.ezen.buybuy.entity.Reply2;
 import com.ezen.buybuy.entity.Reply3;
+import com.ezen.buybuy.mapper.MemberInfoMapper;
 import com.ezen.buybuy.mapper.ProductMapper;
 import com.ezen.buybuy.mapper.ReplyMapper;
 import com.oreilly.servlet.MultipartRequest;
@@ -41,6 +44,18 @@ public class ProductController {
 
 	@Autowired
 	ReplyMapper replyMapper;
+
+	@Autowired
+	MemberInfoMapper memberInfoMapper;
+
+	@RequestMapping("/productBuy")
+	public String productBuy(String member_id, Model mo, Members m, Model moo, Product p, HttpSession session) {
+		m = memberInfoMapper.mypageInfo(member_id);
+		p = memberInfoMapper.productInfo();
+		session.setAttribute("mo", m);
+		session.setAttribute("moo", p);
+		return "product/productBuy";
+	}
 
 	@PostMapping("/ProductListInsert")
 	public String ProductListInsert(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) throws IOException {

@@ -111,13 +111,10 @@ public class GoogleLoginBO {
 				result += line;
 			}
 
-			System.out.println("responseBody :" + result);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "Errors";
 		}
-
 		return result;
 	}
 }

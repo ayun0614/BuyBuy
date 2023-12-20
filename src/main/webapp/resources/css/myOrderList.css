@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+html, body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #ffffff;
+	height: 100%;
+}
+
+.bodyDiv {
+	background-color: #ffffff;
+	width: 1000px;
+	margin: auto;
+}
+
+.myPageSubDiv {
+	margin-top: 35px;
+	display: flex;
+}
+
+.backBtn {
+	margin-left: 70px;
+	width: 24.42px;
+	height: 41.39px;
+}
+
+.myPageSubText {
+	margin-left: 280px;
+	font-weight: 900;
+	font-size: 32px;
+	text-align: center;
+}
+
+hr {
+	height: 1px;
+	background-color: #AFAFAF;
+	width: 90%;
+	margin-top: 35px;
+}
+
+.orderStatusBox {
+	display: flex;
+	margin-left: 82px;
+	margin-top: 50px;
+	width: 836px;
+	height: 93px;
+	background-color: #E9F8F9;
+	border-radius: 25px 25px 25px 25px;
+}
+
+.orderStatusText {
+	width: 300px;
+	margin-left: 40px;
+	margin-top: 33px;
+	text-align: center;
+}
+
+.orderDateText {
+	width: 500px;
+	margin-left: 20px;
+	margin-top: 33px;
+	text-align: center;
+}
+
+.orderInfoText {
+	width: 400px;
+	margin-left: 270px;
+	margin-top: 33px;
+	text-align: center;
+}
+
+.goBtn {
+	margin-left: 10px;
+	margin-bottom: 5px;
+	height: 30px;
+}
+
+.productInfoBox {
+	display: flex;
+}
+
+.productInfoImgDiv {
+	width: 222px;
+	height: 222px;
+	margin-top: 33px;
+	margin-left: 100px;
+	background-color: #537FE7;
+}
+
+.productInfoImg {
+	width: 222px;
+	height: 222px;
+}
+
+.hrSec {
+	height: 1px;
+	background-color: #AFAFAF;
+	width: 90%;
+	margin-top: 50px;
+}
+
+table {
+	margin-top: 60px;
+	margin-left: 30px;
+}
+
+tr {
+	height: 30px;
+}
+
+td {
+	width: 500px;
+	font-size: 18px;
+}

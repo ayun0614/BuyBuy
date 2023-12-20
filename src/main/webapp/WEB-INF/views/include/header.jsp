@@ -6,46 +6,6 @@
 <link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/header.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<style>
-#notification {
-	display: none;
-	position: fixed;
-	background-color: white;
-	color: black;
-	padding: 15px;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	max-height: 300px;
-	overflow: auto;
-	z-index: 999;
-}
-
-#notificationDot {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	width: 5px;
-	height: 5px;
-	background-color: red;
-	border-radius: 50%;
-	display: none;
-}
-
-#bell {
-	background: none;
-	border: none;
-	position: relative;
-}
-
-.grayed {
-	background-color: #f2f2f2; /*이거 회색임*/
-}
-
-#notificationTable {
-	width: 100%;
-	border-collapse: collapse;
-}
-</style>
 <script>
 	$(document).ready(function() {
 		showNotification();
@@ -55,7 +15,7 @@
 		}, 5000);
 
 		$(".header-loginBtn").click(function() {
-			location.href = "${contextPath}/account/login";
+			location.href = "${contextPath}/account/signIn";
 		});
 
 		$(".header-logoutBtn").click(function() {

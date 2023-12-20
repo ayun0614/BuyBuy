@@ -1,169 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var='root' value="${pageContext.request.contextPath }/" />
+<c:set var='contextPath' value="${pageContext.request.contextPath }/" />
 <!DOCTYPE html>
 <html>
 <head>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/myOrderInfo.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <title>BuyBuy</title>
-<style>
-html, body {
-	font-family: 'Noto Sans KR', sans-serif;
-	background-color: #ffffff;
-	height: 100%;
-}
-
-.bodyDiv {
-	background-color: #ffffff;
-	width: 1000px;
-	margin: auto;
-}
-
-.myPageSubDiv {
-	margin-top: 35px;
-	display: flex;
-}
-
-.backBtn {
-	margin-left: 70px;
-	width: 24.42px;
-	height: 41.39px;
-}
-
-.myPageSubText {
-	margin-left: 340px;
-	font-weight: 900;
-	font-size: 32px;
-	text-align: center;
-}
-
-hr {
-	height: 1px;
-	background-color: #AFAFAF;
-	width: 90%;
-	margin-top: 35px;
-}
-
-.productInfoSubText, .userInfoSubText {
-	margin-left: 100px;
-	margin-top: 50px;
-	font-weight: 900;
-	font-size: 25px;
-}
-
-.productInfoBox {
-	display: flex;
-}
-
-.productInfoBox2 {
-	margin-left: 20px;
-	margin-top: 70px;
-}
-
-.productInfoImg {
-	width: 222px;
-	height: 222px;
-	margin-top: 33px;
-	margin-left: 100px;
-	background-color: #537FE7;
-}
-
-.myInfoImg {
-	width: 222px;
-	height: 222px;
-}
-
-.hrSec {
-	height: 1px;
-	background-color: #AFAFAF;
-	width: 90%;
-	margin-top: 50px;
-}
-
-.buyCheckbox {
-	margin-top: 60px;
-	margin-left: 80px;
-}
-
-#buyBtn {
-	background-color: #537FE7;
-	color: #ffffff;
-	width: 840px;
-	height: 70px;
-	margin-top: 20px;
-	margin-bottom: 50px;
-}
-
-.paymentRadioGroup {
-	margin-left: 120px;
-}
-
-.paymentRadio {
-	margin-top: 30px;
-	margin-right: 90px;
-}
-
-.paymentRadioDiv {
-	display: flex;
-	margin-top: 40px;
-}
-
-.form-control {
-	margin-right: 90px;
-	width: 330px;
-}
-
-.userInfoTbl {
-	width: 800px;
-	margin-left: 100px;
-	margin-top: 20px;
-}
-
-.userInfoTr {
-	height: 30px;
-}
-
-.userInfoTd {
-	width: 105px;
-}
-
-.lastPayTextTd {
-	font-size: 18px;
-	font-weight: 900;
-}
-
-.lastPayTd {
-	text-align: right;
-	font-weight: 900;
-	font-size: 18px;
-	color: #537FE7;
-}
-</style>
-
-<script type="text/javascript">
-	
-</script>
 </head>
 <body>
 	<jsp:include page="../include/header.jsp" />
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageOrder"><img src="resources/image/Back.png" class="backBtn"></a>
+			<a href="${contextPath }/account/myOrderList">
+				<img src="${contextPath }/resources/image/myPageBack.png" class="backBtn">
+			</a>
 			<div class="myPageSubText">주문 상세</div>
 		</div>
 		<hr>
 		<div class="productInfoSubText">주문 상품 정보</div>
 		<div class="productInfoBox">
 			<div class="productInfoImg">
-				<img src="" class="myInfoImg" "/>
+				<img src="" class="myInfoImg"/>
 			</div>
 			<div class="productInfoBox2">
 				<div style="font-weight: 900; font-size: 18px;">${mo.product_name}</div>

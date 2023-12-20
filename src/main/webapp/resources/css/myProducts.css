@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+html, body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #ffffff;
+	height: 100%;
+}
+
+.bodyDiv {
+	background-color: #ffffff;
+	width: 1000px;
+	margin: auto;
+}
+
+.myPageSubDiv {
+	margin-top: 35px;
+	display: flex;
+}
+
+.backBtn {
+	margin-left: 70px;
+	width: 24.42px;
+	height: 41.39px;
+}
+
+.myPageSubText {
+	margin-left: 305px;
+	font-weight: 900;
+	font-size: 32px;
+	text-align: center;
+}
+
+hr {
+	height: 1px;
+	background-color: #AFAFAF;
+	width: 94%;
+	margin-top: 35px;
+}
+
+.productInfoSubText {
+	margin-left: 100px;
+	margin-top: 33px;
+	font-weight: 900;
+	font-size: 25px;
+}
+
+.productInfoBox {
+	display: flex;
+}
+
+.productInfoImg {
+	width: 222px;
+	height: 222px;
+	margin-top: 33px;
+	margin-left: 100px;
+	margin-bottom: 33px;
+	background-color: #537FE7;
+}
+
+.hrSec {
+	height: 1px;
+	background-color: #AFAFAF;
+	width: 95%;
+	margin-top: 50px;
+}
+
+.panel-heading {
+	border: none;
+	outline: none;
+	box-shadow: none;
+}
+
+.productInfoTbl {
+	margin-top: 55px;
+	margin-left: 30px;
+	width: 530px;
+}
+
+.productInfoTr {
+	height: 30px;
+}
+
+.panelProductInfoTh, .panelProductInfoTd {
+	text-align: center;
+}

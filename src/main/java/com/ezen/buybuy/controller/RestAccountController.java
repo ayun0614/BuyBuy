@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ezen.buybuy.entity.Orders;
 import com.ezen.buybuy.mapper.MemberInfoMapper;
 
-@RequestMapping("/mypage")
+@RequestMapping("/account")
 @RestController
-public class RestMyPageController {
+public class RestAccountController {
 
 	@Autowired
 	MemberInfoMapper memberInfoMapper;

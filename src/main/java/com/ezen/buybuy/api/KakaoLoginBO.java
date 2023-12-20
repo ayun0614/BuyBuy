@@ -91,8 +91,6 @@ public class KakaoLoginBO {
 				result += line;
 			}
 
-			System.out.println("responseBody :" + result);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = "Errors";

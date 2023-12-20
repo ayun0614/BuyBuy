@@ -3,7 +3,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +10,6 @@
 <title>Bootstrap Example</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <style>
 .top, .middle-left, .middle-right, .middle-right-1, .middle-right-2,
 	.middle-right-3, .bottom {
@@ -77,7 +75,8 @@
 											<input type="hidden" id="endDate" value="${product.end_date}">
 											<div id="countdown_${product.product_idx}"></div>
 											<p>
-												<a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a>
+												<a href="#" class="btn btn-primary" role="button">Button</a>
+												<a href="#" class="btn btn-default" role="button">Button</a>
 											</p>
 										</div>
 									</div>
