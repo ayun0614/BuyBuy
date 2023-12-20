@@ -218,7 +218,6 @@ $(".ProductDetailModify").click(function() {
 </style>
 
 <body>
-
 	<div class="container" style="max-width: 900px; height: 100px;">
 		<jsp:include page="../include/header.jsp" />
 		 <br>
@@ -244,7 +243,6 @@ $(".ProductDetailModify").click(function() {
 						<!--  <form action="${contextPath}/memImageUpdate" method="post"
             enctype="multipart/form-data">-->
 
-						<input type="hidden" name="memID" value="${mvo.memID}" />
 						<table class="table table-bordered"
 							style="text-align: center; border: 1px solid #dddddd;">
 							<div class="col-sm-6 col-md-4" style="width: 440px;">
@@ -267,15 +265,19 @@ $(".ProductDetailModify").click(function() {
 					<div class="row middle-right-1">
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
-							<input type="text" value="${mvo.memName}" readonly />
+							<input type="text" value="${mvo.name}" readonly />
 
 						</div>
 						<div class="col-md-6">
+						<div>
 							<td style="vertical-align: middle;">등록상태</td> <br> <select
-								id="cars" name="cars" style="width: 185px; height: 28px;">
-								<option value="volvo">마감</option>
-								<option value="saab">판매중</option>
+								 name="content_state" style="width: 187px; height: 28px;">
+								<option value="판매중">판매중</option>
+								<option value="마감">마감</option>
+								<option value="배송중">배송중</option>
+								<option value="배송완료">배송완료</option>
 							</select>
+						</div>
 
 						</div>
 						<div class="col-md-6">
@@ -343,7 +345,7 @@ $(".ProductDetailModify").click(function() {
 							</span>
 
 						</div>
-
+							<a href="${contextPath}/ProductDelete?product_idx=${ProductModify.product_idx}">삭제</a>
 						<input type="submit" class="btn btn-primary btn-sm pull-right"
 							value="수정완료" />
 
@@ -374,7 +376,6 @@ $(".ProductDetailModify").click(function() {
 								<!--  <form action="${contextPath}/memImageUpdate" method="post"
 						enctype="multipart/form-data">-->
 
-								<input type="hidden" name="memID" value="${mvo.memID }" />
 								<table class="table table-bordered"
 									style="text-align: center; border: 1px solid #dddddd;">
 									<tr>
@@ -417,9 +418,6 @@ $(".ProductDetailModify").click(function() {
 			<br>
 		</form>
 	</div>
-
-
-
 
 
 </body>

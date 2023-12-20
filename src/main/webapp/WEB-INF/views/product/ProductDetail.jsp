@@ -23,36 +23,38 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
-	<script>
-        // Set the date we're counting down to
-        var countDownDate_${product.product_IDX} = new Date("${product.end_date}").getTime();
+<script>
+    // Set the date we're counting down to
+    var countDownDate_${productDetail.product_idx} = new Date("${productDetail.end_date}").getTime();
 
-        // Update the countdown every 1 second
-        var x_${product.product_IDX} = setInterval(function () {
-            // Get the current date and time
-            var now = new Date().getTime();
+    // Update the countdown every 1 second
+    var x_${productDetail.product_idx} = setInterval(function () {
+        // Get the current date and time
+        var now = new Date().getTime();
 
-            // Calculate the remaining time
-            var distance = countDownDate_${product.product_idx} - now;
+        // Calculate the remaining time
+        var distance = countDownDate_${productDetail.product_idx} - now;
 
-            // Calculate days, hours, minutes, and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Calculate days, hours, minutes, and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display the countdown
-            document.getElementById("countdown_${product.product_idx}").innerHTML =
-                days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
+        // Display the countdown
+        document.getElementById("countdown_${productDetail.product_idx}").innerHTML =
+            days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
 
-            // If the countdown is over, display a message
-            if (distance < 0) {
-                clearInterval(x_${product.product_IDX});
-                document.getElementById("countdown_${product.product_idx}").innerHTML =
-                    "공구종료";
-            }
-        }, 1000);
-    </script>
+        // If the countdown is over, display a message and call the alerttime function
+        if (distance < 0) {
+            clearInterval(x_${productDetail.product_idx});
+            document.getElementById("countdown_${productDetail.product_idx}").innerHTML =
+                "공구종료";
+        }
+    }, 1000);
+
+
+</script>
 <script>
 	// 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
 	function calculateDiscount() {
@@ -214,9 +216,9 @@ $(document).ready(function () {
 </style>
 
 <body>
-
+	<jsp:include page="../include/header.jsp" />
 	<div class="container" style="max-width: 900px; height: 100px;">
-		<jsp:include page="../include/header.jsp" />
+
 
 		<br>
 		<form class="form-inline" method="get"
@@ -225,7 +227,7 @@ $(document).ready(function () {
 				value="${productDetail.product_idx}" />
 			<div class="row" style="max-width: 890px; height: 100px;">
 				<div class="row top text-dark">
-					<input type="text" name="product_Name" readonly id="product_Name"
+					<input type="text" name="product_name" readonly id="product_name"
 						value="${productDetail.product_name }" class="form-control"
 						placeholder="제품 이름">
 				</div>
@@ -246,10 +248,9 @@ $(document).ready(function () {
 						<!--  <form action="${contextPath}/memImageUpdate" method="post"
             enctype="multipart/form-data">-->
 
-						<input type="hidden" name="memID" value="${mvo.memID}" />
 						<table class="table table-bordered"
 							style="text-align: center; border: 1px solid #dddddd;">
-							<div class="col-sm-6 col-md-4" style="width: 440px; ">
+							<div class="col-sm-6 col-md-4" style="width: 440px;">
 								<div class="card-ui">
 									<div class="thumbnail">
 										<img
@@ -258,32 +259,27 @@ $(document).ready(function () {
 									</div>
 								</div>
 							</div>
-
 						</table>
 						<!--</form>-->
 					</div>
 				</div>
-
 				<div class="col-md-6 middle-right text-dark">
 
 					<div class="row middle-right-1">
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
-							<input type="text" value="${mvo.memName}" readonly />
-
+							<input type="text" value="${mvo.name}" readonly />
 						</div>
 						<div class="col-md-6">
-							<td style="vertical-align: middle;">등록상태</td> <br> <select
-								id="cars" name="cars" style="width: 185px; height: 28px;">
-								<option value="volvo">마감</option>
-								<option value="saab">판매중</option>
-							</select>
-
+								<td style="width: 50px; vertical-align: middle;">등록상태</td> <br>
+							<input type="text" name="content_state" readonly
+								value="${productDetail.content_state }">
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">마감일</td> <br>
 							<input type="text" id="selectedDateTime" name="end_date" readonly
-								onchange="calculateTimeDifference()" value="${productDetail.end_date }" >
+								onchange="calculateTimeDifference()"
+								value="${productDetail.end_date }">
 						</div>
 						<div class="col-md-6">
 							<td style="width: 50px; vertical-align: middle;">카테고리</td> <br>
@@ -307,15 +303,14 @@ $(document).ready(function () {
 								value="${productDetail.discount_rate }" readonly
 								onchange="calculateDiscount()" />
 						</div>
-
-
-
-
-
 					</div>
 					<div class="row middle-right-2 text-dark">
 						<div class="col-12">
-						<input type="text" id="end_date" name="end_date" value="${productDetail.end_date}">
+							<td style="width: 50px; vertical-align: middle;">공구마감까지</td> <br>
+							<input type="hidden" id="endDate"
+								value="${productDetail.end_date}">
+							<div id="countdown_${productDetail.product_idx}"
+								style="font-weight: bold";></div>
 						</div>
 					</div>
 					<div class="row middle-right-3 text-dark">
@@ -325,16 +320,16 @@ $(document).ready(function () {
 								class="minus">-</a> <span id="result">1</span> <a href="#"
 								class="plus">+</a>
 							</span>
-							<div id="discountPriceDisplay"></div>
+
 						</div>
 
 						<input type="submit" class="btn btn-primary btn-sm pull-right"
 							value="주문하기" />
-							<a href="${contextPath}/ProductModify?product_idx=${productDetail.product_idx}">상품정보수정</a>
-							<a href="${contextPath}/ProductDelete?product_idx=${productDetail.product_idx}">삭제</a>
-
+						<c:if test="${!empty mvo}">
+							<a
+								href="${contextPath}/ProductModify?product_idx=${productDetail.product_idx}">상품정보수정</a>
+						</c:if>
 					</div>
-
 				</div>
 
 
@@ -360,7 +355,6 @@ $(document).ready(function () {
 								<!--  <form action="${contextPath}/memImageUpdate" method="post"
 						enctype="multipart/form-data">-->
 
-								<input type="hidden" name="memID" value="${mvo.memID }" />
 								<table class="table table-bordered"
 									style="text-align: center; border: 1px solid #dddddd;">
 									<tr>

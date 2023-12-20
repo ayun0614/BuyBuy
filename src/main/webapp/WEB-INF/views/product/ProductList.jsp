@@ -59,11 +59,14 @@
 </head>
 
 <body>
-
+	<jsp:include page="../include/header.jsp" />
 	<div class="container" style="max-width: 900px; height: 100px;">
-		<jsp:include page="../include/header.jsp" />
-		<a href="${contextPath}/ProductListInsert">게시글 등록</a>
 		<br>
+		<c:if test="${!empty mvo}">
+			<a href="${contextPath}/ProductListInsert">게시글 등록</a>
+		</c:if>
+		<hr>
+		<input type="hidden" name="member_id" value=${mvo.member_id } /> <br>
 
 		<div class="row middle">
 			<div class="container" style="max-width: 900px; height: 700px;">
@@ -75,24 +78,18 @@
 							href="${contextPath}/ProductDetail?product_idx=${product.product_idx}">
 							<div class="col-sm-6 col-md-4" style="width: 216px;">
 								<div class="card-ui">
-									<div class="thumbnail">
-										<img src="${contextPath}/resources/upload/${product.thumbnail_img}"
-											alt="thumbnail_img">
+									<div class="thumbnail" style="height: 300px;">
+										<img
+											src="${contextPath}/resources/upload/${product.thumbnail_img}"
+											alt="thumbnail_img" style="height: 150px;">
 										<div class="caption">
-											<div style="text-decoration: line-through;">
-												<td>${product.original_price}</td>
-											</div>
-											<td>${product.discount_price}</td>
-											<td>${product.discount_rate}%</td>
-											<tr>
-												<td>${product.product_name}</td>
-											</tr>
+											<td>${product.product_name}</td> <br> <span
+												style="text-decoration: line-through;"><td>${product.original_price}원</td></span>
+											<br> <span style="color: red; font-weight: bold;"><td>${product.discount_price}원</td></span>
+											<span style="font-size: 20px;"><td>${product.discount_rate}</td></span>
 											<input type="hidden" id="endDate" value="${product.end_date}">
-											<div id="countdown_${product.product_idx}"></div>
-											<p>
-												<a href="#" class="btn btn-primary" role="button">Button</a>
-												<a href="#" class="btn btn-default" role="button">Button</a>
-											</p>
+											<div id="countdown_${product.product_idx}"
+												style="font-weight: bold";></div>
 										</div>
 									</div>
 								</div>

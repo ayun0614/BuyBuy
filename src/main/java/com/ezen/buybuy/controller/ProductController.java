@@ -90,7 +90,8 @@ public class ProductController {
 		mvo.setDetail_img(newProDetail);
 		mvo.setProduct_name(multi.getParameter("product_name"));
 		mvo.setEnd_date(multi.getParameter("end_date"));
-
+		mvo.setContent_state("판매중");
+		
 		// Check if parameters are not null before parsing
 		String originalPriceStr = multi.getParameter("original_price");
 		String discountPriceStr = multi.getParameter("discount_price");
@@ -209,14 +210,14 @@ public class ProductController {
 		    mvo.setOriginal_price(Integer.parseInt(multi.getParameter("original_price")));
 			mvo.setDiscount_price(Integer.parseInt(multi.getParameter("discount_price")));
 			mvo.setCtgr_idx(Integer.parseInt(multi.getParameter("ctgr_idx")));
-			
+			mvo.setContent_state(multi.getParameter("content_state"));
 	
 			productMapper.ProductModify(mvo);
 			return "redirect:/ProductList";
 	}
 	
 	@GetMapping("/ProductDelete")
-	public String productDelete(@RequestParam("product_idx") int product_idx, RedirectAttributes rttr) {
+	public String productDelete(@RequestParam("product_idx") int product_idx) {
 		productMapper.ProductDelete(product_idx);
 		
 		return "redirect:/ProductList";
