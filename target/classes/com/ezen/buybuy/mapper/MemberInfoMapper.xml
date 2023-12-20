@@ -3,7 +3,7 @@
 <mapper namespace="com.ezen.buybuy.mapper.MemberInfoMapper">
 
 	<select id="mypageInfo" resultType="com.ezen.buybuy.entity.Members">
-		select * from members where member_id='dealer02'
+		select * from members where member_id='user01'
 	</select>
 
 	<select id="productInfo" resultType="com.ezen.buybuy.entity.Product">

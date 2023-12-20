@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,7 +130,7 @@ hr {
 			
 			var member_id = $('#member_idReq').text();
 			
-			if('${mo.account_type}' === 'dealer') {
+			if('${mvo.account_type}' === 'dealer') {
 				alert("판매자 계정입니다.");
 			}
 			else { 
@@ -157,7 +157,7 @@ hr {
 </script>
 </head>
 <body>
-	<c:import url="../include/header.jsp" />
+	<jsp:include page="../include/header.jsp" />
 	<div class="bodyDiv">
 		<div class="myPageSubText">마이페이지</div>
 		<hr>
@@ -167,11 +167,11 @@ hr {
 			</div>
 			<table class="myInfotbl">
 				<tr>
-					<td style="font-size: 20px;">${mo.name }</td>
-					<td style="font-size: 20px;">&nbsp&nbsp | &nbsp&nbsp ${mo.nickname }</td>
+					<td style="font-size: 20px;">${mvo.name }</td>
+					<td style="font-size: 20px;">&nbsp&nbsp | &nbsp&nbsp ${mvo.nickname }</td>
 				</tr>
 				<tr>
-					<td colspan="2" id="member_idReq"><br>${mo.member_id }</td>
+					<td colspan="2" id="member_idReq"><br>${mvo.member_id }</td>
 				</tr>
 			</table>
 			<div class="myInfoEditPage">
@@ -186,20 +186,20 @@ hr {
 					<td class="orderStatustd">배송완료</td>
 				</tr>
 				<tr>
-					<td style="font-size: 20px;">${mvo.count_orderend}</td>
-					<td style="font-size: 20px;">${mvo.count_ing}</td>
-					<td style="font-size: 20px;">${mvo.count_end}</td>
+					<td style="font-size: 20px;">${mvoo.count_orderend}</td>
+					<td style="font-size: 20px;">${mvoo.count_ing}</td>
+					<td style="font-size: 20px;">${mvoo.count_end}</td>
 				</tr>
 			</table>
 		</div>
 		<hr class="hrSec">
 		<div class="myPageMoveBox">
-			<c:if test="${mo.account_type eq 'user' }">
+			<c:if test="${mvo.account_type eq 'user' }">
 				<div class="myPageMoveDiv" style="font-size: 20px;">
 					<a href="myPageOrder" style="text-decoration: none; color: black;"><img src="resources/image/Shopping Cart.png"><br>구매한 상품</a>
 				</div>
 			</c:if>
-			<c:if test="${mo.account_type eq 'dealer' }">
+			<c:if test="${mvo.account_type eq 'dealer' }">
 				<div class="myPageMoveDiv" style="font-size: 20px;">
 					<a href="myPagePostingProduct" style="text-decoration: none; color: black;"><img src="resources/image/Bulleted List.png"><br>등록한 상품</a>
 				</div>

@@ -15,12 +15,16 @@ import com.ezen.buybuy.entity.MyPageCNT;
 import com.ezen.buybuy.entity.MypageMain;
 import com.ezen.buybuy.entity.OrderInfo;
 import com.ezen.buybuy.mapper.MemberInfoMapper;
+import com.ezen.buybuy.mapper.MemberMapper;
 
 @Controller
 public class MyPageController {
 	
 	@Autowired
 	MemberInfoMapper memberInfoMapper;
+	
+	@Autowired
+	MemberMapper memberMapper;
 
 	@RequestMapping("/myPageMain")
 	public String myPageMain(String member_id, Model mo, Model mvo, Model moo, Members mem, MypageMain mpm, MyPageCNT cnt, HttpSession session) {
@@ -28,7 +32,7 @@ public class MyPageController {
 		cnt = memberInfoMapper.mypageCnt(member_id);
 		mpm = memberInfoMapper.dealerRequestInfo(member_id);
 		session.setAttribute("mo", mem);
-		session.setAttribute("mvo", cnt);
+		session.setAttribute("mvoo", cnt);
 		session.setAttribute("moo", mpm);
 		return "mypage/myPageMain";
 	}

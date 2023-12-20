@@ -31,6 +31,8 @@ public class RestMyPageController {
 	@PutMapping("/statusUpdate") 
 	public void deliStatusUpdate(@RequestParam("order_num") int order_num) {
 		memberInfoMapper.deliStatusUpdate(order_num);
+		System.out.println(order_num);
+		System.out.println("안녕");
 	}
 	
 	@GetMapping("/postingAll")

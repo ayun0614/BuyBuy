@@ -137,7 +137,7 @@ td {
 		
 		$.ajax({
 			url : "mypage/statusUpdate",
-			type : "put",
+			type : "put", 
 			success : function() {
 				alert('취소 신청이 완료되었습니다.');
 				location.reload();
@@ -176,7 +176,7 @@ td {
 			list += "</div>";
 			list += "<div class = 'productInfoBox'>";
 			list += "<div class = 'productInfoImgDiv'><img src='' class = 'productInfoImg'/></div>";
-			list += "<div>";
+			list += "<div>";   
 			list += "<table>";
 			list += "<tr>";
 			list += "<td style = 'font-size:24px; font-weight: 700;'>" + obj.product_name + "</td>";
