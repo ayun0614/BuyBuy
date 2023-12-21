@@ -30,7 +30,9 @@ public interface AlertMapper {
 	
 	public void replyalert(Alert a);
 	
-	public void reply2alert(Alert a);
+	public void replyalert2(int product_idx);
+	
+	public void reply2alert(int reply_idx, int product_idx);
 	
 	public void orderalert(Alert a);
 	

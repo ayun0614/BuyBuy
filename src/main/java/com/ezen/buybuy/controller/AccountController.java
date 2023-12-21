@@ -158,6 +158,7 @@ public class AccountController {
 			rttr.addFlashAttribute("msgType", "성공");
 			rttr.addFlashAttribute("msg", "로그인 되었습니다");
 			session.setAttribute("mvo", mvo);
+			System.out.println(mvo);
 			return "redirect:/";
 		} else {
 			// 로그인 실패
