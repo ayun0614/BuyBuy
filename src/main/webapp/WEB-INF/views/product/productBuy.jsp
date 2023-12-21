@@ -398,13 +398,13 @@ $(document).ready(function(){
 			<tr class = "userInfoTr"> 
 				<td style = "width: 16px;" class = "userInfoTd">주문자 이름</td>
 				<td class = "userInfoTd">
-					<span id = "userInfoNameSpan">${mo.name }</span>
+					<span id = "userInfoNameSpan">${mvo.name }</span>
 				</td>
 			</tr> 
 			<tr class = "userInfoTr">  
 				<td style = "width: 16px;" class = "userInfoTd">전화번호</td>
 				<td class = "userInfoTd">  
-					<span id = "userInfoTelSpan">${mo.phone }</span>
+					<span id = "userInfoTelSpan">${mvo.phone }</span>
 				</td>
 			</tr>
 		</table>
@@ -416,7 +416,7 @@ $(document).ready(function(){
 			<tr class = "userInfoTr">
 				<td style = "width: 105px;">받는 사람</td>
 				<td style = "width: 105px;" class = "userInfoTd">
-				<span id = "buyerInfoNameSpan">${mo.name }</span>
+				<span id = "buyerInfoNameSpan">${mvo.name }</span>
 				<input type="text" class="form-control" id = "buyerInfoNameInput" value = "">
 				</td>
 				<td align = "right">
@@ -427,21 +427,21 @@ $(document).ready(function(){
 			<tr class = "userInfoTr"> 
 				<td style = "width:105px;">전화번호</td> 
 				<td class = "userInfoTd">
-				<span id = "buyerInfoTelSpan">${mo.phone }</span>
+				<span id = "buyerInfoTelSpan">${mvo.phone }</span>
 				<input type="text" class="form-control" id = "buyerInfoTelInput" value = "">
 				</td>
 			</tr>
 			<tr class = "userInfoTr"> 
 				<td style = "width: 105px;">주소</td>
 				<td class = "userInfoTd" style = "width: 500px;">
-					<span id = "buyerInfoAdrSpan">${mo.zipcode } &nbsp ${mo.addr } &nbsp ${mo.detailaddr }</span>
+					<span id = "buyerInfoAdrSpan">${mvo.zipcode } &nbsp ${mvo.addr } &nbsp ${mvo.detailaddr }</span>
 					<div class = "buyerInfoAdrInputDiv">
 						<br>
 						<div class = "buyerInfoAdrInputGroup"><input type="text" id="sample6_postcode" class="form-control" placeholder="우편번호" value = "">
 						<button onclick="sample6_execDaumPostcode()" class="btn">우편번호 찾기</button>
 						</div>
-						<input type="text" id="sample6_address" class="form-control" placeholder="주소" value = "${mo.addr }">
-						<input type="text" id="sample6_detailAddress" class="form-control" placeholder="상세주소" value = "${mo.detailaddr }">
+						<input type="text" id="sample6_address" class="form-control" placeholder="주소" value = "${mvo.addr }">
+						<input type="text" id="sample6_detailAddress" class="form-control" placeholder="상세주소" value = "${mvo.detailaddr }">
 						<input type="text" id="sample6_extraAddress" class="form-control" placeholder="참고항목"> 
 					</div>
 				</td>

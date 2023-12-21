@@ -154,9 +154,11 @@ hr {
 </head>
 <body>
 	<jsp:include page="../include/header.jsp" />
+	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
+	<input type="hidden" id="order_num" name="order_num" value="${mo.order_num }">
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageOrder"><img src="resources/image/Back.png" class="backBtn"></a>
+			<a href="myPageOrder?member_id=${mvo.member_id }"><img src="resources/image/Back.png" class="backBtn"></a>
 			<div class="myPageSubText">주문 상세</div>
 		</div>
 		<hr>

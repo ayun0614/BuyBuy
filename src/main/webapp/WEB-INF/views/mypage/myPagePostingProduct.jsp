@@ -107,7 +107,7 @@ hr {
 		$.ajax({
 			url : "mypage/postingAll",
 			type : "get",
-			dataType : "json",
+			data : $('#member_id'),
 			success : createView,
 			error : function() {
 				alert("error");
@@ -188,9 +188,10 @@ hr {
 </head>
 <body>
 	<jsp:include page="../include/header.jsp" />
+	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageMain"><img src="resources/image/Back.png" class="backBtn"></a>
+			<a href="myPageMain?member_id=${mvo.member_id}"><img src="resources/image/Back.png" class="backBtn"></a>
 			<div class="myPageSubText">등록한 게시물</div>
 		</div>
 		<hr>

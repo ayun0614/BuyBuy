@@ -165,6 +165,10 @@
 
 					<!-- 회원수정 -->
 					<a href="${contextPath}/account/membermodify?member_id=${mvo.member_id}">개인정보수정</a>
+					
+					
+					<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
+					<a href="${contextPath}/myPageMain?member_id=${mvo.member_id}">마이페이지</a>
 				</c:if>
 
 			</div>

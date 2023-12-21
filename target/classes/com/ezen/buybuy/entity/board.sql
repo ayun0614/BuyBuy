@@ -67,5 +67,18 @@ select count(*) from members where email='hoccoma.naver.com';
 DELETE FROM members WHERE email = 'hoccoma@gmail.com';
 DELETE FROM members WHERE email = 'hoccoma@naver.com';
 
+update orders set status='주문 취소' where order_num=7
 
 DELETE FROM members;
+
+select * from orders where member_id = 'user01'
+
+select * from  applydealeraccount
+
+
+select * from  products where member_id = 'dealer01'
+
+
+delete from applydealeraccount where member_id = 'dealer01'
+
+update orders set status='주문 완료' where order_num=7

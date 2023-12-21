@@ -7,6 +7,7 @@ import lombok.Data;
 public class Orders {
 	private int product_idx;
 	private String member_id;
+	private int order_num;
 	private int order_pcs;
 	private String total_price;
 	private Date order_date;

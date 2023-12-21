@@ -3,6 +3,7 @@ package com.ezen.buybuy.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ezen.buybuy.entity.ApplyDealerACT;
 import com.ezen.buybuy.entity.Members;
@@ -26,13 +27,13 @@ public interface MemberInfoMapper {
 
 	public List<Orders> mypageOrderList(String member_id);
 
-	public Orders deliStatusUpdate(int order_num);
+	public void deliStatusUpdate(int order_num);
 
 	public void dealerRequest(ApplyDealerACT act);
 
 	public List<MyPagePosting> mypagePostingList(String member_id);
 
-	public OrderInfo mypageOrderInfo(int order_num);
+	public OrderInfo mypageOrderInfo(@Param("order_num")int order_num, @Param("member_id")String member_id);
 
 	public void deliUpdate(Orders ord);
 	

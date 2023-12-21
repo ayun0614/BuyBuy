@@ -19,7 +19,6 @@ public class ProductConrtroller {
 	
 	@RequestMapping("/productBuy")
 	public String productBuy(String member_id, Model mo, Members m, Model moo, Product p, HttpSession session) {
-		m = memberInfoMapper.mypageInfo(member_id);
 		p = memberInfoMapper.productInfo();
 		session.setAttribute("mo", m);
 		session.setAttribute("moo", p);

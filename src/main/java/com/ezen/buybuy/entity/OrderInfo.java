@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class OrderInfo {
+	private String member_id;
 	private int order_num;
 	private String thumbnail_img;// 상품
 	private String product_name; // 상품

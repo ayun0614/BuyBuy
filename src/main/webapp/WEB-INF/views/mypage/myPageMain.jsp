@@ -158,6 +158,7 @@ hr {
 </head>
 <body>
 	<jsp:include page="../include/header.jsp" />
+	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
 	<div class="bodyDiv">
 		<div class="myPageSubText">마이페이지</div>
 		<hr>
@@ -195,13 +196,13 @@ hr {
 		<hr class="hrSec">
 		<div class="myPageMoveBox">
 			<c:if test="${mvo.account_type eq 'user' }">
-				<div class="myPageMoveDiv" style="font-size: 20px;">
-					<a href="myPageOrder" style="text-decoration: none; color: black;"><img src="resources/image/Shopping Cart.png"><br>구매한 상품</a>
+				<div class="myPageMoveDiv" style="font-size: 20px;"> 
+					<a href="myPageOrder?member_id=${mvo.member_id}" style="text-decoration: none; color: black;"><img src="resources/image/Shopping Cart.png"><br>구매한 상품</a>
 				</div>
 			</c:if>
 			<c:if test="${mvo.account_type eq 'dealer' }">
 				<div class="myPageMoveDiv" style="font-size: 20px;">
-					<a href="myPagePostingProduct" style="text-decoration: none; color: black;"><img src="resources/image/Bulleted List.png"><br>등록한 상품</a>
+					<a href="myPagePostingProduct?member_id=${mvo.member_id}" style="text-decoration: none; color: black;"><img src="resources/image/Bulleted List.png"><br>등록한 상품</a>
 				</div>
 			</c:if>
 			<div class="vl"></div>
