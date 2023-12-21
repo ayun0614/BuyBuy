@@ -38,4 +38,12 @@
 	<delete id="ProductDelete" parameterType="int">
 		delete from products where product_idx = #{product_idx}
 	</delete>
+	
+	<select id="NewMain" resultType="com.ezen.buybuy.entity.Products">
+		select * from products where end_date > now() order by start_date desc limit 4;
+	</select>
+	
+	<select id="PopMain" resultType="com.ezen.buybuy.entity.Products">
+		select p.* from products as p inner join orders as o on p.product_idx = o.product_idx where p.end_date > now() group by p.product_idx order by count(o.order_pcs) desc limit 4; 
+	</select>
 </mapper>

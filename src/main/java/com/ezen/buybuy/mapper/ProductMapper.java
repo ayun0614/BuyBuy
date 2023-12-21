@@ -20,4 +20,8 @@ public interface ProductMapper {
 	public void ProductModify(Products Products);
 
 	public void ProductDelete(int product_idx);
+	
+	public List<Products> PopMain();
+	
+	public List<Products> NewMain();
 }
