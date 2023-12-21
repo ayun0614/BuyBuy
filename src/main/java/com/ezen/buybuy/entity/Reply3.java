@@ -17,5 +17,6 @@ public class Reply3 {
 	private Date content_date;
 	private String content2;
 	private Date content2_date;
-	private int product_IDX;
+	private int r1state;
+	private int r2state;
 }

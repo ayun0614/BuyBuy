@@ -10,4 +10,5 @@ public class Reply {
 	private String member_id;
 	private String content;
 	private Date content_date;
+	private int r1state;
 }

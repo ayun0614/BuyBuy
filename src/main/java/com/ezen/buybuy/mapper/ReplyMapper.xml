@@ -31,4 +31,13 @@
 	<select id="replytotal2" resultType="com.ezen.buybuy.entity.Reply3">
 		select m.*, r2.* from reply2 as r2 inner join members as m on r2.member_id=m.member_id
 	</select>
+	
+	<update id="replydelete" parameterType="com.ezen.buybuy.entity.Reply">
+ 		update reply set content='삭제된 글입니다', r1state=0 where reply_idx=#{reply_idx}
+ 	</update>
+ 	
+ 	<update id="replydelete2" parameterType="com.ezen.buybuy.entity.Reply2">
+ 		update reply2 set content2='삭제된 글입니다',r2state=0 where reply2_idx=#{reply2_idx}
+ 	</update>
+	
 </mapper>

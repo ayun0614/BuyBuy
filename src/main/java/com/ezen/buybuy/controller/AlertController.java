@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.buybuy.entity.Alert;
+import com.ezen.buybuy.entity.Reply3;
 import com.ezen.buybuy.mapper.AlertMapper;
 
 
@@ -24,10 +25,11 @@ public class AlertController {
 	
 	//1번페이지
 	@RequestMapping("/alertUpdate")
-	public String alertUpdate(Alert a) {
+	public String alertUpdate(Alert a,RedirectAttributes rttr,Reply3 r3) {
 		alertMapper.alertUpdate(a);
-		
-		return "redirect:/main";
+		rttr.addAttribute("product_idx", r3.getProduct_idx());
+		System.out.println(r3.getProduct_idx());
+		return "redirect:/product/ProductDetail";
 	}
 	//2번페이지
 	@RequestMapping("/alertUpdate2")

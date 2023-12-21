@@ -7,6 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
+
 	$(document).ready(function() {
 		showNotification();
 
@@ -73,17 +74,28 @@
 		function updateNotifications(notifications) {
 			var notificationTable = $("#notificationTable");
 			notificationTable.empty();
+			var isFirstRow = true;
 
 			notifications.forEach(function(ao) {
-				var row = $("<tr>");
-				var url = ao.a_url;
+			    var row = $("<tr>");
+			    var url = ao.a_url;
 
-				row.append("<td><a href='" + "${contextPath}/" + ao.a_url + "?member_id=" + $("#member_id").val() + "&a_idx=" + ao.a_idx + "'>" + ao.a_title + "</a></td>");
-				row.append("<br>");
-				row.append("<td>" + ao.msg + "</td>");
-				row.append("<br>");
-				row.addClass(ao.a_state === 0 ? "grayed" : "");
-				notificationTable.append(row);
+			    if (isFirstRow) {
+			        
+			    	row.append("<div style='font-weight: bold;text-align:left;'>알림</div>");
+			        notificationTable.append(row);
+			        isFirstRow = false;
+			    }
+
+			    row = $("<tr>");
+			    row.append("<td style='width: 70px; height: 50px; margin:5px;'><div><img src='https://images.unsplash.com/photo-1528301721190-186c3bd85418?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8fA%3D%3D'style='width: 50px; height: 50px; object-fit: cover;border-radius:50%;'></div>"
+			    	+ "<td class='title' style='width: 250px; height: 70px; margin:5px;'>"
+			        + "<div style='text-align:left;'><a style='text-decoration: none;' href='" + "${contextPath}/" + ao.a_url + "?member_id=" + $("#member_id").val() + "&a_idx=" + ao.a_idx+"&product_idx="+ao.product_idx+ "'>" + ao.a_title + "</a></div>"
+			        + "<div style='text-align:left;'>" + ao.msg + "</div>"
+			        + "</td>");
+
+			    row.addClass(ao.a_state === 0 ? "grayed" : "");
+			    notificationTable.append(row);
 			});
 
 			notifications.forEach(function(ao) {
@@ -129,7 +141,7 @@
 
 			</div>
 			<c:if test="${!empty mvo}">
-
+				<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }" />
 				<button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
 					<div id="notification">
 						<table id="notificationTable"></table>

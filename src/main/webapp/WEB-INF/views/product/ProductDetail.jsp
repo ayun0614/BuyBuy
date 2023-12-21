@@ -326,15 +326,21 @@ function reply(replyFormId) {
 							<h3>게시판</h3>
 							<p>Some content in menu 1.</p>
 						</div>
-					</div>
-				</div>
-		</form>
+						</form>
+						<c:if test="${empty mvo }"> 
+						<div id="menu2" class="tab-pane fade">
+					        <h3>상품 문의</h3>
+					        <div>로그인시 사용가능합니다.</div>
+					        <br>
+					    </div>
+					    </c:if>
+					    <c:if test="${!empty mvo }"> 			
 		<div id="menu2" class="tab-pane fade">
 			<h3>상품 문의</h3>
 			<form id="replyForm" action="${contextPath }/reply" method="post" style="padding: 10px">
 				<input type="hidden" id="product_idx" name="product_idx" value="${productDetail.product_idx }" />
 				<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }" />
-				<input type="text" id="content" name="content" placeholder="댓글을 입력해주세요" class="form-control">
+				<input type="text" id="content" name="content" placeholder="댓글을 입력해주세요" class="form-control" style="margin:15px;">
 				<button type="submit" id="replyInsertBtn" class="btn btn-default">댓글 입력</button>
 			</form>
 
@@ -353,7 +359,10 @@ function reply(replyFormId) {
 									<div>${ro3.content}</div>
 								</div>
 								<div style="margin-left: auto;">
-									<button type="button" class="btn btn-default" onclick="reply('reply2Form${loop.index}')" style="">답글 입력</button>
+									<c:if test="${ro3.member_id eq mvo.member_id and ro3.r1state ne 0}">			
+									<button type="button" class="btn btn-danger" onclick="location.href='${contextPath}/replydelete?reply_idx=${ro3.reply_idx }&product_idx=${ro3.product_idx}'">삭제</button></c:if>
+									<c:if test="${ro3.r1state ne 0}">	
+									<button type="button" class="btn btn-default" onclick="reply('reply2Form${loop.index}')" style="">답글 입력</button></c:if>
 								</div>
 							</td>
 						</tr>
@@ -369,7 +378,12 @@ function reply(replyFormId) {
 											<div>${ro4.member_id}
 												<fmt:formatDate value="${ro4.content2_date}" pattern="yyyy-MM-dd HH:mm" />
 											</div>
-											<div>${ro4.content2}</div>
+											<div>${ro4.content2}</div>									
+										</div>
+										<div style="margin-left: auto;">
+											<c:if test="${ro4.member_id eq mvo.member_id and ro4.r2state ne 0}">
+												<button type="button" class="btn btn-danger" onclick="location.href='${contextPath}/replydelete2?reply2_idx=${ro4.reply2_idx }&product_idx=${ro4.product_idx}'">삭제</button></c:if>
+											
 										</div>
 									</td>
 								</tr>
@@ -390,7 +404,13 @@ function reply(replyFormId) {
 				</tbody>
 			</table>
 		</div>
-	</div>
-	<br>
+		</c:if>	
+		</div>
+			
+</div>
+</div>
+		    
+</div>	
+</div>
 </body>
 </html>
