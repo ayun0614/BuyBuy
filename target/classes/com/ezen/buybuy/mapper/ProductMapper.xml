@@ -4,10 +4,8 @@
 <mapper namespace="com.ezen.buybuy.mapper.ProductMapper">
 
 	<insert id="ProductListInsert" parameterType="com.ezen.buybuy.entity.Products">
-		insert into products(product_name, original_price, discount_price, discount_rate, thumbnail_img,
-		end_date, ctgr_idx, detail_img)
-		values(#{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date},
-		#{ctgr_idx},#{detail_img})
+		insert into products(member_id, product_name, original_price, discount_price, discount_rate, thumbnail_img, end_date, ctgr_idx, detail_img, content_state) 
+		values(#{member_id}, #{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date}, #{ctgr_idx},#{detail_img}, #{content_state})
 	</insert>
 
 	<select id="ProductList" resultType="com.ezen.buybuy.entity.Products">
@@ -23,21 +21,25 @@
 	</select>
 
 	<update id="ProductModify" parameterType="com.ezen.buybuy.entity.Products">
-		update products set
-		product_name = #{product_name},
-		original_price = #{original_price},
-		discount_price =
-		#{discount_price},
-		discount_rate = #{discount_rate},
-		thumbnail_img = #{thumbnail_img},
-		end_date = #{end_date},
-		detail_img = #{detail_img},
-		ctgr_idx=${ctgr_idx}
-		where product_idx = #{product_idx}
-	</update>
+    update products set
+    product_name = #{product_name},
+    original_price = #{original_price},
+    discount_price = #{discount_price},
+    discount_rate = #{discount_rate},
+    thumbnail_img = #{thumbnail_img},
+    end_date = #{end_date},
+    detail_img = #{detail_img},
+    content_state=#{content_state},
+    ctgr_idx=#{ctgr_idx}
+    where product_idx = #{product_idx}
+</update>
 	<delete id="ProductDelete" parameterType="int">
 		delete from products where product_idx = #{product_idx}
 	</delete>
+	
+	<update id="ProductTimeout" parameterType="com.ezen.buybuy.entity.Products">
+	update products set content_state = '마감' where product_idx = #{product_idx}
+</update>
 
 	<select id="NewMain" resultType="com.ezen.buybuy.entity.Products">
 		select * from products where end_date > now() order by start_date desc limit #{limit}

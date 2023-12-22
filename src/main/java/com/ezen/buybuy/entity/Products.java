@@ -1,5 +1,8 @@
 package com.ezen.buybuy.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
@@ -16,4 +19,6 @@ public class Products {
 	private String content_state;
 	private int ctgr_idx;
 	private int reg_id;
+	private String ctgr_name;
+	private String member_id;
 }

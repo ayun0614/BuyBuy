@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
@@ -41,8 +42,7 @@
 
 			// 계산된 할인율을 할인율 입력란에 표시
 			document.getElementById('discount_rate').value = discount
-					.toFixed(0)
-					+ '%';
+					.toFixed(0);
 		} else {
 			// 정가나 판매가가 유효한 숫자가 아닌 경우 할인율 입력란을 비움
 			document.getElementById('discount_rate').value = '';
@@ -79,8 +79,6 @@
 					var img = document.createElement('img');
 					img.src = reader.result;
 					img.className = 'preview-image';
-					  img.style.width = '800px';
-		                img.style.height = '500px'; 
 					previewContainer.appendChild(img);
 
 					var cancelBtn = document.createElement('button');
@@ -153,34 +151,6 @@
 		// 이미지 업로드 버튼 숨기기
 		document.getElementById('imageUploadBtn').style.display = 'none';
 	}
-	function validateForm() {
-		var endDate = document.getElementsByName('end_date')[0].value;
-		var category = document.getElementById('ctgr_idx').value;
-		var originalPrice = document.getElementById('original_price').value;
-		var discountPrice = document.getElementById('discount_price').value;
-
-		if (endDate === '') {
-			alert('마감일을 입력하세요.');
-			return false;
-		}
-
-		if (category === '') {
-			alert('카테고리를 선택하세요.');
-			return false;
-		}
-
-		if (originalPrice === '') {
-			alert('정가를 입력하세요.');
-			return false;
-		}
-
-		if (discountPrice === '') {
-			alert('판매가를 입력하세요.');
-			return false;
-		}
-
-		return true;
-	}
 </script>
 
 <style>
@@ -210,10 +180,6 @@
 	max-height: 100%;
 	margin: 10px;
 }
-
-.nav-tabs li {
-	width: 33.33%;
-	text-align: center;
 }
 </style>
 
@@ -224,21 +190,10 @@
 
 		<br>
 		<form action="${contextPath}/ProductListInsert" method="post"
-			onsubmit="return validateForm()" enctype="multipart/form-data">
+			enctype="multipart/form-data">
 			<input type="hidden" id="endDate" value="${product.end_date}">
-			<div style="display: flex;">
-				<a href="${contextPath }/ProductList" style="font-size: 20px;">
-
-					<span class="glyphicon glyphicon-chevron-left"></span>돌아가기
-				</a>
-				<div style="margin-left: 290px;">
-					<h3>게시글 등록</h3>
-				</div>
-			</div>
-			<br> 
-
 			<div class="row" style="max-width: 890px; height: 100px;">
-				<div class="row top text-dark" style="border-radius: 30px;">
+				<div class="row top text-dark">
 					<input type="text" name="product_name" class="form-control"
 						placeholder="제품 이름">
 				</div>
@@ -246,138 +201,120 @@
 
 			<!-- MIDDLE -->
 			<div class="row middle" style="height: 400px; text-align: center;">
-				<div class="row"
-					style="border: 1px solid black; border-radius: 30px; height: 400px;">
+				<div class="row" style="border: 1px solid black; height: 400px;">
 					<div class="col-md-6"
-						style="height: 100%; display: flex; flex-direction: column; border-radius: 30px; align-items: center; justify-content: center;">
+						style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid black;">
 						<div id="imagePreviewContainer2"
-							style="border-radius: 30px; width: 450px; height: 400px; overflow: hidden; border: 1px solid black; margin-top: 6px; margin-bottom: 6px;"></div>
+							style="width: 450px; height: 400px; overflow: hidden; border: 1px solid black;"></div>
 						<div>
 							<input type="file" name="thumbnail_img" multiple
-								style="margin-bottom: 6px;" onchange="previewImages2(this)" />
+								onchange="previewImages2(this)" />
 						</div>
 					</div>
 					<div class="col-md-6">
-						<br>
-
 						<div>
+						<br>
+						<br>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1";>판매자</span> 
-								<input type="hidden" name="member_id" id="member_id" value="${mvo.member_id}">
-								<input
-									type="text" name="name" value="${mvo.name}" readonly class="form-control"
+								<span class="input-group-addon" id="basic-addon1">판매자</span> <input
+									type="text" value="${mvo.name}" readonly class="form-control" 
 									aria-describedby="basic-addon1">
-							</div>
-							<br>
+							</div><br>
+
+							
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">마감일</span> <input
-									type="datetime-local" name="end_date" class="form-control"
-									placeholder="마감일" aria-describedby="basic-addon1"
-									onchange="calculateTimeDifference()">
-							</div>
-							<br>
+									type="datetime-local" name="end_date" class="form-control" placeholder="마감일" onchange="calculateTimeDifference()"
+									aria-describedby="basic-addon1">
+							</div><br>
 							<div class="input-group">
-								<span class="input-group-addon">카테고리</span> <select
-									class="form-control" id="ctgr_idx" name="ctgr_idx">
+								<span class="input-group-addon" id="basic-addon1">카테고리</span> 
+								<select class="form-control" name="ctgr_idx;">
 									<option value="1">의류</option>
-									<option value="2">홈데코</option>
-									<option value="3">컴퓨터</option>
-									<option value="4">건강</option>
-									<option value="5">화장품</option>
+									<option value="2">화장품</option>
+									<option value="3">식품</option>
+									<option value="4">생필품</option>
+									<option value="5">홈데코</option>
 									<option value="6">문구</option>
-									<option value="7">모바일</option>
-									<option value="8">공구</option>
-									<option value="9">식품</option>
-									<option value="10">취미</option>
+									<option value="7">취미</option>
+									<option value="8">반려용품</option>
+									<option value="9">컴퓨터</option>
+									<option value="10">모바일</option>
 									<option value="11">가전제품</option>
-									<option value="12">기타</option>
-									<option value="13">생필품</option>
-									<option value="14">반려용품</option>
-									<option value="15">스포츠</option>
+									<option value="12">스포츠</option>
+									<option value="13">건강</option>
+									<option value="14">공구</option>
+									<option value="15">기타</option>
 								</select>
-							</div>
-							<br>
-
+							</div><br>
+						
+	
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">정가</span> <input
-									type="text" name="original_price" id="original_price"
-									class="form-control" placeholder="정가"
-									aria-describedby="basic-addon1" onchange="calculateDiscount()" />
-							</div>
-							<br>
+									type="text" name="original_price" class="form-control" placeholder="정가" onchange="calculateDiscount()"
+									aria-describedby="basic-addon1">
+							</div><br>
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">판매가</span> <input
-									type="text" id="discount_price" name="discount_price"
-									class="form-control" placeholder="판매가"
-									aria-describedby="basic-addon1" onchange="calculateDiscount()" />
-							</div>
-							<br>
+									type="text" name="discount_price" class="form-control" placeholder="판매가" onchange="calculateDiscount()"
+									aria-describedby="basic-addon1">
+							</div><br>
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">할인율</span> <input
-									type="text" name="discount_rate" id="discount_rate"
-									class="form-control" placeholder="할인율" readonly
-									aria-describedby="basic-addon1" onchange="calculateDiscount()" />
-							</div>
-							<br>
-							<div style="text-align: center" width="300px";>
-								<input type="submit" class="btn btn-primary btn-sm pull-right"
-									style="margin-right: 10px;" value="등록하기" />
-							</div>
-
-
-
-						</div>
-					</div>
-
-
-
-
-
+									type="text" name="discount_rate" class="form-control" placeholder="할인율" onchange="calculateDiscount()"
+									aria-describedby="basic-addon1">
+							</div><br>
+							
+								<div style="text-align: center" width="300px";>
+					<input type="submit" class="btn btn-primary btn-sm pull-right"
+						value="등록하기" />
 				</div>
-			</div>
-
-			<hr>
-			상품상세
-
-			<div class="row bottom text-dark">
-				<div class="panel panel-default">
-					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#home">상품상세</a></li>
-						<li><a data-toggle="tab" href="#menu1">판매자정보</a></li>
-						<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
-					</ul>
-					<div class="tab-content">
-						<div id="home" class="tab-pane fade in active">
-							<div class="panel-body">
-								<table class="table table-bordered"
-									style="text-align: center; border-radius: 30px; border: 1px solid #dddddd;">
-									<tr>
-										<td colspan="2" id="imagePreviewContainer"
-											style="height: 300px; width: 300px;"></td>
-									</tr>
-									<tr>
-										<td><span class="btn btn-default"> <input
-												type="file" style="width: 300px;" name="detail_img" multiple
-												onchange="previewImages(this)" />
-										</span></td>
-									</tr>
-								</table>
-							</div>
-						</div>
-						<div id="menu1" class="tab-pane fade">
-							<h3>게시판</h3>
-							<p>Some content in menu 1.</p>
-						</div>
-						<div id="menu2" class="tab-pane fade">
-							<h3>공지사항</h3>
-							<p>Some content in menu 2.</p>
 						</div>
 					</div>
 				</div>
-			</div>
-			<br>
 
+				<hr>
+				상품상세
 
+				<div class="row bottom text-dark">
+					<div class="panel panel-default">
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#home">상품상세</a></li>
+							<li><a data-toggle="tab" href="#menu1">판매자정보</a></li>
+							<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="home" class="tab-pane fade in active">
+								<div class="panel-body">
+									<table class="table table-bordered"
+										style="text-align: center; border: 1px solid #dddddd;">
+										<tr>
+											<td colspan="2" id="imagePreviewContainer"></td>
+										</tr>
+										<tr>
+											<form action="#" method="post" enctype="multipart/form-data">
+
+												<td><span class="btn btn-default"> <input
+														type="file" name="detail_img" multiple
+														onchange="previewImages(this)" />
+												</span></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div id="menu1" class="tab-pane fade">
+								<h3>게시판</h3>
+								<p>Some content in menu 1.</p>
+							</div>
+							<div id="menu2" class="tab-pane fade">
+								<h3>공지사항</h3>
+								<p>Some content in menu 2.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			
 		</form>
 
 	</div>

@@ -28,4 +28,6 @@ public interface ProductMapper {
 	public List<Products> ProductSearch(String word);
 	
 	public List<Products> SoonMain();
+
+	public void ProductTimeout(int product_idx);
 }
