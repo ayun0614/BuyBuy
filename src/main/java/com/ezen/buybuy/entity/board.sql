@@ -90,3 +90,7 @@ alter table orders modify order_date datetime
 select * from orders
 
 update orders set order_date = now()
+
+
+
+select * from orders where product_idx = 3

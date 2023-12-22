@@ -142,7 +142,9 @@ hr {
 			list += "<td class = 'productInfoTd' colspan = '2' align='right'><del>" + obj.original_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "<del>원</td>";
 			list += "</tr>";
 			list += "<tr class = 'productInfoTr'>";
-			list += "<td class = 'productInfoTd' colspan = '2' align='right' style = 'font-size:24px; font-weight: 700; color:red;'><b>" + obj.discount_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원</b></td>";
+			
+			list += "<td class = 'productInfoTd'><button type='submit' class='btn btn-default' style = 'font-size:11px; font-weight: 700;' onclick = 'buyerExcel("+obj.product_idx+")'>구매자 정보<br>Excel</button></td>";
+			list += "<td class = 'productInfoTd' align='right' style = 'font-size:24px; font-weight: 700; color:red;'><b>" + obj.discount_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원</b></td>";
 			list += "</tr>";
 			list += "</table>";
 			list += "</div>";
@@ -183,6 +185,21 @@ hr {
 		list += "</div>";
 
 		$("#view").html(list);
+	}
+	
+	function buyerExcel(product_idx) {
+		
+		$.ajax({
+			url : "mypage/excel/download?product_idx="+product_idx,
+			type : "get", 
+			success : function() {
+				location.href = "mypage/excel/download?product_idx="+product_idx;
+			},
+			error : function(xhr, status, error) {
+				alert("error");
+			}
+		});
+
 	}
 </script>
 </head>
