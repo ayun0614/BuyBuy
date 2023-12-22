@@ -282,4 +282,36 @@ public class ProductController {
 			}
 		}
 	}
+
+	@GetMapping("/search")
+	public String ProductSearch(Model m, @RequestParam("word")String word) {
+		List<Products> productList;
+		productList = productMapper.ProductSearch('%'+word+'%');
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
+	}
+	
+	@GetMapping("/pop")
+	public String ProductPop(Model m) {
+		List<Products> productList;
+		productList = productMapper.PopMain(9999);
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
+	}
+	
+	@GetMapping("/new")
+	public String ProductNew(Model m) {
+		List<Products> productList;
+		productList = productMapper.NewMain(9999);
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
+	}
+	
+	@GetMapping("/soon")
+	public String ProductSoon(Model m) {
+		List<Products> productList;
+		productList = productMapper.SoonMain();
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
+	}
 }

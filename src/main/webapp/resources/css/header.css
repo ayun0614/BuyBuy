@@ -83,6 +83,10 @@
 	display: inline-block;
 }
 
+.header-pop, .header-new, .header-second{
+	cursor: pointer;
+}
+
 .header-overlay {
 	display: none;
 	position: absolute;
@@ -104,6 +108,7 @@
 	user-select: none;
 	font-size: 20px;
 	font-weight: 300;
+	cursor: pointer;
 }
 
 .menu-grid {

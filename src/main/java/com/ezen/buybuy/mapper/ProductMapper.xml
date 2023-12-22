@@ -38,12 +38,21 @@
 	<delete id="ProductDelete" parameterType="int">
 		delete from products where product_idx = #{product_idx}
 	</delete>
-	
+
 	<select id="NewMain" resultType="com.ezen.buybuy.entity.Products">
-		select * from products where end_date > now() order by start_date desc limit 4;
+		select * from products where end_date > now() order by start_date desc limit #{limit}
 	</select>
-	
+
 	<select id="PopMain" resultType="com.ezen.buybuy.entity.Products">
-		select p.* from products as p inner join orders as o on p.product_idx = o.product_idx where p.end_date > now() group by p.product_idx order by count(o.order_pcs) desc limit 4; 
+		select p.* from products as p inner join orders as o on p.product_idx = o.product_idx where p.end_date > now()
+		group by p.product_idx order by count(o.order_pcs) desc limit #{limit}
+	</select>
+
+	<select id="ProductSearch" parameterType="String" resultType="com.ezen.buybuy.entity.Products">
+		select * from products where product_name like #{word}
+	</select>
+
+	<select id="SoonMain" resultType="com.ezen.buybuy.entity.Products">
+		<![CDATA[	select * from products where end_date > now() and content_state = '판매중' and end_date < DATE_ADD(NOW(), INTERVAL 7 DAY) order by end_date]]>
 	</select>
 </mapper>

@@ -21,8 +21,8 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		List<Products> popList, newList;
-		popList = productVAO.PopMain();
-		newList = productVAO.NewMain();
+		popList = productVAO.PopMain(4);
+		newList = productVAO.NewMain(4);
 		
 		model.addAttribute("popList", popList);
 		model.addAttribute("newList", newList);

@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/header.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
-
 	$(document).ready(function() {
 		showNotification();
 
@@ -24,12 +22,16 @@
 		});
 
 		$(".header-searchBtn").click(function() {
-			location.href = "${contextPath}/include/search?word=" + $(".header-searchInput").val();
+			if ($(".header-searchInput").val() != null && $(".header-searchInput").val() != "") {
+				location.href = "${contextPath}/product/search?word=" + $(".header-searchInput").val();
+			}
 		});
 		2
 		$(".header-searchInput").keyup(function(key) {
 			if (key.keyCode == 13) {
-				location.href = "${contextPath}/include/search?word=" + $(".header-searchInput").val();
+				if ($(".header-searchInput").val() != null && $(".header-searchInput").val() != "") {
+					location.href = "${contextPath}/product/search?word=" + $(".header-searchInput").val();
+				}
 			}
 		});
 
@@ -76,27 +78,35 @@
 			notificationTable.empty();
 			var isFirstRow = true;
 
-			notifications.forEach(function(ao) {
-			    var row = $("<tr>");
-			    var url = ao.a_url;
+			notifications
+					.forEach(function(ao) {
+						var row = $("<tr>");
+						var url = ao.a_url;
 
-			    if (isFirstRow) {
-			        
-			    	row.append("<div style='font-weight: bold;text-align:left;'>알림</div>");
-			        notificationTable.append(row);
-			        isFirstRow = false;
-			    }
+						if (isFirstRow) {
 
-			    row = $("<tr>");
-			    row.append("<td style='width: 70px; height: 50px; margin:5px;'><div><img src='https://images.unsplash.com/photo-1528301721190-186c3bd85418?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8fA%3D%3D'style='width: 50px; height: 50px; object-fit: cover;border-radius:50%;'></div>"
-			    	+ "<td class='title' style='width: 250px; height: 70px; margin:5px;'>"
-			        + "<div style='text-align:left;'><a style='text-decoration: none;' href='" + "${contextPath}/" + ao.a_url + "?member_id=" + $("#member_id").val() + "&a_idx=" + ao.a_idx+"&product_idx="+ao.product_idx+ "'>" + ao.a_title + "</a></div>"
-			        + "<div style='text-align:left;'>" + ao.msg + "</div>"
-			        + "</td>");
+							row.append("<div style='font-weight: bold;text-align:left;'>알림</div>");
+							notificationTable.append(row);
+							isFirstRow = false;
+						}
 
-			    row.addClass(ao.a_state === 0 ? "grayed" : "");
-			    notificationTable.append(row);
-			});
+						row = $("<tr>");
+						row
+								.append("<td style='width: 70px; height: 50px; margin:5px;'><div><img src='https://images.unsplash.com/photo-1528301721190-186c3bd85418?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8fA%3D%3D'style='width: 50px; height: 50px; object-fit: cover;border-radius:50%;'></div>"
+										+ "<td class='title' style='width: 250px; height: 70px; margin:5px;'>"
+										+ "<div style='text-align:left;'><a style='text-decoration: none;' href='"
+										+ "${contextPath}/"
+										+ ao.a_url
+										+ "?member_id="
+										+ $("#member_id").val()
+										+ "&a_idx="
+										+ ao.a_idx
+										+ "&product_idx="
+										+ ao.product_idx + "'>" + ao.a_title + "</a></div>" + "<div style='text-align:left;'>" + ao.msg + "</div>" + "</td>");
+
+						row.addClass(ao.a_state === 0 ? "grayed" : "");
+						notificationTable.append(row);
+					});
 
 			notifications.forEach(function(ao) {
 				var aostate = ao.a_state;
@@ -114,7 +124,6 @@
 		notification.style.display = (notification.style.display === "block") ? "none" : "block";
 	}
 </script>
-
 <div class="header-shadow">
 	<div class="container">
 		<div class="header-item header-display row">
@@ -131,14 +140,11 @@
 				<c:if test="${empty mvo}">
 					<button class="header-loginBtn btn" style="border-color: black;">Login</button>
 				</c:if>
-
 				<c:if test="${!empty mvo}">
 					<button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
-
 					<!-- 회원수정 -->
 					<a href="${contextPath}/account/membermodify?member_id=${mvo.member_id}">개인정보수정</a>
 				</c:if>
-
 			</div>
 			<c:if test="${!empty mvo}">
 				<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }" />
@@ -151,7 +157,6 @@
 			</c:if>
 		</div>
 	</div>
-
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">

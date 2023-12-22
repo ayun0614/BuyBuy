@@ -21,7 +21,11 @@ public interface ProductMapper {
 
 	public void ProductDelete(int product_idx);
 	
-	public List<Products> PopMain();
+	public List<Products> PopMain(int limit);
 	
-	public List<Products> NewMain();
+	public List<Products> NewMain(int limit);
+	
+	public List<Products> ProductSearch(String word);
+	
+	public List<Products> SoonMain();
 }
