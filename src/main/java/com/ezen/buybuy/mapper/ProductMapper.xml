@@ -4,18 +4,20 @@
 <mapper namespace="com.ezen.buybuy.mapper.ProductMapper">
 
 <insert id="ProductListInsert" parameterType="com.ezen.buybuy.entity.Products">
-		insert into products(product_name, original_price, discount_price, discount_rate, thumbnail_img, end_date, ctgr_idx, detail_img, content_state) 
-		values(#{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date}, #{ctgr_idx},#{detail_img}, #{content_state})
+		insert into products(member_id, product_name, original_price, discount_price, discount_rate, thumbnail_img, end_date, ctgr_idx, detail_img, content_state) 
+		values(#{member_id}, #{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date}, #{ctgr_idx},#{detail_img}, #{content_state})
 	</insert>
 	
 	<select id="ProductList" resultType="com.ezen.buybuy.entity.Products">
-		select *from products
+		select *from products ORDER BY product_idx DESC
 	</select>
 	
 	<select id="read" resultType="com.ezen.buybuy.entity.Products">
- 		select *from products where product_idx=#{product_idx}
- 	</select>
- 	
+    SELECT * FROM products
+    NATURAL JOIN categories
+    WHERE product_idx = #{product_idx}
+</select>
+
  	<update id="ProductModify" parameterType="com.ezen.buybuy.entity.Products">
     update products set
     product_name = #{product_name},
@@ -25,8 +27,12 @@
     thumbnail_img = #{thumbnail_img},
     end_date = #{end_date},
     detail_img = #{detail_img},
-    content_state=#{content_state}
+    content_state=#{content_state},
+    ctgr_idx=#{ctgr_idx}
     where product_idx = #{product_idx}
+</update>
+<update id="ProductTimeout" parameterType="com.ezen.buybuy.entity.Products">
+	update products set content_state = '마감' where product_idx = #{product_idx}
 </update>
   <delete id="ProductDelete" parameterType="int">
         delete from products where product_idx = #{product_idx}

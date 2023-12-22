@@ -211,11 +211,11 @@
 	max-height: 100%;
 	margin: 10px;
 }
-.nav-tabs li {
-    width: 33.33%;
-    text-align: center;
-}
 
+.nav-tabs li {
+	width: 33.33%;
+	text-align: center;
+}
 </style>
 
 <body>
@@ -227,11 +227,17 @@
 		<form action="${contextPath}/ProductListInsert" method="post"
 			onsubmit="return validateForm()" enctype="multipart/form-data">
 			<input type="hidden" id="endDate" value="${product.end_date}">
-			<a href="${contextPath }/ProductList" style="font-size:20px;">
-    <span class="glyphicon glyphicon-chevron-left"></span>돌아가기</a>
-    <br>
-    <br>
-			
+			<div style="display: flex;">
+				<a href="${contextPath }/ProductList" style="font-size: 20px;">
+
+					<span class="glyphicon glyphicon-chevron-left"></span>돌아가기
+				</a>
+				<div style="margin-left: 290px;">
+					<h3>게시글 등록</h3>
+				</div>
+			</div>
+			<br> 
+
 			<div class="row" style="max-width: 890px; height: 100px;">
 				<div class="row top text-dark" style="border-radius: 30px;">
 					<input type="text" name="product_name" class="form-control"
@@ -254,19 +260,20 @@
 					</div>
 					<div class="col-md-6">
 						<br>
-						
+
 						<div>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1";>판매자</span> <input
-									type="text" value="${mvo.name}" readonly class="form-control"
+								<span class="input-group-addon" id="basic-addon1";>판매자</span> 
+								<input type="hidden" name="member_id" id="member_id" value="${mvo.member_id}">
+								<input
+									type="text" name="name" value="${mvo.name}" readonly class="form-control"
 									aria-describedby="basic-addon1">
 							</div>
 							<br>
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">마감일</span> <input
 									type="datetime-local" name="end_date" class="form-control"
-									placeholder="마감일" onchange="calculateTimeDifference()"
-									aria-describedby="basic-addon1"
+									placeholder="마감일" aria-describedby="basic-addon1"
 									onchange="calculateTimeDifference()">
 							</div>
 							<br>
@@ -274,20 +281,20 @@
 								<span class="input-group-addon">카테고리</span> <select
 									class="form-control" id="ctgr_idx" name="ctgr_idx">
 									<option value="1">의류</option>
-									<option value="2">화장품</option>
-									<option value="3">식품</option>
-									<option value="4">생필품</option>
-									<option value="5">홈데코</option>
+									<option value="2">홈데코</option>
+									<option value="3">컴퓨터</option>
+									<option value="4">건강</option>
+									<option value="5">화장품</option>
 									<option value="6">문구</option>
-									<option value="7">취미</option>
-									<option value="8">반려용품</option>
-									<option value="9">컴퓨터</option>
-									<option value="10">모바일</option>
+									<option value="7">모바일</option>
+									<option value="8">공구</option>
+									<option value="9">식품</option>
+									<option value="10">취미</option>
 									<option value="11">가전제품</option>
-									<option value="12">스포츠</option>
-									<option value="13">건강</option>
-									<option value="14">공구</option>
-									<option value="15">기타</option>
+									<option value="12">기타</option>
+									<option value="13">생필품</option>
+									<option value="14">반려용품</option>
+									<option value="15">스포츠</option>
 								</select>
 							</div>
 							<br>
@@ -309,7 +316,7 @@
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">할인율</span> <input
 									type="text" name="discount_rate" id="discount_rate"
-									class="form-control" placeholder="할인율"
+									class="form-control" placeholder="할인율" readonly
 									aria-describedby="basic-addon1" onchange="calculateDiscount()" />
 							</div>
 							<br>

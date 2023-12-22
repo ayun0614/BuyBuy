@@ -14,5 +14,6 @@ public interface ProductMapper {
 	public Products read(int product_idx);
 	public void ProductModify(Products Products);
 	public void ProductDelete(int product_idx);
+	public void ProductTimeout(int product_idx);
 	
 }

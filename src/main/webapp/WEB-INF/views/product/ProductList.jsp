@@ -59,20 +59,25 @@
 </head>
 
 <body>
+	<!-- header.jsp 파일을 포함 -->
 	<jsp:include page="../include/header.jsp" />
-	<div class="container" style="max-width: 900px; height: 100px;">
+
+	<div class="container" style="max-width: 1000px; height: 100px;">
 		<br>
+		<!-- 로그인한 사용자인 경우에만 "게시글 등록" 링크 표시 -->
 		<c:if test="${!empty mvo}">
 			<a href="${contextPath}/ProductListInsert">게시글 등록</a>
 		</c:if>
 		<hr>
-		<input type="hidden" name="member_id" value=${mvo.member_id } /> <br>
+		<!-- 사용자의 member_id 값을 hidden 필드로 저장 -->
+		<input type="hidden" name="member_id" value="${mvo.member_id}" /> <br>
 
 		<div class="row middle">
 			<div class="container" style="max-width: 900px; height: 700px;">
 
 				<div class="col-12 mx-auto">
 
+					<!-- ProductList에 있는 각각의 상품에 대한 정보를 출력 -->
 					<c:forEach items="${ProductList}" var="product">
 						<a
 							href="${contextPath}/ProductDetail?product_idx=${product.product_idx}">
@@ -84,18 +89,38 @@
 											alt="thumbnail_img" style="height: 150px;">
 										<div class="caption">
 											<td>${product.product_name}</td> <br> <span
-												style="text-decoration: line-through;"><td>${product.original_price}원</td></span>
-											<br> <span style="color: red; font-weight: bold;"><td>${product.discount_price}원</td></span>
-											<span style="font-size: 20px;"><td>${product.discount_rate}</td></span>
-											<input type="hidden" id="endDate" value="${product.end_date}">
-											<div id="countdown_${product.product_idx}"
-												style="font-weight: bold";></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</a>
-						<script>
+												style="text-decoration: line-through;">
+												<td>${product.original_price}원</td>
+											</span> <br> <span style="color: red; font-weight: bold;">
+												<td>${product.discount_price}원</td>
+											</span> <span style="font-size: 20px;">
+												<td>${product.discount_rate}</td>
+											</span>
+
+											<!-- DB에 저장된 content_state가 "판매중"이 아닌 경우 -->
+											<c:if test="${product.content_state ne '판매중'}">
+												<!-- DB에 저장된 content_state에 따라 상태를 표시 -->
+												<c:choose>
+													<c:when test="${product.content_state eq '마감'}">
+														<div style="font-weight: bold;">마감</div>
+													</c:when>
+													<c:when test="${product.content_state eq '배송중'}">
+														<div style="font-weight: bold;">배송중</div>
+													</c:when>
+													<c:when test="${product.content_state eq '배송완료'}">
+														<div style="font-weight: bold;">배송완료</div>
+													</c:when>
+												</c:choose>
+											</c:if>
+
+											<!-- DB에 저장된 content_state가 "판매중"인 경우에는 시간 흐름 표시 -->
+											<c:if test="${product.content_state eq '판매중'}">
+												<input type="hidden" id="endDate"
+													value="${product.end_date}">
+												<div id="countdown_${product.product_idx}"
+													style="font-weight: bold;"></div>
+
+												<script>
         // Set the date we're counting down to
         var countDownDate_${product.product_idx} = new Date("${product.end_date}").getTime();
 
@@ -117,18 +142,25 @@
             document.getElementById("countdown_${product.product_idx}").innerHTML =
                 days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
 
-            // If the countdown is over, display a message
+            // If the countdown is over, display a message and update content_state
             if (distance < 0) {
                 clearInterval(x_${product.product_idx});
                 document.getElementById("countdown_${product.product_idx}").innerHTML =
                     "공구종료";
+
+       
             }
         }, 1000);
     </script>
+											</c:if>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
 					</c:forEach>
 
 				</div>
-
 			</div>
 		</div>
 		<button class="load-more">Load More</button>

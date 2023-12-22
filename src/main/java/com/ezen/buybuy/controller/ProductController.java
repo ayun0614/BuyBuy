@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,6 +92,7 @@ public class ProductController {
 		mvo.setProduct_name(multi.getParameter("product_name"));
 		mvo.setEnd_date(multi.getParameter("end_date"));
 		mvo.setContent_state("판매중");
+		mvo.setMember_id(multi.getParameter("member_id"));
 		
 		// Check if parameters are not null before parsing
 		String originalPriceStr = multi.getParameter("original_price");
@@ -211,6 +213,7 @@ public class ProductController {
 			mvo.setDiscount_price(Integer.parseInt(multi.getParameter("discount_price")));
 			mvo.setCtgr_idx(Integer.parseInt(multi.getParameter("ctgr_idx")));
 			mvo.setContent_state(multi.getParameter("content_state"));
+			mvo.setMember_id(multi.getParameter("member_id"));
 	
 			productMapper.ProductModify(mvo);
 			return "redirect:/ProductList";
@@ -223,43 +226,17 @@ public class ProductController {
 		return "redirect:/ProductList";
 	}
 	
-	@RequestMapping("/uploadImage")
-	public class ImageUploadController {
 
-	    @PostMapping
-	    public ResponseEntity<Object> handleImageUpload(MultipartFile upload) {
-	        try {
-	            if (!upload.isEmpty()) {
-	                // 디렉토리가 없다면 생성
-	                Path uploadDir = Paths.get("uploads");
-	                if (!Files.exists(uploadDir)) {
-	                    Files.createDirectories(uploadDir);
-	                }
-
-	                // 파일 이름을 고유하게 만들기
-	                String originalFileName = upload.getOriginalFilename();
-	                String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFileName;
-
-	                // 파일 저장 경로
-	                Path filePath = uploadDir.resolve(uniqueFileName);
-
-	                // 파일 저장
-	                Files.copy(upload.getInputStream(), filePath);
-
-	                // ResponseEntity로 JSON 응답 반환
-	                return ResponseEntity.ok()
-	                        .body("{\"uploaded\": 1, \"fileName\": \"" + uniqueFileName + "\", \"url\": \"/uploads/" + uniqueFileName + "\"}");
-	            } else {
-	                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                        .body("{\"uploaded\": 0, \"error\": \"File is empty\"}");
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                    .body("{\"uploaded\": 0, \"error\": \"" + e.getMessage() + "\"}");
-	        }
-	    }
+	@RequestMapping("/ProductTimeout") 
+	public String ProductTimeout(@RequestParam("product_idx") int product_idx){ 
+		
+		productMapper.ProductTimeout(product_idx);
+		
+		
+		return "redirect:/ProductDetail?product_idx="+product_idx;
 	}
+
+	
 	
 	
 

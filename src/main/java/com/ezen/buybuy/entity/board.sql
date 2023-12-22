@@ -15,5 +15,13 @@ CREATE TABLE Products (
 	    	);
 select *from products;
 
+select *from categories;
+select *from members;
 
+insert into products(member_id, product_name) 
+		values('user01', 'aa');
 drop table Products;
+
+   SELECT * FROM products
+    NATURAL JOIN categories
+    WHERE product_idx = 1
