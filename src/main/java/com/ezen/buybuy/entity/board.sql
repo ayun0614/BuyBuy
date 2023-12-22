@@ -82,3 +82,11 @@ select * from  products where member_id = 'dealer01'
 delete from applydealeraccount where member_id = 'dealer01'
 
 update orders set status='주문 완료' where order_num=7
+
+SHOW COLUMNS from orders
+
+alter table orders modify order_date datetime
+
+select * from orders
+
+update orders set order_date = now()

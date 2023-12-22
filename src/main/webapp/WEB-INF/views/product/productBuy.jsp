@@ -482,7 +482,7 @@ $(document).ready(function(){
 
 			<tr class = "userInfoTr"> 
 				<td class = "lastPayTextTd">총 결제 금액</td>
-				<td class = "lastPayTd"><fmt:formatNumber value="${moo.discount_price*3}" pattern="#,##0" />원</td>
+				<td class = "lastPayTd"><fmt:formatNumber value="${moo.discount_price+2500}" pattern="#,##0" />원</td>
 			</tr>
 		</table>
 	</div>

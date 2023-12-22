@@ -232,7 +232,7 @@ hr {
 				</tr>
 				<tr class="userInfoTr">
 					<td class="lastPayTextTd">총 결제 금액</td>
-					<td class="lastPayTd"><fmt:formatNumber value="${mo.total_price}" pattern="#,##0" />원</td>
+					<td class="lastPayTd"><fmt:formatNumber value="${mo.discount_price*mo.order_pcs+2500}" pattern="#,##0" />원</td>
 				</tr>
 			</table>
 		</div>
