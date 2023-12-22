@@ -20,8 +20,14 @@ $(document).ready(function() {
 		$("#myMessage").modal("show");
 	}
 
+	if(${!empty mem}){
+		$("#registerButton").attr("disabled", false);
+	}else{
+		$("#registerButton").attr("disabled", true);
+	}
+	
+	
 	// 이메일 보내기 버튼 클릭 시
-	$("#registerButton").attr("disabled", true);
 	$("#emailChk").click(function() {
 		var email = $("#email").val();
 	
@@ -117,7 +123,7 @@ $(document).ready(function() {
 				document.getElementById('postcode').value = data.zonecode;
 				document.getElementById("address").value = addr;
 				// 커서를 상세주소 필드로 이동한다.
-				document.getElementById("detailAddress").focus();
+				document.getElementById("detailaddr").focus();
 			}
 		}).open();
 	}
@@ -168,9 +174,9 @@ $(document).ready(function() {
 		var email = document.getElementById("email").value; // 이메일 값 추가
 		var postcode = document.getElementById("postcode").value;
 		var address = document.getElementById("address").value;
-		var detailAddress = document.getElementById("detailAddress").value;
+		var detailaddr = document.getElementById("detailaddr").value;
 	
-		if (name === "" || member_id === "" || password === "" || password2 === "" || phone === "" || email === "" || postcode === "" || address === "" || detailAddress === "") {
+		if (name === "" || member_id === "" || password === "" || password2 === "" || phone === "" || email === "" || postcode === "" || address === "" || detailaddr === "") {
 			alert("모든 필수 항목을 작성해주세요.");
 			return false; // 회원가입 제한
 		}
@@ -209,54 +215,80 @@ $(document).ready(function() {
 			<div class="panel panel-default">
 				<div class="panel-heading">회원가입</div>
 				<div class="panel-body">
-					<div class="form-group">
-						<label for="name">이름</label>
-						<input id="name" name="name" class="form-control" type="text" maxlength="20" placeholder="이름을 입력하세요." onkeyup="nameCheck ()" />
-					</div>
-					<div class="form-group">
-						<label for="member_id">아이디</label>
-						<div class="input-group">
-							<!-- Bootstrap input group 사용 -->
-							<input id="member_id" name="member_id" class="form-control" maxlength="20" placeholder="아이디를 입력하세요.">
-							<span class="input-group-btn">
-								<button type="button" class="btn btn-primary" onclick="registerCheck()">중복확인</button>
-							</span>
+					<c:if test="${!empty mem}">
+						<input id="profileImg" name="profileImg" type="hidden" value="${mem.profileImg }"/>
+					</c:if>
+				
+					<c:if test="${empty mem}">
+						<div class="form-group">
+							<label for="name">이름</label>
+							<input id="name" name="name" class="form-control" type="text" maxlength="20" placeholder="이름을 입력하세요." onkeyup="nameCheck ()" />
 						</div>
-					</div>
-					<div class="form-group">
-						<label for="password">비밀번호 </label>
-						<input id="password" name="password" onkeyup="passwordCheck()" class="form-control" type="password" maxlength="20" placeholder="비밀번호를 입력하세요." />
-						<span>
-							<!-- 아이콘 추가 -->
-						</span>
-					</div>
-					<div class="form-group">
-						<label for="password2">비밀번호 확인</label>
-						<input id="password2" name="password2" onkeyup="passwordCheck()" class="form-control" type="password" maxlength="20" placeholder="비밀번호를 입력하세요." />
-						<span id="passMessage" style="color: red"></span>
-					</div>
-					<div class="form-group">
-						<label for="phone">전화번호</label>
-						<input id="phone" name="phone" type="text" class="form-control" oninput="autoHyphen2(this)" maxlength="13" placeholder="전화번호를 입력하세요">
-					</div>
-					<tr class="email">
-						<th><label for="useremail">이메일</label></th>
-						<td>
+					</c:if>
+					<c:if test="${!empty mem}">
+						<input id="name" name="name" type="hidden" value="${mem.name }" />
+					</c:if>
+					<c:if test="${empty mem}">
+						<div class="form-group">
+							<label for="member_id">아이디</label>
 							<div class="input-group">
-								<input id="email" type="text" name="email" title="이메일 주소를 입력해주세요." required class="form-control " placeholder="이메일 주소를 입력하세요." />
+								<!-- Bootstrap input group 사용 -->
+								<input id="member_id" name="member_id" class="form-control" maxlength="20" placeholder="아이디를 입력하세요.">
 								<span class="input-group-btn">
-									<span id="emailChk" class="btn btn-primary">인증번호 보내기</span>
+									<button type="button" class="btn btn-primary" onclick="registerCheck()">중복확인</button>
 								</span>
 							</div>
-							<div class="input-group">
-								<input id="email2" type="text" name="email2" title="인증번호 입력" disabled required class="form-control" placeholder="인증번호를 입력하세요." />
-								<span class="input-group-btn">
-									<span id="emailChk2" class="btn btn-primary">이메일인증</span>
-								</span>
-							</div> <span class="point successEmailChk">이메일 입력 후 인증번호 보내기를 해주십시오.</span> <input type="hidden" id="emailDoubleChk" />
-							<p class="tip">아이디 비밀번호 분실 시 필요한 정보이므로, 정확하게 기입해 주십시오.</p>
-						</td>
-					</tr>
+						</div>
+					</c:if>
+					<c:if test="${!empty mem}">
+						<input id="member_id" name="member_id" type="hidden" value="${mem.member_id }" />
+					</c:if>
+					<c:if test="${empty mem}">
+						<div class="form-group">
+							<label for="password">비밀번호 </label>
+							<input id="password" name="password" onkeyup="passwordCheck()" class="form-control" type="password" maxlength="20" placeholder="비밀번호를 입력하세요." />
+							<span>
+								<!-- 아이콘 추가 -->
+							</span>
+						</div>
+						<div class="form-group">
+							<label for="password2">비밀번호 확인</label>
+							<input id="password2" name="password2" onkeyup="passwordCheck()" class="form-control" type="password" maxlength="20" placeholder="비밀번호를 입력하세요." />
+							<span id="passMessage" style="color: red"></span>
+						</div>
+					</c:if>
+					<c:if test="${!empty mem}">
+						<input id="password" name="password" type="hidden" value="${mem.password }" />
+						<input id="password2" name="password2" type="hidden" value="${mem.password }" />
+					</c:if>
+					<div class="form-group">
+						<label for="phone">전화번호</label>
+						<input id="phone" name="phone" type="text" class="form-control" oninput="autoHyphen2(this)" maxlength="13" placeholder="전화번호를 입력하세요" value="${mem.phone }">
+					</div>
+					<c:if test="${empty mem}">
+						<tr class="email">
+							<th><label for="useremail">이메일</label></th>
+							<td>
+								<div class="input-group">
+									<input id="email" type="text" name="email" title="이메일 주소를 입력해주세요." required class="form-control " placeholder="이메일 주소를 입력하세요." />
+									<span class="input-group-btn">
+										<span id="emailChk" class="btn btn-primary">인증번호 보내기</span>
+									</span>
+								</div>
+								<div class="input-group">
+									<input id="email2" type="text" name="email2" title="인증번호 입력" disabled required class="form-control" placeholder="인증번호를 입력하세요." />
+									<span class="input-group-btn">
+										<span id="emailChk2" class="btn btn-primary">이메일인증</span>
+									</span>
+								</div> <span class="point successEmailChk">이메일 입력 후 인증번호 보내기를 해주십시오.</span> <input type="hidden" id="emailDoubleChk" />
+								<p class="tip">아이디 비밀번호 분실 시 필요한 정보이므로, 정확하게 기입해 주십시오.</p>
+							</td>
+						</tr>
+					</c:if>
+					<c:if test="${!empty mem}">
+						<input type="hidden" id="emailDoubleChk" value="true" />
+						<input id="email" type="hidden" name="email" value="${mem.email }" />
+					</c:if>
 					<div class="form-group">
 						<label for="address">주소</label>
 						<div class="input-group">
@@ -272,7 +304,7 @@ $(document).ready(function() {
 							<input type="text" id="address" name="addr" class="form-control" placeholder="주소">
 						</div>
 						<div class="address-field">
-							<input type="text" id="detailAddress" name="addr" class="form-control" placeholder="상세주소">
+							<input type="text" id="detailaddr" name="detailaddr" class="form-control" placeholder="상세주소">
 						</div>
 						<div class="address-field">
 							<input type="hidden" id="extraAddress" name="addr" class="form-control" placeholder="참고항목">

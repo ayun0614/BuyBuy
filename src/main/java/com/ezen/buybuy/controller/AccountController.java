@@ -39,7 +39,6 @@ public class AccountController {
 	private GoogleLoginBO googleLoginBO;
 	private String apiResult = null;
 	private Members memVO;
-	private JSONObject json;
 
 	@Autowired
 	MemberMapper memberMapper;
@@ -93,12 +92,28 @@ public class AccountController {
 			throws IOException {
 		String token = kakaoLoginBO.requestToken(session, code, state);
 		apiResult = kakaoLoginBO.requestProfile(token);
-		json = new JSONObject(apiResult);
+
+		JSONObject full = new JSONObject(apiResult);
+		JSONObject kakao_account = full.getJSONObject("kakao_account");
+		JSONObject profile = kakao_account.getJSONObject("profile");
+
 		memVO = new Members();
+		memVO.setMember_id(full.getBigInteger("id").toString() + "_kakao");
 
-		memVO.setMember_id(json.getBigInteger("id").toString() + "_kakao");
+		Members check = memberMapper.registerCheck(memVO.getMember_id());
 
-		return "account/kakaocallback";
+		if (check == null || check.getMember_id().equals("")) {
+			memVO.setPassword(full.getBigInteger("id").toString());
+			memVO.setName(profile.getString("nickname"));
+			memVO.setEmail(kakao_account.getString("email"));
+			memVO.setProfileImg(profile.getString("thumbnail_image_url"));
+
+			model.addAttribute("mem", memVO);
+			return "account/signUp";
+		}
+
+		session.setAttribute("mvo", check);
+		return "redirect:/";
 	}
 
 	@RequestMapping("/googleCallBack")
@@ -106,9 +121,25 @@ public class AccountController {
 			throws IOException {
 		String token = googleLoginBO.requestToken(session, code, state);
 		apiResult = googleLoginBO.requestProfile(token);
-		model.addAttribute("result", apiResult);
-		System.out.println(apiResult);
-		return "account/googlecallback";
+		JSONObject full = new JSONObject(apiResult);
+
+		memVO = new Members();
+		memVO.setMember_id(full.getBigInteger("id").toString() + "_google");
+		
+		Members check = memberMapper.registerCheck(memVO.getMember_id());
+
+		if (check == null || check.getMember_id().equals("")) {
+			memVO.setPassword(full.getBigInteger("id").toString());
+			memVO.setName(full.getString("name"));
+			memVO.setEmail(full.getString("email"));
+			memVO.setProfileImg(full.getString("picture"));
+
+			model.addAttribute("mem", memVO);
+			return "account/signUp";
+		}
+
+		session.setAttribute("mvo", check);
+		return "redirect:/";
 	}
 
 	@RequestMapping("/naverCallBack")
@@ -117,9 +148,27 @@ public class AccountController {
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
 		apiResult = naverLoginBO.getUserProfile(oauthToken);
-		model.addAttribute("result", apiResult);
-		System.out.println(apiResult);
-		return "account/navercallback";
+		JSONObject full = new JSONObject(apiResult);
+		JSONObject response = full.getJSONObject("response");
+
+		memVO = new Members();
+		memVO.setMember_id(response.getString("id") + "_naver");
+		
+		Members check = memberMapper.registerCheck(memVO.getMember_id());
+
+		if (check == null || check.getMember_id().equals("")) {
+			memVO.setPassword(response.getString("id"));
+			memVO.setName(response.getString("name"));
+			memVO.setEmail(response.getString("email"));
+			memVO.setProfileImg(response.getString("profile_image"));
+			memVO.setPhone(response.getString("mobile"));
+
+			model.addAttribute("mem", memVO);
+			return "account/signUp";
+		}
+		
+		session.setAttribute("mvo", check);
+		return "redirect:/";
 	}
 
 	@RequestMapping("/signUp")
@@ -140,32 +189,6 @@ public class AccountController {
 			return 0; // 이미 존재하는 회원, 입력불가
 		}
 		return 1; // 사용가능한 아이디
-	}
-
-	@RequestMapping("/check")
-	public String memLogin(Members m, RedirectAttributes rttr, HttpSession session) {
-		if (m.getMember_id() == null || m.getMember_id().isEmpty() || m.getPassword() == null || m.getPassword().isEmpty()) {
-			rttr.addFlashAttribute("msgType", "실패");
-			rttr.addFlashAttribute("msg", "값을 모두 입력하세요");
-			return "redirect:/account/login";
-		}
-
-		// 아이디나 비밀번호 길이 등 추가적인 유효성 검사 가능
-
-		Members mvo = memberMapper.check(m);
-		if (mvo != null) {
-			// 로그인 성공
-			rttr.addFlashAttribute("msgType", "성공");
-			rttr.addFlashAttribute("msg", "로그인 되었습니다");
-			session.setAttribute("mvo", mvo);
-			System.out.println(mvo);
-			return "redirect:/";
-		} else {
-			// 로그인 실패
-			rttr.addFlashAttribute("msgType", "실패");
-			rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 올바르지 않습니다");
-			return "redirect:/account/login";
-		}
 	}
 
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
@@ -235,5 +258,30 @@ public class AccountController {
 	@RequestMapping("/myProducts")
 	public String myProducts() {
 		return "account/myProducts";
+	}
+
+	@RequestMapping("/check")
+	public String memLogin(Members m, RedirectAttributes rttr, HttpSession session) {
+		if (m.getMember_id() == null || m.getMember_id().isEmpty() || m.getPassword() == null || m.getPassword().isEmpty()) {
+			rttr.addFlashAttribute("msgType", "실패");
+			rttr.addFlashAttribute("msg", "값을 모두 입력하세요");
+			return "redirect:/account/login";
+		}
+
+		// 아이디나 비밀번호 길이 등 추가적인 유효성 검사 가능
+
+		Members mvo = memberMapper.check(m);
+		if (mvo != null) {
+			// 로그인 성공
+			rttr.addFlashAttribute("msgType", "성공");
+			rttr.addFlashAttribute("msg", "로그인 되었습니다");
+			session.setAttribute("mvo", mvo);
+			return "redirect:/";
+		} else {
+			// 로그인 실패
+			rttr.addFlashAttribute("msgType", "실패");
+			rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 올바르지 않습니다");
+			return "redirect:/account/login";
+		}
 	}
 }
