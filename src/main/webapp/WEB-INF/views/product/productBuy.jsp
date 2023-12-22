@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	function sample6_execDaumPostcode() {
@@ -61,8 +60,6 @@
 		}).open();
 	}
 </script>
-
-
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
 	const userCode = "imp14397622";
@@ -115,8 +112,6 @@
 
 	}
 </script>
-
-
 <meta charset="UTF-8">
 <title>BuyBuy</title>
 <style>
@@ -256,7 +251,6 @@ hr {
 	display: flex;
 }
 </style>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -335,8 +329,7 @@ hr {
 				<div style="font-weight: 900; font-size: 22px;">${moo.product_name }</div>
 				<br>
 				<div style="font-size: 12px;">수량 개</div>
-				<br>
-				<br>
+				<br> <br>
 				<div style="font-weight: 900; font-size: 18px;">
 					<fmt:formatNumber value="${moo.discount_price }" pattern="#,##0" />
 					원
@@ -418,7 +411,6 @@ hr {
 					<td>배송비</td>
 					<td style="text-align: right">+ 2,500원</td>
 				</tr>
-
 				<tr class="userInfoTr">
 					<td class="lastPayTextTd">총 결제 금액</td>
 					<td class="lastPayTd"><fmt:formatNumber value="${moo.discount_price }" pattern="#,##0" />원</td>
@@ -432,7 +424,6 @@ hr {
 				<label style="font-size: 18px;" class="paymentRadio"><input type="radio" name="optradio" class="paymentDivHide" id="cardpay" value="cardpay">&nbsp카드 결제</label> <label style="font-size: 18px;" class="paymentRadio"><input type="radio" name="optradio" class="paymentDivHide" id="passBookpay" value="passBookpay">&nbsp무통장 입금</label> <label style="font-size: 18px;" class="paymentRadio"><input type="radio" name="optradio" class="paymentDivHide" id="tosspay" value="tosspay">&nbsp토스페이</label> <label style="font-size: 18px;" class="paymentRadio"><input type="radio" name="optradio" class="paymentDivShow" id="giftCardpay" value="giftCardpay">&nbsp문화상품권</label>
 			</div>
 		</div>
-
 		<div class="buyCheckbox">
 			<label style="font-size: 16px;"><input type="checkbox" id="buyCheckBox">구매 정보 저장 및 결제 진행에 동의</label>
 			<button type="button" class="btn" id="buyBtn" onclick="requestPay()">상품 결제</button>

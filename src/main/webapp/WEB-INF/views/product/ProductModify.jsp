@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,20 +10,14 @@
 <title>Bootstrap Example</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
 	function cancelImageUploadDetail(index) {
-		var previewContainer = document
-				.getElementById('imagePreviewContainerDetail');
+		var previewContainer = document.getElementById('imagePreviewContainerDetail');
 		var filesInput = document.getElementsByName('detail_img')[0]; // Use getElementsByName to get the file input
 		var images = previewContainer.getElementsByClassName('preview-image');
 		var buttons = previewContainer.getElementsByClassName('cancel-btn');
@@ -42,8 +34,7 @@
 	}
 
 	function previewImagesDetail(input) {
-		var previewContainer = document
-				.getElementById('imagePreviewContainerDetail');
+		var previewContainer = document.getElementById('imagePreviewContainerDetail');
 		var files = input.files;
 
 		// 기존 미리보기 이미지 및 버튼 삭제
@@ -92,9 +83,7 @@
 			var discount = ((regularPrice - salePrice) / regularPrice) * 100;
 
 			// 계산된 할인율을 할인율 입력란에 표시
-			document.getElementById('discount_rate').value = discount
-					.toFixed(0)
-					+ '%';
+			document.getElementById('discount_rate').value = discount.toFixed(0) + '%';
 		} else {
 			// 정가나 판매가가 유효한 숫자가 아닌 경우 할인율 입력란을 비움
 			document.getElementById('discount_rate').value = '';
@@ -155,8 +144,7 @@
 		document.getElementById('imageUploadBtn').style.display = 'none';
 	}
 	function cancelImageUpload2(index) {
-		var previewContainer = document
-				.getElementById('imagePreviewContainer2');
+		var previewContainer = document.getElementById('imagePreviewContainer2');
 		var filesInput = document.getElementsByName('thumbnail_img')[0];
 		var images = previewContainer.getElementsByClassName('preview-image');
 		var buttons = previewContainer.getElementsByClassName('cancel-btn');
@@ -176,8 +164,7 @@
 	}
 
 	function previewImages2(input) {
-		var previewContainer = document
-				.getElementById('imagePreviewContainer2');
+		var previewContainer = document.getElementById('imagePreviewContainer2');
 		var files = input.files;
 
 		// 미리보기 컨테이너의 기존 내용 지우기
@@ -208,7 +195,7 @@
 	function confirmLeave() {
 		var isConfirmed = confirm("수정중인 내용은 저장되지 않습니다. 그래도 돌아가시겠습니까?");
 		if (isConfirmed) {
-			window.location.href = "${contextPath}/ProductDetail?product_idx=${ProductModify.product_idx}";
+			window.location.href = "${contextPath}/product/ProductDetail?product_idx=${ProductModify.product_idx}";
 		}
 	}
 
@@ -217,8 +204,6 @@
 		return "수정중인 내용은 저장되지 않습니다. 그래도 돌아가시겠습니까?";
 	};
 </script>
-
-
 <style>
 .top, .middle-left, .middle-right, .middle-right-1, .middle-right-2,
 	.middle-right-3, .bottom {
@@ -252,69 +237,47 @@
 	text-align: center;
 }
 </style>
-
 <body>
 	<jsp:include page="../include/header.jsp" />
-
 	<div class="container" style="max-width: 900px; height: 100px;">
-
 		<br>
-		<form
-			action="${contextPath}/ProductModify?product_idx=${ProductModify.product_idx}"
-			method="post" enctype="multipart/form-data">
-			<input type="hidden" name="product_idx"
-				value=${ProductModify.product_idx }> 
-			
+		<form action="${contextPath}/product/ProductModify?product_idx=${ProductModify.product_idx}" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="product_idx" value=${ProductModify.product_idx }>
 			<div style="display: flex;">
-				<a
-				href="${contextPath }/ProductDetail?product_idx=${ProductModify.product_idx}"
-				style="font-size: 20px;"> <span
-				class="glyphicon glyphicon-chevron-left"></span>상세로 돌아가기
-			</a>
+				<a href="${contextPath }/product/ProductDetail?product_idx=${ProductModify.product_idx}" style="font-size: 20px;"> <span class="glyphicon glyphicon-chevron-left"></span>상세로 돌아가기
+				</a>
 				<div style="margin-left: 220px;">
 					<h3>게시글 수정</h3>
 				</div>
-			</div><br>
-
+			</div>
+			<br>
 			<div class="row" style="max-width: 890px; height: 100px;">
 				<div class="row top text-dark" style="border-radius: 30px;">
-					<input type="text" name="product_name" class="form-control"
-						value="${ProductModify.product_name}" placeholder="제품 이름">
+					<input type="text" name="product_name" class="form-control" value="${ProductModify.product_name}" placeholder="제품 이름">
 				</div>
 			</div>
 			<!-- MIDDLE -->
 			<div class="row middle" style="height: 400px; text-align: center;">
-				<div class="row"
-					style="border: 1px solid black; border-radius: 30px; height: 400px;">
-					<div class="col-md-6"
-						style="height: 100%; display: flex; flex-direction: column; border-radius: 30px; align-items: center; justify-content: center;">
-						<div id="imagePreviewContainer2"
-							style="border-radius: 30px; width: 450px; height: 400px; overflow: hidden; border: 1px solid black; margin-top: 6px; margin-bottom: 6px;">
-							<img
-								src="${contextPath}/resources/upload/${ProductModify.thumbnail_img}"
-								alt="thumbnail_img">
+				<div class="row" style="border: 1px solid black; border-radius: 30px; height: 400px;">
+					<div class="col-md-6" style="height: 100%; display: flex; flex-direction: column; border-radius: 30px; align-items: center; justify-content: center;">
+						<div id="imagePreviewContainer2" style="border-radius: 30px; width: 450px; height: 400px; overflow: hidden; border: 1px solid black; margin-top: 6px; margin-bottom: 6px;">
+							<img src="${contextPath}/resources/upload/${ProductModify.thumbnail_img}" alt="thumbnail_img">
 						</div>
 						<div>
-							<input type="file" name="thumbnail_img" multiple
-								style="margin-bottom: 6px;" onchange="previewImages2(this)" />
+							<input type="file" name="thumbnail_img" multiple style="margin-bottom: 6px;" onchange="previewImages2(this)" />
 						</div>
 					</div>
 					<div class="col-md-6">
 						<br>
-
 						<div>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1";>판매자</span> <input
-									type="text" value="${mvo.name}" readonly
-									class="form-control  input-sm" aria-describedby="basic-addon1">
+								<span class="input-group-addon" id="basic-addon1";>판매자</span>
+								<input type="text" value="${mvo.name}" readonly class="form-control  input-sm" aria-describedby="basic-addon1">
 							</div>
 							<br>
 							<div class="input-group">
-								<span class="input-group-addon">상태</span> <select
-									value="${productModify.content_state}"
-									class="form-control  input-sm" id="content_state"
-									name="content_state">
-
+								<span class="input-group-addon">상태</span>
+								<select value="${productModify.content_state}" class="form-control  input-sm" id="content_state" name="content_state">
 									<option value="판매중">판매중</option>
 									<option value="마감">마감</option>
 									<option value="배송중">배송중</option>
@@ -323,18 +286,13 @@
 							</div>
 							<br>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">마감일</span> <input
-									type="datetime-local" name="end_date"
-									class="form-control  input-sm" placeholder="마감일"
-									value="${ProductModify.end_date }"
-									aria-describedby="basic-addon1"
-									onchange="calculateTimeDifference()">
+								<span class="input-group-addon" id="basic-addon1">마감일</span>
+								<input type="datetime-local" name="end_date" class="form-control  input-sm" placeholder="마감일" value="${ProductModify.end_date }" aria-describedby="basic-addon1" onchange="calculateTimeDifference()">
 							</div>
 							<br>
 							<div class="input-group">
-								<span class="input-group-addon">카테고리</span> <select
-									class="form-control  input-sm" id="ctgr_name" name="ctgr_idx">
-
+								<span class="input-group-addon">카테고리</span>
+								<select class="form-control  input-sm" id="ctgr_name" name="ctgr_idx">
 									<option value="1">의류</option>
 									<option value="2">홈데코</option>
 									<option value="3">컴퓨터</option>
@@ -353,61 +311,31 @@
 								</select>
 							</div>
 							<br>
-
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">정가</span> <input
-									type="text" name="original_price" id="original_price"
-									class="form-control  input-sm" placeholder="정가"
-									value="${ProductModify.original_price }"
-									aria-describedby="basic-addon1" onchange="calculateDiscount()" />
+								<span class="input-group-addon" id="basic-addon1">정가</span>
+								<input type="text" name="original_price" id="original_price" class="form-control  input-sm" placeholder="정가" value="${ProductModify.original_price }" aria-describedby="basic-addon1" onchange="calculateDiscount()" />
 							</div>
 							<br>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">판매가</span> <input
-									type="text" id="discount_price" name="discount_price"
-									class="form-control  input-sm" placeholder="판매가"
-									value="${ProductModify.discount_price }"
-									aria-describedby="basic-addon1" onchange="calculateDiscount()" />
+								<span class="input-group-addon" id="basic-addon1">판매가</span>
+								<input type="text" id="discount_price" name="discount_price" class="form-control  input-sm" placeholder="판매가" value="${ProductModify.discount_price }" aria-describedby="basic-addon1" onchange="calculateDiscount()" />
 							</div>
 							<br>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">할인율</span> <input
-									type="text" name="discount_rate" id="discount_rate"
-									class="form-control input-sm" placeholder="할인율" readonly
-									value="${ProductModify.discount_rate}"
-									aria-describedby="basic-addon1" onchange="calculateDiscount()" />
+								<span class="input-group-addon" id="basic-addon1">할인율</span>
+								<input type="text" name="discount_rate" id="discount_rate" class="form-control input-sm" placeholder="할인율" readonly value="${ProductModify.discount_rate}" aria-describedby="basic-addon1" onchange="calculateDiscount()" />
 							</div>
-							
 							<div class="col-md-7"></div>
-							<div class="col-md-5" style="margin-top:10px;">
-									
-									
-									<a href="${contextPath}/ProductDelete?product_idx=${ProductModify.product_idx}" class="btn btn-danger" style="font-size: 12px; width: 65.5px; height: 29.33px; display: flex; justify-content: center; align-items: center; text-align: center;">게시글삭제</a>
-									<input type="submit" class="btn btn-primary btn-sm pull-right" style="margin-top:-30px;"
-										value="수정완료" />
-								</div>
-							
-		
-
-
-
-
-
+							<div class="col-md-5" style="margin-top: 10px;">
+								<a href="${contextPath}/product/ProductDelete?product_idx=${ProductModify.product_idx}" class="btn btn-danger" style="font-size: 12px; width: 65.5px; height: 29.33px; display: flex; justify-content: center; align-items: center; text-align: center;">게시글삭제</a>
+								<input type="submit" class="btn btn-primary btn-sm pull-right" style="margin-top: -30px;" value="수정완료" />
+							</div>
 						</div>
 					</div>
-
-
-
-
-
 				</div>
-
-
-
 			</div>
 			<hr>
 			상품상세
-
 			<div class="row bottom text-dark">
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs">
@@ -421,26 +349,18 @@
 								<!-- 실질 파일업로드 할수 있는 인반문자열 , 바이너리 데이터 필요 -->
 								<!--  <form action="${contextPath}/memImageUpdate" method="post"
 						enctype="multipart/form-data">-->
-
-								<table class="table table-bordered"
-									style="text-align: center; border-radius: 30px; border: 1px solid #dddddd;">
+								<table class="table table-bordered" style="text-align: center; border-radius: 30px; border: 1px solid #dddddd;">
 									<tr>
-										<td colspan="2" id="imagePreviewContainerDetail"><img
-											src="${contextPath}/resources/upload/${ProductModify.detail_img}"
-											style="width: 800px; height: 400px;" alt="thumbnail_img">
-										</td>
+										<td colspan="2" id="imagePreviewContainerDetail"><img src="${contextPath}/resources/upload/${ProductModify.detail_img}" style="width: 800px; height: 400px;" alt="thumbnail_img"></td>
 									</tr>
 									<tr>
-										<td><span class="btn btn-default"> <input
-												type="file" style="width: 300px;" name="detail_img" multiple
-												onchange="previewImagesDetail(this)" />
-										</span></td>
+										<td><span class="btn btn-default">
+												<input type="file" style="width: 300px;" name="detail_img" multiple onchange="previewImagesDetail(this)" />
+											</span></td>
 									</tr>
 								</table>
 								<!--</form>-->
 							</div>
-
-
 						</div>
 						<div id="menu1" class="tab-pane fade">
 							<h3>게시판</h3>

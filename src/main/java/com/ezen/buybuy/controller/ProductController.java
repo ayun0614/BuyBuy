@@ -59,6 +59,12 @@ public class ProductController {
 		return "product/productBuy";
 	}
 
+	@GetMapping("/ProductListInsert")
+	public String ProductListInsert() {
+		return "product/ProductInsert";
+
+	}
+
 	@PostMapping("/ProductListInsert")
 	public String ProductListInsert(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) throws IOException {
 
@@ -78,7 +84,7 @@ public class ProductController {
 			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
 				newProThumbnail = thumbnailFile.getName();
 			} else {
-				return "redirect:product/ProductList";
+				return "redirect:/product/ProductList";
 			}
 		}
 
@@ -89,7 +95,7 @@ public class ProductController {
 			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
 				newProDetail = detailFile.getName();
 			} else {
-				return "redirect:product/ProductList";
+				return "redirect:/product/ProductList";
 			}
 		}
 
@@ -101,7 +107,7 @@ public class ProductController {
 		mvo.setEnd_date(multi.getParameter("end_date"));
 		mvo.setContent_state("판매중");
 		mvo.setMember_id(multi.getParameter("member_id"));
-		
+
 		// Check if parameters are not null before parsing
 		String originalPriceStr = multi.getParameter("original_price");
 		String discountPriceStr = multi.getParameter("discount_price");
@@ -129,7 +135,7 @@ public class ProductController {
 		rttr.addFlashAttribute("msgType", "성공");
 		rttr.addFlashAttribute("msg", "사진이 등록되었습니다.");
 
-		return "redirect:product/ProductList";
+		return "redirect:/product/ProductList";
 
 	}
 
@@ -169,6 +175,7 @@ public class ProductController {
 		model.addAttribute("ProductOrder", ProductOrder);
 		return "product/OrderPage";
 	}
+
 	@GetMapping("/ProductModify")
 	public String Modify(@RequestParam("product_idx") int product_idx, Model model) {
 		Products productModify = productMapper.read(product_idx);
@@ -247,28 +254,26 @@ public class ProductController {
 	@GetMapping("/ProductDelete")
 	public String productDelete(@RequestParam("product_idx") int product_idx) {
 		productMapper.ProductDelete(product_idx);
-		
+
 		return "redirect:/product/ProductList";
 	}
-	
 
-	@RequestMapping("/ProductTimeout") 
-	public String ProductTimeout(@RequestParam("product_idx") int product_idx){ 
-		
+	@RequestMapping("/ProductTimeout")
+	public String ProductTimeout(@RequestParam("product_idx") int product_idx) {
+
 		productMapper.ProductTimeout(product_idx);
-		
-		
-		return "redirect:/product/ProductDetail?product_idx="+product_idx;
+
+		return "redirect:/product/ProductDetail?product_idx=" + product_idx;
 	}
 
 	@GetMapping("/search")
-	public String ProductSearch(Model m, @RequestParam("word")String word) {
+	public String ProductSearch(Model m, @RequestParam("word") String word) {
 		List<Products> productList;
-		productList = productMapper.ProductSearch('%'+word+'%');
+		productList = productMapper.ProductSearch('%' + word + '%');
 		m.addAttribute("ProductList", productList);
 		return "product/ProductList";
 	}
-	
+
 	@GetMapping("/pop")
 	public String ProductPop(Model m) {
 		List<Products> productList;
@@ -276,7 +281,7 @@ public class ProductController {
 		m.addAttribute("ProductList", productList);
 		return "product/ProductList";
 	}
-	
+
 	@GetMapping("/new")
 	public String ProductNew(Model m) {
 		List<Products> productList;
@@ -284,7 +289,7 @@ public class ProductController {
 		m.addAttribute("ProductList", productList);
 		return "product/ProductList";
 	}
-	
+
 	@GetMapping("/soon")
 	public String ProductSoon(Model m) {
 		List<Products> productList;
