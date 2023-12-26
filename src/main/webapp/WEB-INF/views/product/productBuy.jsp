@@ -65,52 +65,82 @@
 	const userCode = "imp14397622";
 	IMP.init(userCode);
 
-	function requestPay() {
+function requestPay() {
+	
+	var member_id = $("#member_id").val();
+	var deli_name = $("#buyerInfoNameInput").val();
+	var deli_phone = $("#buyerInfoTelInput").val();
+	var deli_zipcode = $("#sample6_postcode").val();
+	var deli_addr = $("#sample6_address").val();
+	var deli_detailaddr = $("#sample6_detailAddress").val();
+	var deli_memo = $("#memo option:selected").val();
+	var pay_type = $("input[name='optradio']:checked").val();
+	
+	var total = $("td.lastPayTd").html();
+	var regex = /[^0-9]/g;
+	var total_price = total.replace(regex, "");
 
-		if ($("#cardpay").is(':checked')) {
-			IMP.request_pay({
-				pg : "html5_inicis",
-				pay_method : "card",
-				merchant_uid : "test_lput00zg",
-				name : "테스트 결제",
-				amount : 100,
-				buyer_tel : "010-0000-0000",
-			});
-		} else if ($("#passBookpay").is(':checked')) {
-			IMP.request_pay({
-				pg : "html5_inicis",
-				pay_method : "vbank",
-				merchant_uid : "test_lputfugb",
-				name : "테스트 결제",
-				amount : 100,
-				buyer_name : "포트원",
-				buyer_tel : "010-0000-0000",
-				buyer_email : "buyer@example.com",
-			});
-		} else if ($("#tosspay").is(':checked')) {
-			IMP.request_pay({
-				pg : "tosspay",
-				pay_method : "card",
-				merchant_uid : "test_lputgqjf",
-				name : "테스트 결제",
-				amount : 100,
-				buyer_tel : "010-0000-0000",
-			});
-		} else if ($("#giftCardpay").is(':checked')) {
-			IMP.request_pay({
-				pg : "html5_inicis",
-				pay_method : "cultureland",
-				merchant_uid : "test_lputhh6r",
-				name : "테스트 결제",
-				amount : 100,
-				buyer_tel : "010-0000-0000",
-			});
-		} else {
-			alert("결제 수단을 선택해 주세요.");
-
+	$.ajax({  
+		url:"mypage/productBuy",
+		type:"put",
+		contentType:'application/json;charset=utf-8',
+		data:JSON.stringify({"member_id":member_id, "total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
+		success:function(){ 
+			alert("성공");
+		},
+		error:function(){
+			alert("error");
 		}
-
+	});
+	
+	if($("#cardpay").is(':checked')) {
+		IMP.request_pay({
+		    pg: "html5_inicis",
+		    pay_method: "card",
+		    merchant_uid: "test_lput00zg",
+		    name: "테스트 결제",
+		    amount: 100,
+		    buyer_tel: "010-0000-0000",
+		  });
 	}
+	else if($("#passBookpay").is(':checked')) {
+		  IMP.request_pay({
+			    pg: "html5_inicis",
+			    pay_method: "vbank",
+			    merchant_uid: "test_lputfugb",
+			    name: "테스트 결제",
+			    amount: 100,
+			    buyer_name: "포트원",
+			    buyer_tel: "010-0000-0000",
+			    buyer_email: "buyer@example.com",
+			  });
+	}
+	else if($("#tosspay").is(':checked')) {
+		IMP.request_pay({
+		    pg: "tosspay",
+		    pay_method: "card",
+		    merchant_uid: "test_lputgqjf",
+		    name: "테스트 결제",
+		    amount: 100,
+		    buyer_tel: "010-0000-0000",
+		  });
+	}
+	else if($("#giftCardpay").is(':checked')) {
+		IMP.request_pay({
+		    pg: "html5_inicis",
+		    pay_method: "cultureland",
+		    merchant_uid: "test_lputhh6r",
+		    name: "테스트 결제",
+		    amount: 100,
+		    buyer_tel: "010-0000-0000",
+		  });
+	}
+	else {
+		alert("결제 수단을 선택해 주세요.");
+		 
+	}
+	
+}
 </script>
 <meta charset="UTF-8">
 <title>BuyBuy</title>
@@ -318,23 +348,13 @@ hr {
 </script>
 </head>
 <body>
-	<jsp:include page="../include/header.jsp" />
-	<div class="bodyDiv">
-		<div class="productInfoSubText">주문 상품 정보</div>
-		<div class="productInfoBox">
-			<div class="productInfoImg">
-				<img src="" class="myInfoImg" "/>
-			</div>
-			<div class="productInfoBox2">
-				<div style="font-weight: 900; font-size: 22px;">${moo.product_name }</div>
-				<br>
-				<div style="font-size: 12px;">수량 개</div>
-				<br> <br>
-				<div style="font-weight: 900; font-size: 18px;">
-					<fmt:formatNumber value="${moo.discount_price }" pattern="#,##0" />
-					원
-				</div>
-			</div>
+  <jsp:include page="../include/header.jsp"/> 
+  <input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
+<div class = "bodyDiv">
+	<div class = "productInfoSubText">주문 상품 정보</div>  
+	<div class = "productInfoBox">
+		<div class = "productInfoImg">
+		<img src="" class = "myInfoImg""/>
 		</div>
 		<hr class="hrSec">
 		<div class="userInfoSubText">주문자 정보</div>
@@ -429,5 +449,116 @@ hr {
 			<button type="button" class="btn" id="buyBtn" onclick="requestPay()">상품 결제</button>
 		</div>
 	</div>
+	<hr class = "hrSec"> 
+	<div class = "userInfoSubText">주문자 정보</div>
+	<div class = "userInfoBox">
+		<table class = "userInfoTbl">  
+			<tr class = "userInfoTr"> 
+				<td style = "width: 16px;" class = "userInfoTd">주문자 이름</td>
+				<td class = "userInfoTd">
+					<span id = "userInfoNameSpan">${mvo.name }</span>
+				</td>
+			</tr> 
+			<tr class = "userInfoTr">  
+				<td style = "width: 16px;" class = "userInfoTd">전화번호</td>
+				<td class = "userInfoTd">  
+					<span id = "userInfoTelSpan">${mvo.phone }</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<hr class = "hrSec">
+	<div class = "userInfoSubText">배송 정보</div>
+	<div class = "userInfoBox">
+		<table class = "userInfoTbl" style = "width:800px;">
+			<tr class = "userInfoTr">
+				<td style = "width: 105px;">받는 사람</td>
+				<td style = "width: 105px;" class = "userInfoTd">
+				<span id = "buyerInfoNameSpan">${mvo.name }</span>
+				<input type="text" class="form-control" id = "buyerInfoNameInput" value = "${mvo.name }">
+				</td>
+				<td align = "right">
+					<button type="button" class="btn btn-default" id = "buyerInfoUpdateBeBtn">수정</button>
+					<button type="button" class="btn btn-default" id = "buyerInfoUpdateAfBtn">완료</button>
+				</td>
+			</tr>
+			<tr class = "userInfoTr"> 
+				<td style = "width:105px;">전화번호</td> 
+				<td class = "userInfoTd">
+				<span id = "buyerInfoTelSpan">${mvo.phone }</span>
+				<input type="text" class="form-control" id = "buyerInfoTelInput" value = "${mvo.phone }">
+				</td>
+			</tr>
+			<tr class = "userInfoTr"> 
+				<td style = "width: 105px;">주소</td>
+				<td class = "userInfoTd" style = "width: 500px;">
+					<span id = "buyerInfoAdrSpan">${mvo.zipcode } &nbsp ${mvo.addr } &nbsp ${mvo.detailaddr }</span>
+					<div class = "buyerInfoAdrInputDiv">
+						<br>
+						<div class = "buyerInfoAdrInputGroup"><input type="text" id="sample6_postcode" class="form-control" placeholder="우편번호" value = "${mvo.zipcode }">
+						<button onclick="sample6_execDaumPostcode()" class="btn">우편번호 찾기</button>
+						</div>
+						<input type="text" id="sample6_address" class="form-control" placeholder="주소" value = "${mvo.addr }">
+						<input type="text" id="sample6_detailAddress" class="form-control" placeholder="상세주소" value = "${mvo.detailaddr }">
+						<input type="text" id="sample6_extraAddress" class="form-control" placeholder="참고항목"> 
+					</div>
+				</td>
+			</tr>
+			<tr class = "userInfoTr"> 
+				<td class = "userInfoTd" colspan = "3">배송 메모</td>
+			</tr>
+			<tr class = "userInfoTr"> 
+				<td class = "userInfoTd" colspan = "3"> 
+				<label for="memo" class = "delMemoLabel">
+					<select class="form-control" id="memo" style = "width: 700px;">  
+					    <option value = "문앞에 놔 주세요">문앞에 놔 주세요</option>
+					    <option value = "벨 눌러주세요">벨 눌러주세요</option>
+					    <option value = "배송 전에 연락 주세요">배송 전에 연락 주세요</option>  
+					    <option value = "경비실에 맡겨 주세요">경비실에 맡겨 주세요</option>
+				 	</select>
+				</label>
+			  </td>
+			</tr>
+		</table>
+	</div>
+	<hr class = "hrSec">
+	<div class = "userInfoSubText">결제 금액</div>
+	<div class = "userInfoBox">
+		<table class = "userInfoTbl" style = "width:800px;">
+			<tr class = "userInfoTr">
+				<td>상품 가격</td>
+				<td style = "text-align:right"><fmt:formatNumber value="${moo.original_price }" pattern="#,##0" />원</td>
+			</tr>
+			<tr class = "userInfoTr"> 
+				<td>할인</td>
+				<td style = "text-align:right">- <fmt:formatNumber value="${moo.original_price-moo.discount_price }" pattern="#,##0" />원</td>
+			</tr>
+			<tr class = "userInfoTr"> 
+				<td>배송비</td>
+				<td style = "text-align:right">+ 2,500원</td>
+			</tr>
+
+			<tr class = "userInfoTr"> 
+				<td class = "lastPayTextTd">총 결제 금액</td>
+				<td class = "lastPayTd"><fmt:formatNumber value="${moo.discount_price+2500}" pattern="#,##0" />원</td>
+			</tr>
+		</table>
+	</div>
+	<hr class = "hrSec">
+	<div class = "userInfoSubText">결제 수단</div>
+	<div class = "userInfoBox">
+		<div class = "paymentRadioGroup">
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "cardpay" value = "카드 결제">&nbsp카드 결제</label>
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "passBookpay" value = "무통장 입금">&nbsp무통장 입금</label>
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivHide" id = "tosspay" value = "토스페이">&nbsp토스페이</label>
+			<label style = "font-size:18px;" class = "paymentRadio"><input type="radio" name="optradio" class = "paymentDivShow" id = "giftCardpay" value = "문화상품권">&nbsp문화상품권</label>
+		</div>
+	</div> 
+
+	<div class="buyCheckbox"> 
+  		<label style = "font-size:16px;"><input type="checkbox" id = "buyCheckBox">구매 정보 저장 및 결제 진행에 동의</label>
+		<button type="button" class="btn" id = "buyBtn" onclick="requestPay()">상품 결제</button>
+	</div>
+</div>
 </body>
 </html>

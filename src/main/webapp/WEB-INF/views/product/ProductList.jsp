@@ -150,7 +150,6 @@
 	</div>
 	<script>
         $('.card-ui').slice(0, 8).show(); // 처음 페이지에 보여지는 사진 개수
-
         $('.load-more').click(function () {
             $('.card-ui:hidden').slice(0, 4).fadeIn();
             if ($('.card-ui:hidden').length == 0) {

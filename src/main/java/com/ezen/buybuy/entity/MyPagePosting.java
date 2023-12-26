@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class MyPagePosting {
+	
+	private int cnt;
 	private String member_id;
 	private int product_idx;
 	private String thumbnail_img;

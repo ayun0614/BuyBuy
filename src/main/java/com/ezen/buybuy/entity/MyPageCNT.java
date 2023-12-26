@@ -8,6 +8,5 @@ public class MyPageCNT {
 	private int count_orderend;
 	private int count_ing;
 	private int count_end;
-	
 	private String name;
 }

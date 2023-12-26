@@ -15,14 +15,9 @@
 <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script>
-
-
-
 var countDownDate_${productDetail.product_idx} = new Date("${productDetail.end_date}").getTime();
 
 //1초마다 카운트다운 업데이트
-
-
     // Set the date we're counting down to
     var countDownDate_${productDetail.product_idx} = new Date("${productDetail.end_date}").getTime();
 

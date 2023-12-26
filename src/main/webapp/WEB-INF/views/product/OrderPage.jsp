@@ -337,7 +337,8 @@ hr {
 				<div style="font-weight: 900; font-size: 18px;">상품 이름 : ${productOrder.product_Name }</div>
 				<br>
 				<div style="font-size: 12px;">수량 3개</div>
-				<br> <br>
+				<br>
+				<br>
 				<div style="font-weight: 900; font-size: 18px;">10,000원</div>
 			</div>
 		</div>

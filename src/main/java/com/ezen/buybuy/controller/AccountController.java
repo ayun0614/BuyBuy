@@ -58,6 +58,11 @@ public class AccountController {
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
 		this.naverLoginBO = naverLoginBO;
 	}
+	
+	@Autowired
+	private void setGoogleLoginBO(GoogleLoginBO googleLoginBO) {
+		this.googleLoginBO = googleLoginBO;
+	}
 
 	@Autowired
 	private void setGoogleLoginBO(GoogleLoginBO googleLoginBO) {
@@ -140,6 +145,16 @@ public class AccountController {
 
 		session.setAttribute("mvo", check);
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/googleCallBack")
+	public String googleCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
+			throws IOException {
+		String token = googleLoginBO.requestToken(session, code, state);
+		apiResult = googleLoginBO.requestProfile(token);
+		model.addAttribute("result", apiResult);
+		
+		return "account/googlecallback";
 	}
 
 	@RequestMapping("/naverCallBack")
