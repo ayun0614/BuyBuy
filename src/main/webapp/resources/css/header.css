@@ -83,7 +83,7 @@
 	display: inline-block;
 }
 
-.header-pop, .header-new, .header-second{
+.header-pop, .header-new, .header-second {
 	cursor: pointer;
 }
 
@@ -155,6 +155,6 @@
 }
 
 #notificationTable {
-	width: 100%;
+	width: 270px;
 	border-collapse: collapse;
 }

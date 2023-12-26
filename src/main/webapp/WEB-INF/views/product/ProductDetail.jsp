@@ -272,23 +272,35 @@ function ProductTimeout() {
 							<h3>게시판</h3>
 							<p>Some content in menu 1.</p>
 						</div>
-		</form>
-		<c:if test="${!empty mvo }">
-			<div id="menu2" class="tab-pane fade">
-				<h3>상품 문의</h3>
-				<form id="replyForm" action="${contextPath }/reply" method="post" style="padding: 10px">
-					<input type="hidden" id="product_idx" name="product_idx" value="${productDetail.product_idx }" />
-					<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }" />
-					<input type="text" id="content" name="content" placeholder="댓글을 입력해주세요" class="form-control" style="margin: 15px;">
-					<button type="submit" id="replyInsertBtn" class="btn btn-default">댓글 입력</button>
-				</form>
-				<table class="table table-hover">
-					<tbody>
-						<c:forEach items="${ro3}" var="ro3" varStatus="loop">
-							<tr>
-								<td rowspan="2" style="height: 68px; display: flex; align-items: center;">
-									<div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 7px;">
-										<img src="https://th.bing.com/th/id/OIP.t31yu1KhzSofEN6wHWN3BgHaHa?w=187&h=187&c=7&r=0&o=5&pid=1.7" alt="프로필 이미지" style="width: 100%; height: 100%; object-fit: cover;">
+						</form>
+						<c:if test="${empty mvo }"> 
+						<div id="menu2" class="tab-pane fade">
+					        <h3>상품 문의</h3>
+					        <div>로그인시 사용가능합니다.</div>
+					        <br>
+					    </div>
+					    </c:if>
+					    <c:if test="${!empty mvo }"> 			
+		<div id="menu2" class="tab-pane fade">
+			<h3>상품 문의</h3>
+			<form id="replyForm" action="${contextPath }/reply" method="post" style="padding: 10px; display: flex; align-items: center;">
+			    <input type="hidden" id="product_idx" name="product_idx" value="${productDetail.product_idx }" />
+			    <input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }" />
+			    <input type="text" id="content" name="content" placeholder="댓글을 입력해주세요" class="form-control" style="margin: 15px; w" />
+			    <button type="submit" id="replyInsertBtn" class="btn btn-default">댓글 입력</button>
+			</form>
+
+			<table class="table table-hover">
+				<tbody>
+					<c:forEach items="${ro3}" var="ro3" varStatus="loop">
+						<tr>
+							<td rowspan="2" style="height: 68px; display: flex; align-items: center;">
+								<div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 7px;">
+									<img src="https://th.bing.com/th/id/OIP.t31yu1KhzSofEN6wHWN3BgHaHa?w=187&h=187&c=7&r=0&o=5&pid=1.7" alt="프로필 이미지" style="width: 100%; height: 100%; object-fit: cover;">
+								</div>
+								<div style="display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 5px;">
+									<div>${ro3.member_id}
+										<fmt:formatDate value="${ro3.content_date}" pattern="yyyy-MM-dd HH:mm" />
 									</div>
 									<div style="display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 5px;">
 										<div>${ro3.member_id}
