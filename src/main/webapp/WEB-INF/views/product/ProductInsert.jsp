@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-
 <html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,11 +22,6 @@
 	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script
 	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
-
-
-
-
-
 <script>
 	// 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
 	function calculateDiscount() {
@@ -80,8 +74,8 @@
 					var img = document.createElement('img');
 					img.src = reader.result;
 					img.className = 'preview-image';
-					  img.style.width = '800px';
-		                img.style.height = '500px'; 
+					img.style.width = '800px';
+					img.style.height = '500px';
 					previewContainer.appendChild(img);
 
 					var cancelBtn = document.createElement('button');
@@ -183,7 +177,6 @@
 		return true;
 	}
 </script>
-
 <style>
 .top, .middle-left, .middle-right, .middle-right-1, .middle-right-2,
 	.middle-right-3, .bottom {
@@ -213,38 +206,39 @@
 }
 
 .nav-tabs li {
-	width: 33.33%;
+	width: 50%;
 	text-align: center;
 }
+.input-group .form-control:last-child{
+   width: 350px;
+}
+.input-group-addon:first-child{
+   width: 100px;
+}
 </style>
-
 <body>
 	<jsp:include page="../include/header.jsp" />
-
 	<div class="container" style="max-width: 900px; height: 100px;">
-
 		<br>
-		<form action="${contextPath}/ProductListInsert" method="post"
+		<form action="${contextPath}/product/ProductListInsert" method="post"
 			onsubmit="return validateForm()" enctype="multipart/form-data">
 			<input type="hidden" id="endDate" value="${product.end_date}">
 			<div style="display: flex;">
-				<a href="${contextPath }/ProductList" style="font-size: 20px;">
-
-					<span class="glyphicon glyphicon-chevron-left"></span>돌아가기
+				<a href="${contextPath }/product/ProductList"
+					style="font-size: 20px;"> <span
+					class="glyphicon glyphicon-chevron-left"></span>돌아가기
 				</a>
 				<div style="margin-left: 290px;">
 					<h3>게시글 등록</h3>
 				</div>
 			</div>
-			<br> 
-
+			<br>
 			<div class="row" style="max-width: 890px; height: 100px;">
 				<div class="row top text-dark" style="border-radius: 30px;">
 					<input type="text" name="product_name" class="form-control"
 						placeholder="제품 이름">
 				</div>
 			</div>
-
 			<!-- MIDDLE -->
 			<div class="row middle" style="height: 400px; text-align: center;">
 				<div class="row"
@@ -260,13 +254,12 @@
 					</div>
 					<div class="col-md-6">
 						<br>
-
 						<div>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1";>판매자</span> 
-								<input type="hidden" name="member_id" id="member_id" value="${mvo.member_id}">
-								<input
-									type="text" name="name" value="${mvo.name}" readonly class="form-control"
+								<span class="input-group-addon" id="basic-addon1";>판매자</span> <input
+									type="hidden" name="member_id" id="member_id"
+									value="${mvo.member_id}"> <input type="text"
+									name="name" value="${mvo.name}" readonly class="form-control"
 									aria-describedby="basic-addon1">
 							</div>
 							<br>
@@ -298,7 +291,6 @@
 								</select>
 							</div>
 							<br>
-
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">정가</span> <input
 									type="text" name="original_price" id="original_price"
@@ -324,28 +316,18 @@
 								<input type="submit" class="btn btn-primary btn-sm pull-right"
 									style="margin-right: 10px;" value="등록하기" />
 							</div>
-
-
-
 						</div>
 					</div>
-
-
-
-
-
 				</div>
 			</div>
-
 			<hr>
 			상품상세
-
 			<div class="row bottom text-dark">
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#home">상품상세</a></li>
-						<li><a data-toggle="tab" href="#menu1">판매자정보</a></li>
-						<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
+
+						<li><a data-toggle="tab" href="#menu2">판매자정보</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="home" class="tab-pane fade in active">
@@ -365,22 +347,59 @@
 								</table>
 							</div>
 						</div>
-						<div id="menu1" class="tab-pane fade">
-							<h3>게시판</h3>
-							<p>Some content in menu 1.</p>
-						</div>
 						<div id="menu2" class="tab-pane fade">
-							<h3>공지사항</h3>
-							<p>Some content in menu 2.</p>
+							<h3>판매자정보</h3>
+							<p>
+							<div class="form-group" style="height: 300px; width: 300px;">
+								<table class="table">
+									<tbody>
+
+										<tr>
+											<td class="col-sm-5 control-label">이름</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.name}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">사업장 주소</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.addr}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">상세주소</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.detailaddr}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">Email</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.email}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">전화번호</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.phone}</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							</p>
+
 						</div>
 					</div>
 				</div>
 			</div>
 			<br>
-
-
 		</form>
-
 	</div>
 </body>
 </html>

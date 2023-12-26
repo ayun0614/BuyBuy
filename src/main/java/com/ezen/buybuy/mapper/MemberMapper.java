@@ -8,8 +8,12 @@ import com.ezen.buybuy.entity.Members;
 public interface MemberMapper {
 
 	public int register(Members m);
+
 	public Members check(Members m);
+
 	public void insert(Members mem);
+
 	public Members registerCheck(String member_id);
+
 	public int emailCheck(String email);
 }
