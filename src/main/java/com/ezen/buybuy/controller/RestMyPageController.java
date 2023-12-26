@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ezen.buybuy.entity.ApplyDealerACT;
@@ -42,7 +43,6 @@ public class RestMyPageController {
 	@PutMapping("/statusUpdate") 
 	public void deliStatusUpdate(@RequestParam("order_num") int order_num) {
 		memberInfoMapper.deliStatusUpdate(order_num);
-		System.out.println("@@@@@@@@@@@@@@"+order_num);
 	}
 	
 	@GetMapping("/postingAll")
@@ -53,7 +53,7 @@ public class RestMyPageController {
 	}
 	
 	@PutMapping("/dealerRequest")
-	public void dealerRequest(@RequestBody ApplyDealerACT act) {
+	public @ResponseBody void dealerRequest(@RequestBody ApplyDealerACT act) {
 		memberInfoMapper.dealerRequest(act);  
 	}
 	
@@ -74,9 +74,13 @@ public class RestMyPageController {
 	
 	@GetMapping("/excel/download") 
     public void excelDownload(HttpServletResponse response, @RequestParam("product_idx") int product_idx) throws IOException {
-//      Workbook wb = new HSSFWorkbook();
       Workbook wb = new XSSFWorkbook();
       Sheet sheet = wb.createSheet("상품 구매자 리스트");
+      sheet.setColumnWidth(4, 4000);
+      sheet.setColumnWidth(5, 5000);
+      sheet.setColumnWidth(6, 17000);
+      sheet.setColumnWidth(7, 7000);
+      
       Row row = null;
       Cell cell = null;
       int rowNum = 0;
@@ -100,11 +104,8 @@ public class RestMyPageController {
       cell = row.createCell(7);
       cell.setCellValue("배송 메모");
 
-
       
       List<Orders> orderList = memberInfoMapper.productBuyerList(product_idx);
-      System.out.println(product_idx);
-      System.out.println(orderList);
 
    // Body
    for (int i = 0; i < orderList.size(); i++) {
@@ -137,11 +138,9 @@ public class RestMyPageController {
        
    }
    
-   
-
       // 컨텐츠 타입과 파일명 지정
       response.setContentType("ms-vnd/excel");
-//      response.setHeader("Content-Disposition", "attachment;filename=example.xls");
+      // response.setHeader("Content-Disposition", "attachment;filename=example.xls");
       response.setHeader("Content-Disposition", "attachment;filename=example.xlsx");
 
       // Excel File Output

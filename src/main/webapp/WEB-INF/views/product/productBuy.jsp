@@ -70,6 +70,7 @@ IMP.init(userCode);
 
 function requestPay() {
 	
+	var member_id = $("#member_id").val();
 	var deli_name = $("#buyerInfoNameInput").val();
 	var deli_phone = $("#buyerInfoTelInput").val();
 	var deli_zipcode = $("#sample6_postcode").val();
@@ -86,7 +87,7 @@ function requestPay() {
 		url:"mypage/productBuy",
 		type:"put",
 		contentType:'application/json;charset=utf-8',
-		data:JSON.stringify({"total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
+		data:JSON.stringify({"member_id":member_id, "total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
 		success:function(){ 
 			alert("성공");
 		},
@@ -377,6 +378,7 @@ $(document).ready(function(){
 </head>
 <body>
   <jsp:include page="../include/header.jsp"/> 
+  <input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
 <div class = "bodyDiv">
 	<div class = "productInfoSubText">주문 상품 정보</div>  
 	<div class = "productInfoBox">
@@ -417,7 +419,7 @@ $(document).ready(function(){
 				<td style = "width: 105px;">받는 사람</td>
 				<td style = "width: 105px;" class = "userInfoTd">
 				<span id = "buyerInfoNameSpan">${mvo.name }</span>
-				<input type="text" class="form-control" id = "buyerInfoNameInput" value = "">
+				<input type="text" class="form-control" id = "buyerInfoNameInput" value = "${mvo.name }">
 				</td>
 				<td align = "right">
 					<button type="button" class="btn btn-default" id = "buyerInfoUpdateBeBtn">수정</button>
@@ -428,7 +430,7 @@ $(document).ready(function(){
 				<td style = "width:105px;">전화번호</td> 
 				<td class = "userInfoTd">
 				<span id = "buyerInfoTelSpan">${mvo.phone }</span>
-				<input type="text" class="form-control" id = "buyerInfoTelInput" value = "">
+				<input type="text" class="form-control" id = "buyerInfoTelInput" value = "${mvo.phone }">
 				</td>
 			</tr>
 			<tr class = "userInfoTr"> 
@@ -437,7 +439,7 @@ $(document).ready(function(){
 					<span id = "buyerInfoAdrSpan">${mvo.zipcode } &nbsp ${mvo.addr } &nbsp ${mvo.detailaddr }</span>
 					<div class = "buyerInfoAdrInputDiv">
 						<br>
-						<div class = "buyerInfoAdrInputGroup"><input type="text" id="sample6_postcode" class="form-control" placeholder="우편번호" value = "">
+						<div class = "buyerInfoAdrInputGroup"><input type="text" id="sample6_postcode" class="form-control" placeholder="우편번호" value = "${mvo.zipcode }">
 						<button onclick="sample6_execDaumPostcode()" class="btn">우편번호 찾기</button>
 						</div>
 						<input type="text" id="sample6_address" class="form-control" placeholder="주소" value = "${mvo.addr }">

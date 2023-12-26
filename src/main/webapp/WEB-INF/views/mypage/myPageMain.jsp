@@ -128,7 +128,7 @@ hr {
 
 		$('#dealerChangeReq').click(function(){
 			
-			var member_id = $('#member_idReq').text();
+			var member_id = $('#member_id').val();
 			
 			if('${mvo.account_type}' === 'dealer') {
 				alert("판매자 계정입니다.");
@@ -140,7 +140,7 @@ hr {
 					type:"put",
 					contentType:'application/json;charset=utf-8',
 					data:JSON.stringify({"member_id":member_id}),
-					success:function(){ 
+					success:function(){
 						alert("신청이 완료되었습니다.");
 					}, 
 					error:function(){

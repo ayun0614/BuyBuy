@@ -152,7 +152,11 @@ td {
 		$.each(data, function(index, obj) {
 			list += "<input type='hidden' id='order_num' name='order_num' value='"+obj.order_num+"'>";
 			list += "<div class = 'orderStatusBox'>";
-			list += "<div class = 'orderStatusText' style = 'font-size:20px;' id = 'sta"+obj.order_num+"'>" + obj.status + "</div>";
+			if (obj.status == "주문 취소") {
+				list += "<div class = 'orderStatusText' style = 'font-size:20px; color:red; font-weight: 700;' id = 'sta"+obj.order_num+"'>" + obj.status + "</div>";
+			} else {
+				list += "<div class = 'orderStatusText' style = 'font-size:20px; font-weight: 700;' id = 'sta"+obj.order_num+"'>" + obj.status + "</div>";
+			}
 			list += "<div class = 'orderDateText' style = 'font-size:20px;'>신청일자 " + obj.order_date + "</div>";
 			list += "<div class = 'orderInfoText' style = 'font-size:20px;'><a href = 'myPageOrderInfo?order_num=" + obj.order_num + "&member_id=${mvo.member_id }' style = 'text-decoration:none; color: black;'>주문상세<img src = 'resources/image/Go.png' class = 'goBtn'></a></div>";
 			list += "</div>";
