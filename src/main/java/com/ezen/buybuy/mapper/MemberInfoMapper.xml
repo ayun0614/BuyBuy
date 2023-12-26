@@ -6,7 +6,7 @@
 		select * from members where member_id='user01'
 	</select>
 
-	<select id="productInfo" resultType="com.ezen.buybuy.entity.Product">
+	<select id="productInfo" resultType="com.ezen.buybuy.entity.Products">
 		select * from products where product_idx = 161
 	</select>
 

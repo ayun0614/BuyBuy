@@ -58,11 +58,6 @@ public class AccountController {
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
 		this.naverLoginBO = naverLoginBO;
 	}
-	
-	@Autowired
-	private void setGoogleLoginBO(GoogleLoginBO googleLoginBO) {
-		this.googleLoginBO = googleLoginBO;
-	}
 
 	@Autowired
 	private void setGoogleLoginBO(GoogleLoginBO googleLoginBO) {
@@ -130,7 +125,7 @@ public class AccountController {
 
 		memVO = new Members();
 		memVO.setMember_id(full.getBigInteger("id").toString() + "_google");
-		
+
 		Members check = memberMapper.registerCheck(memVO.getMember_id());
 
 		if (check == null || check.getMember_id().equals("")) {
@@ -146,16 +141,6 @@ public class AccountController {
 		session.setAttribute("mvo", check);
 		return "redirect:/";
 	}
-	
-	@RequestMapping("/googleCallBack")
-	public String googleCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
-			throws IOException {
-		String token = googleLoginBO.requestToken(session, code, state);
-		apiResult = googleLoginBO.requestProfile(token);
-		model.addAttribute("result", apiResult);
-		
-		return "account/googlecallback";
-	}
 
 	@RequestMapping("/naverCallBack")
 	public String naverCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
@@ -168,7 +153,7 @@ public class AccountController {
 
 		memVO = new Members();
 		memVO.setMember_id(response.getString("id") + "_naver");
-		
+
 		Members check = memberMapper.registerCheck(memVO.getMember_id());
 
 		if (check == null || check.getMember_id().equals("")) {
@@ -181,7 +166,7 @@ public class AccountController {
 			model.addAttribute("mem", memVO);
 			return "account/signUp";
 		}
-		
+
 		session.setAttribute("mvo", check);
 		return "redirect:/";
 	}
@@ -245,34 +230,35 @@ public class AccountController {
 	}
 
 	@RequestMapping("/myPage")
-	public String myPage(String member_id, Model mo, Model mvo, Model moo, Members mem, MypageMain mpm, MyPageCNT cnt, HttpSession session) {
+	public String myPageMain(@RequestParam("member_id") String member_id, Model mo, Model mvo, Model moo, Members mem, MypageMain mpm, MyPageCNT cnt, HttpSession session, HttpServletRequest request) {
+		
+		cnt.setMember_id(member_id);
+		 
 		mem = memberInfoMapper.mypageInfo(member_id);
 		cnt = memberInfoMapper.mypageCnt(member_id);
 		mpm = memberInfoMapper.dealerRequestInfo(member_id);
 		session.setAttribute("mo", mem);
-		session.setAttribute("mvo", cnt);
+		session.setAttribute("mvoo", cnt);
 		session.setAttribute("moo", mpm);
-		return "account/myPage";
+		return "mypage/myPageMain";
 	}
 
 	@RequestMapping("/myOrderList")
-	public String myPageOrder() {
-		return "account/myOrderList";
-	}
-
-	@RequestMapping(value = "/myOrderInfo", method = RequestMethod.GET)
-	public String myOrderInfo(String member_id, Model mo, OrderInfo oi, HttpSession session, HttpServletRequest request) {
-		oi = memberInfoMapper.mypageOrderInfo(member_id);
-		String order_num = request.getParameter("order_num");
-		mo.addAttribute("order_num", order_num);
+	public String myPageOrder(String member_id) {
+		return "mypage/myPageOrderList"; 
+	} 
+	@RequestMapping("/myOrderInfo")
+	public String myPageOrderInfo(@RequestParam("order_num") int order_num, @RequestParam("member_id") String member_id, Model mo, OrderInfo oi, HttpSession session, HttpServletRequest request) {
+		oi.setMember_id(member_id); 
+		oi.setOrder_num(order_num);
+		oi = memberInfoMapper.mypageOrderInfo(order_num, member_id); 
 		session.setAttribute("mo", oi);
-		// m.addAttribute("member_id", member_id);
-		return "account/myOrderInfo";
+		return "mypage/myPageOrderInfo"; 
 	}
 
 	@RequestMapping("/myProducts")
-	public String myProducts() {
-		return "account/myProducts";
+	public String myPagePostingProduct() {
+		return "mypage/myPagePostingProduct"; 
 	}
 
 	@RequestMapping("/check")

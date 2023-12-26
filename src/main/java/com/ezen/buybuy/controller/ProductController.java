@@ -1,22 +1,13 @@
 package com.ezen.buybuy.controller;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,14 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ezen.buybuy.api.GoogleLoginBO;
 import com.ezen.buybuy.api.ImgurBO;
-import com.ezen.buybuy.entity.Alert;
 import com.ezen.buybuy.entity.Members;
-import com.ezen.buybuy.entity.Product;
 import com.ezen.buybuy.entity.Products;
 import com.ezen.buybuy.entity.Reply;
 import com.ezen.buybuy.entity.Reply2;
@@ -68,7 +55,7 @@ public class ProductController {
 	}
 
 	@RequestMapping("/productBuy")
-	public String productBuy(String member_id, Model mo, Members m, Model moo, Product p, HttpSession session) {
+	public String productBuy(String member_id, Model mo, Members m, Model moo, Products p, HttpSession session) {
 		m = memberInfoMapper.mypageInfo(member_id);
 		p = memberInfoMapper.productInfo();
 		session.setAttribute("mo", m);

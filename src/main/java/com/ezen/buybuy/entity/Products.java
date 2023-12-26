@@ -1,6 +1,7 @@
 package com.ezen.buybuy.entity;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import lombok.Data;
