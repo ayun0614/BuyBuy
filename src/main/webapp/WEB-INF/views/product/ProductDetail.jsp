@@ -171,7 +171,7 @@ function ProductTimeout() {
 			<div class="row middle" style="height: 400px; text-align: center;">
 				<div class="row" style="border: 1px solid black; border-radius: 30px; height: 450px;">
 					<div class="col-md-6" style="border-radius: 30px; width: 450px; height: 435px; overflow: hidden; border: 1px solid black; margin-left: 6px; margin-top: 6px; margin-bottom: 6px;">
-						<img src="${contextPath}/resources/upload/${productDetail.thumbnail_img}" alt="thumbnail_img">
+						<img src="${productDetail.thumbnail_img}" alt="thumbnail_img">
 					</div>
 					<div class="col-md-6">
 						<br>
@@ -262,7 +262,7 @@ function ProductTimeout() {
 								<table class="table table-bordered" style="text-align: center; border-radius: 30px; border: 1px solid #dddddd;">
 									<tr>
 										<div class="thumbnail">
-											<img src="${contextPath}/resources/upload/${productDetail.detail_img}" alt="detail_img">
+											<img src="${productDetail.detail_img}" alt="detail_img">
 										</div>
 									</tr>
 								</table>

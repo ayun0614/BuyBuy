@@ -23,6 +23,7 @@
 	<beans:bean id="naverLoginBO" class="com.ezen.buybuy.api.NaverLoginBO" />
 	<beans:bean id="kakaoLoginBO" class="com.ezen.buybuy.api.KakaoLoginBO" />
 	<beans:bean id="googleLoginBO" class="com.ezen.buybuy.api.GoogleLoginBO" />
+	<beans:bean id="imgurBO" class="com.ezen.buybuy.api.ImgurBO" />
 
     <!-- Mail Sender Bean -->
     <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
