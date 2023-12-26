@@ -226,7 +226,7 @@ public class AccountController {
 	@RequestMapping("/logout")
 	public String memLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/main";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/myPage")

@@ -69,10 +69,10 @@
 					<!-- ProductList에 있는 각각의 상품에 대한 정보를 출력 -->
 					<c:forEach items="${ProductList}" var="product">
 						<a href="${contextPath}/product/ProductDetail?product_idx=${product.product_idx}">
-							<div class="col-sm-6 col-md-4" style="width: 216px;">
+							<div class="col-sm-6 col-md-4" style="width: 285px;">
 								<div class="card-ui">
-									<div class="thumbnail" style="height: 300px;">
-										<img src="${contextPath}/resources/upload/${product.thumbnail_img}" alt="thumbnail_img" style="height: 150px;">
+									<div class="thumbnail" style="height: 350px;">
+										<img src="${contextPath}/resources/upload/${product.thumbnail_img}" alt="thumbnail_img" style="height: 200px;">
 										<div class="caption">
 											<td>${product.product_name}</td> <br>
 											<span style="text-decoration: line-through;">
@@ -105,37 +105,37 @@
 												<input type="hidden" id="endDate" value="${product.end_date}">
 												<div id="countdown_${product.product_idx}" style="font-weight: bold;"></div>
 												<script>
-											        // Set the date we're counting down to
-											        var countDownDate_${product.product_idx} = new Date("${product.end_date}").getTime();
-											
-											        // Update the countdown every 1 second
-											        var x_${product.product_idx} = setInterval(function () {
-											            // Get the current date and time
-											            var now = new Date().getTime();
-											
-											            // Calculate the remaining time
-											            var distance = countDownDate_${product.product_idx} - now;
-											
-											            // Calculate days, hours, minutes, and seconds
-											            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-											            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-											            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-											            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-											
-											            // Display the countdown
-											            document.getElementById("countdown_${product.product_idx}").innerHTML =
-											                days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
-											
-											            // If the countdown is over, display a message and update content_state
-											            if (distance < 0) {
-											                clearInterval(x_${product.product_idx});
-											                document.getElementById("countdown_${product.product_idx}").innerHTML =
-											                    "공구종료";
-											
-											       
-											            }
-											        }, 1000);
-											    </script>
+                                         // Set the date we're counting down to
+                                         var countDownDate_${product.product_idx} = new Date("${product.end_date}").getTime();
+                                 
+                                         // Update the countdown every 1 second
+                                         var x_${product.product_idx} = setInterval(function () {
+                                             // Get the current date and time
+                                             var now = new Date().getTime();
+                                 
+                                             // Calculate the remaining time
+                                             var distance = countDownDate_${product.product_idx} - now;
+                                 
+                                             // Calculate days, hours, minutes, and seconds
+                                             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                                 
+                                             // Display the countdown
+                                             document.getElementById("countdown_${product.product_idx}").innerHTML =
+                                                 days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
+                                 
+                                             // If the countdown is over, display a message and update content_state
+                                             if (distance < 0) {
+                                                 clearInterval(x_${product.product_idx});
+                                                 document.getElementById("countdown_${product.product_idx}").innerHTML =
+                                                     "공구종료";
+                                 
+                                        
+                                             }
+                                         }, 1000);
+                                     </script>
 											</c:if>
 										</div>
 									</div>
@@ -146,9 +146,9 @@
 				</div>
 			</div>
 		</div>
-	<div style="text-align: center; margin-right: 50px;">
-    <button class="load-more btn btn-primary btn-lg" style="margin: 0 auto;">Load More</button>
-</div>
+		<div style="text-align: center; margin-right: 50px;">
+			<button class="load-more btn btn-primary btn-lg" style="margin: 0 auto;">Load More</button>
+		</div>
 	</div>
 	<script>
         $('.card-ui').slice(0, 8).show(); // 처음 페이지에 보여지는 사진 개수
