@@ -226,26 +226,26 @@ public class AccountController {
 	@RequestMapping("/logout")
 	public String memLogout(HttpSession session) {
 		session.invalidate();
-		return "main";
+		return "redirect:/main";
 	}
 
 	@RequestMapping("/myPage")
 	public String myPageMain(@RequestParam("member_id") String member_id, Model mo, Model mvo, Model moo, Members mem, MypageMain mpm, MyPageCNT cnt, HttpSession session, HttpServletRequest request) {
 		
 		cnt.setMember_id(member_id);
-		 
+		
 		mem = memberInfoMapper.mypageInfo(member_id);
 		cnt = memberInfoMapper.mypageCnt(member_id);
 		mpm = memberInfoMapper.dealerRequestInfo(member_id);
 		session.setAttribute("mo", mem);
 		session.setAttribute("mvoo", cnt);
 		session.setAttribute("moo", mpm);
-		return "mypage/myPageMain";
+		return "account/myPage";
 	}
 
 	@RequestMapping("/myOrderList")
 	public String myPageOrder(String member_id) {
-		return "mypage/myPageOrderList"; 
+		return "account/myOrderList"; 
 	} 
 	@RequestMapping("/myOrderInfo")
 	public String myPageOrderInfo(@RequestParam("order_num") int order_num, @RequestParam("member_id") String member_id, Model mo, OrderInfo oi, HttpSession session, HttpServletRequest request) {
@@ -253,12 +253,12 @@ public class AccountController {
 		oi.setOrder_num(order_num);
 		oi = memberInfoMapper.mypageOrderInfo(order_num, member_id); 
 		session.setAttribute("mo", oi);
-		return "mypage/myPageOrderInfo"; 
+		return "account/myOrderInfo"; 
 	}
 
 	@RequestMapping("/myProducts")
 	public String myPagePostingProduct() {
-		return "mypage/myPagePostingProduct"; 
+		return "account/myProducts"; 
 	}
 
 	@RequestMapping("/check")
