@@ -6,7 +6,7 @@ import lombok.Data;
 public class Products {
 	private int product_idx;
 	private String product_name;
-	private String ptart_date;
+	private String start_date;
 	private String end_date;
 	private String thumbnail_img;
 	private int original_price;
@@ -16,4 +16,7 @@ public class Products {
 	private String content_state;
 	private int ctgr_idx;
 	private int reg_id;
+	private String ctgr_name;
+	private String member_id;
+	private int order_pcs;
 }

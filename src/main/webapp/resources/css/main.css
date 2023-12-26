@@ -99,6 +99,7 @@
 .product-image{
 	width:250px;
 	max-width: 100%;
+	cursor: pointer;
 }
 
 .product-flex div h1{
@@ -107,13 +108,20 @@
 	font-size: 13;
 	margin-top:5px;
 	margin-bottom:0px;
+	cursor: pointer;
 }
 
 .product-flex div h2{
+	display: block;
 	font-weight: 300;
 	font-size: 15;
+	width: 250px;
 	margin-top:3px;
 	margin-bottom:0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
 }
 
 .product-flex div h3{

@@ -21,4 +21,8 @@ public interface ReplyMapper {
 	public List<Reply3> replytotal(Reply3 r3);
 
 	public List<Reply3> replytotal2(Reply3 r3);
+	
+	public void replydelete(int reply_idx);
+	
+	public void replydelete2(int reply2_idx);
 }

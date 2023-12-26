@@ -10,4 +10,7 @@ public class Alert {
 	private String member_id;
 	private String a_url;
 	private int a_state;
+	private int product_idx;
+	private int reply_idx;
+	private String thumbnail_img;
 }

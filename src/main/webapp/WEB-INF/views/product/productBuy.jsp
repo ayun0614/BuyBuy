@@ -78,16 +78,17 @@ function requestPay() {
 	var deli_detailaddr = $("#sample6_detailAddress").val();
 	var deli_memo = $("#memo option:selected").val();
 	var pay_type = $("input[name='optradio']:checked").val();
+	var order_pcs = $("#orderPcsSpan").text();
 	
 	var total = $("td.lastPayTd").html();
 	var regex = /[^0-9]/g;
 	var total_price = total.replace(regex, "");
 
 	$.ajax({  
-		url:"mypage/productBuy",
+		url:"productBuy",
 		type:"put",
 		contentType:'application/json;charset=utf-8',
-		data:JSON.stringify({"member_id":member_id, "total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
+		data:JSON.stringify({"member_id":member_id, "order_pcs":order_pcs, "total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
 		success:function(){ 
 			alert("성공");
 		},
@@ -388,7 +389,7 @@ $(document).ready(function(){
 		<div class = "productInfoBox2"> 
 			<div style = "font-weight: 900; font-size: 22px;">${moo.product_name }</div>
 			<br>
-			<div style = "font-size: 12px;">수량 개</div>
+			<div style = "font-size: 12px;">수량 <span id = "orderPcsSpan">${order_pcs}</span>개</div>
 			<br><br>
 			<div style = "font-weight: 900; font-size: 18px;"><fmt:formatNumber value="${moo.discount_price }" pattern="#,##0" />원</div>
 		</div>
@@ -484,7 +485,7 @@ $(document).ready(function(){
 
 			<tr class = "userInfoTr"> 
 				<td class = "lastPayTextTd">총 결제 금액</td>
-				<td class = "lastPayTd"><fmt:formatNumber value="${moo.discount_price+2500}" pattern="#,##0" />원</td>
+				<td class = "lastPayTd"><fmt:formatNumber value="${(moo.discount_price*order_pcs)+2500}" pattern="#,##0" />원</td>
 			</tr>
 		</table>
 	</div>
