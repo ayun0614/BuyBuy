@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.UUID;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,10 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.buybuy.entity.Members;
+import com.ezen.buybuy.entity.Product;
 import com.ezen.buybuy.entity.Products;
 import com.ezen.buybuy.entity.Reply;
 import com.ezen.buybuy.entity.Reply2;
 import com.ezen.buybuy.entity.Reply3;
+import com.ezen.buybuy.mapper.MemberInfoMapper;
 import com.ezen.buybuy.mapper.ProductMapper;
 import com.ezen.buybuy.mapper.ReplyMapper;
 import com.oreilly.servlet.MultipartRequest;
@@ -41,6 +46,24 @@ public class ProductController {
 
 	@Autowired
 	ReplyMapper replyMapper;
+
+	@Autowired
+	MemberInfoMapper memberInfoMapper;
+
+	@RequestMapping("/productBuy")
+	public String productBuy(String member_id, Model mo, Members m, Model moo, Product p, HttpSession session) {
+		m = memberInfoMapper.mypageInfo(member_id);
+		p = memberInfoMapper.productInfo();
+		session.setAttribute("mo", m);
+		session.setAttribute("moo", p);
+		return "product/productBuy";
+	}
+
+	@GetMapping("/ProductListInsert")
+	public String ProductListInsert() {
+		return "product/ProductInsert";
+
+	}
 
 	@PostMapping("/ProductListInsert")
 	public String ProductListInsert(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) throws IOException {
@@ -61,7 +84,7 @@ public class ProductController {
 			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
 				newProThumbnail = thumbnailFile.getName();
 			} else {
-				return "redirect:product/ProductList";
+				return "redirect:/product/ProductList";
 			}
 		}
 
@@ -72,7 +95,7 @@ public class ProductController {
 			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
 				newProDetail = detailFile.getName();
 			} else {
-				return "redirect:product/ProductList";
+				return "redirect:/product/ProductList";
 			}
 		}
 
@@ -82,6 +105,8 @@ public class ProductController {
 		mvo.setDetail_img(newProDetail);
 		mvo.setProduct_name(multi.getParameter("product_name"));
 		mvo.setEnd_date(multi.getParameter("end_date"));
+		mvo.setContent_state("판매중");
+		mvo.setMember_id(multi.getParameter("member_id"));
 
 		// Check if parameters are not null before parsing
 		String originalPriceStr = multi.getParameter("original_price");
@@ -110,7 +135,7 @@ public class ProductController {
 		rttr.addFlashAttribute("msgType", "성공");
 		rttr.addFlashAttribute("msg", "사진이 등록되었습니다.");
 
-		return "redirect:product/ProductList";
+		return "redirect:/product/ProductList";
 
 	}
 
@@ -219,52 +244,57 @@ public class ProductController {
 		mvo.setOriginal_price(Integer.parseInt(multi.getParameter("original_price")));
 		mvo.setDiscount_price(Integer.parseInt(multi.getParameter("discount_price")));
 		mvo.setCtgr_idx(Integer.parseInt(multi.getParameter("ctgr_idx")));
-		System.out.println(mvo.getCtgr_idx());
+		mvo.setContent_state(multi.getParameter("content_state"));
+		mvo.setMember_id(multi.getParameter("member_id"));
 
 		productMapper.ProductModify(mvo);
 		return "redirect:/product/ProductList";
 	}
 
 	@GetMapping("/ProductDelete")
-	public String productDelete(@RequestParam("product_idx") int product_idx, RedirectAttributes rttr) {
+	public String productDelete(@RequestParam("product_idx") int product_idx) {
 		productMapper.ProductDelete(product_idx);
 
-		return "redirect:product/ProductList";
+		return "redirect:/product/ProductList";
 	}
 
-	@RequestMapping("/uploadImage")
-	public class ImageUploadController {
+	@RequestMapping("/ProductTimeout")
+	public String ProductTimeout(@RequestParam("product_idx") int product_idx) {
 
-		@PostMapping
-		public ResponseEntity<Object> handleImageUpload(MultipartFile upload) {
-			try {
-				if (!upload.isEmpty()) {
-					// 디렉토리가 없다면 생성
-					Path uploadDir = Paths.get("uploads");
-					if (!Files.exists(uploadDir)) {
-						Files.createDirectories(uploadDir);
-					}
+		productMapper.ProductTimeout(product_idx);
 
-					// 파일 이름을 고유하게 만들기
-					String originalFileName = upload.getOriginalFilename();
-					String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFileName;
+		return "redirect:/product/ProductDetail?product_idx=" + product_idx;
+	}
 
-					// 파일 저장 경로
-					Path filePath = uploadDir.resolve(uniqueFileName);
+	@GetMapping("/search")
+	public String ProductSearch(Model m, @RequestParam("word") String word) {
+		List<Products> productList;
+		productList = productMapper.ProductSearch('%' + word + '%');
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
+	}
 
-					// 파일 저장
-					Files.copy(upload.getInputStream(), filePath);
+	@GetMapping("/pop")
+	public String ProductPop(Model m) {
+		List<Products> productList;
+		productList = productMapper.PopMain(9999);
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
+	}
 
-					// ResponseEntity로 JSON 응답 반환
-					return ResponseEntity.ok()
-							.body("{\"uploaded\": 1, \"fileName\": \"" + uniqueFileName + "\", \"url\": \"/uploads/" + uniqueFileName + "\"}");
-				} else {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"uploaded\": 0, \"error\": \"File is empty\"}");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"uploaded\": 0, \"error\": \"" + e.getMessage() + "\"}");
-			}
-		}
+	@GetMapping("/new")
+	public String ProductNew(Model m) {
+		List<Products> productList;
+		productList = productMapper.NewMain(9999);
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
+	}
+
+	@GetMapping("/soon")
+	public String ProductSoon(Model m) {
+		List<Products> productList;
+		productList = productMapper.SoonMain();
+		m.addAttribute("ProductList", productList);
+		return "product/ProductList";
 	}
 }

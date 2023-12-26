@@ -19,28 +19,47 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-public class KakaoLoginBO {
-	private final String CODE_URI = "https://kauth.kakao.com/oauth/authorize";
-	private final String TOKEN_URI = "https://kauth.kakao.com/oauth/token";
-	private final String USER_INFO_URI = "https://kapi.kakao.com/v2/user/me";
+public class ImgurBO {
+	private final String CODE_URI = "https://accounts.google.com/o/oauth2/v2/auth";
+	private final String TOKEN_URI = "https://oauth2.googleapis.com/token";
+	private final String USER_INFO_URI = "https://www.googleapis.com/userinfo/v2/me";
 	private final String RESPONSE_TYPE = "code";
 	private final String GRANT_TYPE = "authorization_code";
-	private final String CLIENT_ID = "5f019fb279d5d9fbc26265777b9a30c2";
-	private final String REDIRECT_URI = "http://localhost:8080/buybuy/account/kakaoCallBack";
-	private final String SESSION_STATE = "kakao_state";
+	private final String CLIENT_ID = "68fc69ed9de3480";
+	private final String CLIENT_SECRET = "837798472f4c65d102afc93baa8ba843b3db65da";
+	private final String REDIRECT_URI = "http://localhost:8080/buybuy/imgur";
+	private final String SESSION_STATE = "google_state";
+	private final String SCOPE = "email profile openid";
+	private final String ACCESS_TYPE = "offline";
 
 	RestTemplate restTemplate = new RestTemplate();
 
 	public String requestCode(HttpSession session) throws Exception {
 		String state = generateRandomString();
 		setSession(session, state);
-
 		String codeRequestUrl = CODE_URI;
-		codeRequestUrl += "?response_type=" + RESPONSE_TYPE;
-		codeRequestUrl += "&client_id=" + CLIENT_ID;
+		codeRequestUrl += "?client_id=" + CLIENT_ID;
 		codeRequestUrl += "&redirect_uri=" + REDIRECT_URI;
+		codeRequestUrl += "&response_type=" + RESPONSE_TYPE;
+		codeRequestUrl += "&scope=" + SCOPE;
+		codeRequestUrl += "&access_type=" + ACCESS_TYPE;
 		codeRequestUrl += "&state=" + state;
 		return codeRequestUrl;
+	}
+
+	// 세션 유효성 검증을 위한 난수 생성
+	private String generateRandomString() {
+		return UUID.randomUUID().toString();
+	}
+
+	// http session에 데이터 저장
+	private void setSession(HttpSession session, String state) {
+		session.setAttribute(SESSION_STATE, state);
+	}
+
+	// http session에서 데이터 가져오기
+	private String getSession(HttpSession session) {
+		return (String) session.getAttribute(SESSION_STATE);
 	}
 
 	public String requestToken(HttpSession session, String code, String state) throws MalformedURLException {
@@ -50,8 +69,9 @@ public class KakaoLoginBO {
 			MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
 			parameters.add("grant_type", GRANT_TYPE);
 			parameters.add("client_id", CLIENT_ID);
-			parameters.add("redirect_uri", REDIRECT_URI);
+			parameters.add("client_secret", CLIENT_SECRET);
 			parameters.add("code", code);
+			parameters.add("redirect_uri", REDIRECT_URI);
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -95,23 +115,6 @@ public class KakaoLoginBO {
 			e.printStackTrace();
 			result = "Errors";
 		}
-
 		return result;
 	}
-
-	// 세션 유효성 검증을 위한 난수 생성
-	private String generateRandomString() {
-		return UUID.randomUUID().toString();
-	}
-
-	// http session에 데이터 저장
-	private void setSession(HttpSession session, String state) {
-		session.setAttribute(SESSION_STATE, state);
-	}
-
-	// http session에서 데이터 가져오기
-	private String getSession(HttpSession session) {
-		return (String) session.getAttribute(SESSION_STATE);
-	}
-	
 }

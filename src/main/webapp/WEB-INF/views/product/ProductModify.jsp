@@ -3,55 +3,78 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <title>Bootstrap Example</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-
 <script>
-        // Set the date we're counting down to
-        var countDownDate_${product.product_IDX} = new Date("${product.end_Date}").getTime();
+	function cancelImageUploadDetail(index) {
+		var previewContainer = document.getElementById('imagePreviewContainerDetail');
+		var filesInput = document.getElementsByName('detail_img')[0]; // Use getElementsByName to get the file input
+		var images = previewContainer.getElementsByClassName('preview-image');
+		var buttons = previewContainer.getElementsByClassName('cancel-btn');
 
-        // Update the countdown every 1 second
-        var x_${product.product_IDX} = setInterval(function () {
-            // Get the current date and time
-            var now = new Date().getTime();
+		// 미리보기 이미지와 버튼을 삭제
+		previewContainer.removeChild(images[index]);
+		previewContainer.removeChild(buttons[index]);
 
-            // Calculate the remaining time
-            var distance = countDownDate_${product.product_IDX} - now;
+		// 선택한 이미지를 파일 입력에서도 삭제
+		filesInput.value = '';
 
-            // Calculate days, hours, minutes, and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		// 이미지 추가 버튼을 다시 표시
+		document.getElementById('imageUploadBtnDetail').style.display = 'inline';
+	}
 
-            // Display the countdown
-            document.getElementById("countdown_${product.product_IDX}").innerHTML =
-                days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
+	function previewImagesDetail(input) {
+		var previewContainer = document.getElementById('imagePreviewContainerDetail');
+		var files = input.files;
 
-            // If the countdown is over, display a message
-            if (distance < 0) {
-                clearInterval(x_${product.product_IDX});
-                document.getElementById("countdown_${product.product_IDX}").innerHTML =
-                    "공구종료";
-            }
-        }, 1000);
-    </script>
+		// 기존 미리보기 이미지 및 버튼 삭제
+		previewContainer.innerHTML = '';
 
-<script>
+		for (var i = 0; i < files.length; i++) {
+			var reader = new FileReader();
+			var file = files[i];
+
+			reader.onloadend = (function(index) {
+				return function() {
+					var img = document.createElement('img');
+					img.src = reader.result;
+					img.className = 'preview-image';
+					img.style.width = '800px';
+					img.style.height = '500px';
+					previewContainer.appendChild(img);
+
+					var cancelBtn = document.createElement('button');
+					cancelBtn.innerHTML = '현재 이미지 삭제';
+					cancelBtn.className = 'btn btn-danger cancel-btn';
+					cancelBtn.onclick = function() {
+						cancelImageUploadDetail(index);
+					};
+
+					previewContainer.appendChild(cancelBtn);
+				};
+			})(i);
+
+			if (file) {
+				reader.readAsDataURL(file);
+			}
+		}
+
+		// 이미지 추가 버튼을 숨김
+		document.getElementById('imageUploadBtnDetail').style.display = 'none';
+	}
 	// 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
 	function calculateDiscount() {
 		// 정가와 판매가 값을 가져옴
-		var regularPrice = parseFloat(document.getElementById('original_price').value);
 		var salePrice = parseFloat(document.getElementById('discount_price').value);
 
 		// 정가와 판매가가 유효한 숫자인 경우에만 계산 수행
@@ -60,8 +83,7 @@
 			var discount = ((regularPrice - salePrice) / regularPrice) * 100;
 
 			// 계산된 할인율을 할인율 입력란에 표시
-			document.getElementById('discount_rate').value = discount
-					.toFixed(0);
+			document.getElementById('discount_rate').value = discount.toFixed(0) + '%';
 		} else {
 			// 정가나 판매가가 유효한 숫자가 아닌 경우 할인율 입력란을 비움
 			document.getElementById('discount_rate').value = '';
@@ -98,6 +120,8 @@
 					var img = document.createElement('img');
 					img.src = reader.result;
 					img.className = 'preview-image';
+					img.style.width = '800px';
+					img.style.height = '500px';
 					previewContainer.appendChild(img);
 
 					var cancelBtn = document.createElement('button');
@@ -119,64 +143,67 @@
 		// 이미지 추가 버튼을 숨김
 		document.getElementById('imageUploadBtn').style.display = 'none';
 	}
-	
+	function cancelImageUpload2(index) {
+		var previewContainer = document.getElementById('imagePreviewContainer2');
+		var filesInput = document.getElementsByName('thumbnail_img')[0];
+		var images = previewContainer.getElementsByClassName('preview-image');
+		var buttons = previewContainer.getElementsByClassName('cancel-btn');
 
-function calculateDiscount() {
-    // 정가와 판매가 값을 가져옴
-    var regularPrice = parseFloat(document.getElementById('original_price').value);
-    var salePrice = parseFloat(document.getElementById('discount_price').value);
+		// 인덱스가 요소 범위 내에 있는지 확인
+		if (index >= 0 && index < images.length) {
+			// 미리보기 이미지 및 버튼 삭제
+			previewContainer.removeChild(images[index]);
+			previewContainer.removeChild(buttons[index]);
+		}
 
-    // 수량을 가져옴
-    var quantity = parseInt(document.getElementById('result').textContent);
+		// 파일 입력 값 초기화
+		filesInput.value = '';
 
-    // 정가와 판매가가 유효한 숫자인 경우에만 계산 수행
-    if (!isNaN(regularPrice) && !isNaN(salePrice)) {
-        // 할인율 계산
-        var discount = ((regularPrice - salePrice) / regularPrice) * 100;
+		// 이미지 업로드 버튼 표시
+		document.getElementById('imageUploadBtn').style.display = 'inline';
+	}
 
-        // 할인가 계산 (수량만큼 곱하기)
-        var discountedPrice = salePrice * quantity;
+	function previewImages2(input) {
+		var previewContainer = document.getElementById('imagePreviewContainer2');
+		var files = input.files;
 
-        // 계산된 할인율을 할인율 입력란에 표시
-        document.getElementById('discount_rate').value = discount.toFixed(0);
+		// 미리보기 컨테이너의 기존 내용 지우기
+		previewContainer.innerHTML = '';
 
-        // 할인가를 동적으로 표시할 span 업데이트
-        document.getElementById('discountPriceDisplay').textContent = '총금액: ' + discountedPrice.toFixed(0)+ '원';
-    } else {
-        // 정가나 판매가가 유효한 숫자가 아닌 경우 할인율 입력란을 비움
-        document.getElementById('discount_rate').value = '';
-    }
-}
+		for (var i = 0; i < files.length; i++) {
+			var reader = new FileReader();
+			var file = files[i];
 
-$(document).ready(function () {
-    // Get the initial value of the result
-    var result = parseInt($("#result").text());
-    $('#ctgr_idx').val(${ProductModify.ctgr_idx});
+			reader.onloadend = (function(index) {
+				return function() {
+					var img = document.createElement('img');
+					img.src = reader.result;
+					img.className = 'preview-image';
+					previewContainer.appendChild(img);
 
-    // Handle the plus button click
-    $(".plus").on("click", function () {
-        result += 1;
-        $("#result").text(result);
-        // Recalculate discount when quantity changes
-        calculateDiscount();
-    });
+				};
+			})(i);
 
-    // Handle the minus button click
-    $(".minus").on("click", function () {
-        // Make sure the result is greater than 1 before decrementing
-        if (result > 1) {
-            result -= 1;
-            $("#result").text(result);
-            // Recalculate discount when quantity changes
-            calculateDiscount();
-        }
-    });
-});
-$(".ProductDetailModify").click(function() {
-	location.href = "${contextPath}/product/ProductModify";
-});
+			if (file) {
+				reader.readAsDataURL(file);
+			}
+		}
+
+		// 이미지 업로드 버튼 숨기기
+		document.getElementById('imageUploadBtn').style.display = 'none';
+	}
+	function confirmLeave() {
+		var isConfirmed = confirm("수정중인 내용은 저장되지 않습니다. 그래도 돌아가시겠습니까?");
+		if (isConfirmed) {
+			window.location.href = "${contextPath}/product/ProductDetail?product_idx=${ProductModify.product_idx}";
+		}
+	}
+
+	// 페이지 떠나기 전에 확인 메시지 표시
+	window.onbeforeunload = function() {
+		return "수정중인 내용은 저장되지 않습니다. 그래도 돌아가시겠습니까?";
+	};
 </script>
-
 <style>
 .top, .middle-left, .middle-right, .middle-right-1, .middle-right-2,
 	.middle-right-3, .bottom {
@@ -204,96 +231,106 @@ $(".ProductDetailModify").click(function() {
 	max-height: 100%;
 	margin: 10px;
 }
-</style>
 
+.nav-tabs li {
+	width: 33.33%;
+	text-align: center;
+}
+</style>
 <body>
 	<jsp:include page="../include/header.jsp" />
 	<div class="container" style="max-width: 900px; height: 100px;">
-
 		<br>
-		<form class="form-inline" method="post" enctype="multipart/form-data" action="${contextPath}/product/ProductModify?product_idx=${ProductModify.product_idx}">
+		<form action="${contextPath}/product/ProductModify?product_idx=${ProductModify.product_idx}" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="product_idx" value=${ProductModify.product_idx }>
-
-			<div class="row" style="max-width: 890px; height: 100px;">
-				<div class="row top text-dark">
-					<input type="text" name="product_name" id="product_name" value="${ProductModify.product_name }" class="form-control" placeholder="제품 이름">
+			<div style="display: flex;">
+				<a href="${contextPath }/product/ProductDetail?product_idx=${ProductModify.product_idx}" style="font-size: 20px;"> <span class="glyphicon glyphicon-chevron-left"></span>상세로 돌아가기
+				</a>
+				<div style="margin-left: 220px;">
+					<h3>게시글 수정</h3>
 				</div>
 			</div>
-			<div class="row middle">
-				<div class="col-md-6 middle-left" style="height: 422px; display: flex; align-items: center; justify-content: center;">
-					<div class="panel-body">
-						<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
-							<div class="col-sm-6 col-md-4" style="width: 440px;">
-								<div class="card-ui">
-									<tr>
-										<td><span class="btn btn-default"> 이미지 업로드하세요 <input type="file" name="thumbnail_img" />
-										</span></td>
-									</tr>
-								</div>
-							</div>
-						</table>
-						<!--</form>-->
-					</div>
+			<br>
+			<div class="row" style="max-width: 890px; height: 100px;">
+				<div class="row top text-dark" style="border-radius: 30px;">
+					<input type="text" name="product_name" class="form-control" value="${ProductModify.product_name}" placeholder="제품 이름">
 				</div>
-				<div class="col-md-6 middle-right text-dark">
-					<div class="row middle-right-1">
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">판매자</td> <br>
-							<input type="text" value="${mvo.name}" readonly />
+			</div>
+			<!-- MIDDLE -->
+			<div class="row middle" style="height: 400px; text-align: center;">
+				<div class="row" style="border: 1px solid black; border-radius: 30px; height: 400px;">
+					<div class="col-md-6" style="height: 100%; display: flex; flex-direction: column; border-radius: 30px; align-items: center; justify-content: center;">
+						<div id="imagePreviewContainer2" style="border-radius: 30px; width: 450px; height: 400px; overflow: hidden; border: 1px solid black; margin-top: 6px; margin-bottom: 6px;">
+							<img src="${contextPath}/resources/upload/${ProductModify.thumbnail_img}" alt="thumbnail_img">
 						</div>
-						<div class="col-md-6">
-							<td style="vertical-align: middle;">등록상태</td> <br> <select id="cars" name="cars" style="width: 185px; height: 28px;">
-								<option value="volvo">마감</option>
-								<option value="saab">판매중</option>
-							</select>
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">마감일</td> <br>
-							<input type="datetime-local" id="selectedDateTime" name="end_date" onchange="calculateTimeDifference()" value="${ProductModify.end_date }">
-						</div>
-						<div class="col-md-6">
-							<td style="vertical-align: middle;">카테고리</td> <br> <select id="ctgr_idx" name="ctgr_idx" style="width: 185px; height: 28px;">
-								<option value="1">의류</option>
-								<option value="2">화장품</option>
-								<option value="3">식품</option>
-								<option value="4">생필품</option>
-								<option value="5">홈데코</option>
-								<option value="6">문구</option>
-								<option value="7">취미</option>
-								<option value="8">반려용품</option>
-								<option value="9">컴퓨터</option>
-								<option value="10">모바일</option>
-								<option value="11">가전제품</option>
-								<option value="12">스포츠</option>
-								<option value="13">건강</option>
-								<option value="14">공구</option>
-								<option value="15">기타</option>
-							</select>
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">정가</td> <br>
-							<input type="text" name="original_price" id="original_price" value="${ProductModify.original_price }" onchange="calculateDiscount()" />
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">할인가</td> <br>
-							<input type="text" name="discount_price" id="discount_price" value="${ProductModify.discount_price }" onchange="calculateDiscount()" />
-						</div>
-						<div class="col-md-6">
-							<td style="width: 50px; vertical-align: middle;">할인율</td> <br>
-							<input type="text" name="discount_rate" id="discount_rate" value="${ProductModify.discount_rate }" readonly onchange="calculateDiscount()" />
+						<div>
+							<input type="file" name="thumbnail_img" multiple style="margin-bottom: 6px;" onchange="previewImages2(this)" />
 						</div>
 					</div>
-					<div class="row middle-right-2 text-dark">
-						<div class="col-12">
-							<input type="text" id="endDate" value="${ProductModify.end_date}">
+					<div class="col-md-6">
+						<br>
+						<div>
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1";>판매자</span>
+								<input type="text" value="${mvo.name}" readonly class="form-control  input-sm" aria-describedby="basic-addon1">
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">상태</span>
+								<select value="${productModify.content_state}" class="form-control  input-sm" id="content_state" name="content_state">
+									<option value="판매중">판매중</option>
+									<option value="마감">마감</option>
+									<option value="배송중">배송중</option>
+									<option value="배송완료">배송완료</option>
+								</select>
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">마감일</span>
+								<input type="datetime-local" name="end_date" class="form-control  input-sm" placeholder="마감일" value="${ProductModify.end_date }" aria-describedby="basic-addon1" onchange="calculateTimeDifference()">
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">카테고리</span>
+								<select class="form-control  input-sm" id="ctgr_name" name="ctgr_idx">
+									<option value="1">의류</option>
+									<option value="2">홈데코</option>
+									<option value="3">컴퓨터</option>
+									<option value="4">건강</option>
+									<option value="5">화장품</option>
+									<option value="6">문구</option>
+									<option value="7">모바일</option>
+									<option value="8">공구</option>
+									<option value="9">식품</option>
+									<option value="10">취미</option>
+									<option value="11">가전제품</option>
+									<option value="12">기타</option>
+									<option value="13">생필품</option>
+									<option value="14">반려용품</option>
+									<option value="15">스포츠</option>
+								</select>
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">정가</span>
+								<input type="text" name="original_price" id="original_price" class="form-control  input-sm" placeholder="정가" value="${ProductModify.original_price }" aria-describedby="basic-addon1" onchange="calculateDiscount()" />
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">판매가</span>
+								<input type="text" id="discount_price" name="discount_price" class="form-control  input-sm" placeholder="판매가" value="${ProductModify.discount_price }" aria-describedby="basic-addon1" onchange="calculateDiscount()" />
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">할인율</span>
+								<input type="text" name="discount_rate" id="discount_rate" class="form-control input-sm" placeholder="할인율" readonly value="${ProductModify.discount_rate}" aria-describedby="basic-addon1" onchange="calculateDiscount()" />
+							</div>
+							<div class="col-md-7"></div>
+							<div class="col-md-5" style="margin-top: 10px;">
+								<a href="${contextPath}/product/ProductDelete?product_idx=${ProductModify.product_idx}" class="btn btn-danger" style="font-size: 12px; width: 65.5px; height: 29.33px; display: flex; justify-content: center; align-items: center; text-align: center;">게시글삭제</a>
+								<input type="submit" class="btn btn-primary btn-sm pull-right" style="margin-top: -30px;" value="수정완료" />
+							</div>
 						</div>
-					</div>
-					<div class="row middle-right-3 text-dark">
-						<div class="num">
-							<span>수량</span> <span class="count"> <a href="#" class="minus">-</a> <span id="result">1</span> <a href="#" class="plus">+</a>
-							</span>
-						</div>
-						<input type="submit" class="btn btn-primary btn-sm pull-right" value="수정완료" />
 					</div>
 				</div>
 			</div>
@@ -308,18 +345,19 @@ $(".ProductDetailModify").click(function() {
 					</ul>
 					<div class="tab-content">
 						<div id="home" class="tab-pane fade in active">
-							<h3>HOME</h3>
 							<div class="panel-body">
-								<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
+								<!-- 실질 파일업로드 할수 있는 인반문자열 , 바이너리 데이터 필요 -->
+								<!--  <form action="${contextPath}/memImageUpdate" method="post"
+						enctype="multipart/form-data">-->
+								<table class="table table-bordered" style="text-align: center; border-radius: 30px; border: 1px solid #dddddd;">
 									<tr>
-										<td colspan="2" id="imagePreviewContainer"></td>
+										<td colspan="2" id="imagePreviewContainerDetail"><img src="${contextPath}/resources/upload/${ProductModify.detail_img}" style="width: 800px; height: 400px;" alt="thumbnail_img"></td>
 									</tr>
-									<div class="thumbnail">
-										<tr>
-											<td><span class="btn btn-default"> 이미지 업로드하세요 <input type="file" name="detail_img" />
+									<tr>
+										<td><span class="btn btn-default">
+												<input type="file" style="width: 300px;" name="detail_img" multiple onchange="previewImagesDetail(this)" />
 											</span></td>
-										</tr>
-									</div>
+									</tr>
 								</table>
 								<!--</form>-->
 							</div>

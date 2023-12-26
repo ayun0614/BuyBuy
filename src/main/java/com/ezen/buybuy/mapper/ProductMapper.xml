@@ -4,10 +4,9 @@
 <mapper namespace="com.ezen.buybuy.mapper.ProductMapper">
 
 	<insert id="ProductListInsert" parameterType="com.ezen.buybuy.entity.Products">
-		insert into products(product_name, original_price, discount_price, discount_rate, thumbnail_img,
-		end_date, ctgr_idx, detail_img)
-		values(#{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date},
-		#{ctgr_idx},#{detail_img})
+		insert into products(member_id, product_name, original_price, discount_price, discount_rate,
+		thumbnail_img, end_date, ctgr_idx, detail_img, content_state)
+		values(#{member_id}, #{product_name}, #{original_price},#{discount_price}, #{discount_rate}, #{thumbnail_img}, #{end_date}, #{ctgr_idx},#{detail_img}, #{content_state})
 	</insert>
 
 	<select id="ProductList" resultType="com.ezen.buybuy.entity.Products">
@@ -19,7 +18,9 @@
 	</select>
 
 	<select id="read" resultType="com.ezen.buybuy.entity.Products">
-		select *from products where product_idx=#{product_idx}
+		SELECT * FROM products
+		NATURAL JOIN categories
+		WHERE product_idx = #{product_idx}
 	</select>
 
 	<update id="ProductModify" parameterType="com.ezen.buybuy.entity.Products">
@@ -32,10 +33,33 @@
 		thumbnail_img = #{thumbnail_img},
 		end_date = #{end_date},
 		detail_img = #{detail_img},
-		ctgr_idx=${ctgr_idx}
+		content_state=#{content_state},
+		ctgr_idx=#{ctgr_idx}
 		where product_idx = #{product_idx}
 	</update>
+
+	<update id="ProductTimeout" parameterType="com.ezen.buybuy.entity.Products">
+		update products set content_state = '마감' where product_idx = #{product_idx}
+	</update>
+
 	<delete id="ProductDelete" parameterType="int">
 		delete from products where product_idx = #{product_idx}
 	</delete>
+
+	<select id="NewMain" resultType="com.ezen.buybuy.entity.Products">
+		<![CDATA[select * from products where end_date > now() order by start_date desc limit #{limit}]]>
+	</select>
+
+	<select id="PopMain" resultType="com.ezen.buybuy.entity.Products">
+		select p.* from products as p inner join orders as o on p.product_idx = o.product_idx where p.end_date > now()
+		group by p.product_idx order by count(o.order_pcs) desc limit #{limit}
+	</select>
+
+	<select id="ProductSearch" parameterType="String" resultType="com.ezen.buybuy.entity.Products">
+		select * from products where product_name like #{word}
+	</select>
+
+	<select id="SoonMain" resultType="com.ezen.buybuy.entity.Products">
+		<![CDATA[select * from products where end_date > now() and content_state = '판매중' and end_date < DATE_ADD(NOW(), INTERVAL 7 DAY) order by end_date]]>
+	</select>
 </mapper>
