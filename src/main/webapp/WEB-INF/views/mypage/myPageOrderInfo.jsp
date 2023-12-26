@@ -17,6 +17,7 @@
 <style>
 html, body {
 	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #ffffff;
 	height: 100%;
 }
 
@@ -153,17 +154,16 @@ hr {
 </head>
 <body>
 	<jsp:include page="../include/header.jsp" />
-	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
-	<input type="hidden" id="order_num" name="order_num" value="${mo.order_num }">
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageOrder?member_id=${mvo.member_id }"><img src="resources/image/Back.png" class="backBtn"></a>
-</head>
-<body>
-	<jsp:include page="../include/header.jsp" />
+			<a href="myPageOrder"><img src="resources/image/Back.png" class="backBtn"></a>
+			<div class="myPageSubText">주문 상세</div>
+		</div>
+		<hr>
+		<div class="productInfoSubText">주문 상품 정보</div>
 		<div class="productInfoBox">
 			<div class="productInfoImg">
-				<img src="" class="myInfoImg"/>
+				<img src="" class="myInfoImg" "/>
 			</div>
 			<div class="productInfoBox2">
 				<div style="font-weight: 900; font-size: 18px;">${mo.product_name}</div>
@@ -230,7 +230,7 @@ hr {
 				</tr>
 				<tr class="userInfoTr">
 					<td class="lastPayTextTd">총 결제 금액</td>
-					<td class="lastPayTd"><fmt:formatNumber value="${mo.discount_price*mo.order_pcs+2500}" pattern="#,##0" />원</td>
+					<td class="lastPayTd"><fmt:formatNumber value="${mo.total_price}" pattern="#,##0" />원</td>
 				</tr>
 			</table>
 		</div>

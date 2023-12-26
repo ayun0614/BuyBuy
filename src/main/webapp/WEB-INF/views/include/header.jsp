@@ -21,10 +21,6 @@
 			location.href = "${contextPath}/account/logout";
 		});
 
-		$(".header-logoutBtn").click(function() {
-			location.href = "${contextPath}/account/logout";
-		});
-
 		$(".header-searchBtn").click(function() {
 			if ($(".header-searchInput").val() != null && $(".header-searchInput").val() != "") {
 				location.href = "${contextPath}/product/search?word=" + $(".header-searchInput").val();

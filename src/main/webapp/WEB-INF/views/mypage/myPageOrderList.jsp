@@ -18,6 +18,7 @@ html, body {
 	font-family: 'Noto Sans KR', sans-serif;
 	background-color: #ffffff;
 	height: 100%;
+}
 
 .bodyDiv {
 	background-color: #ffffff;
@@ -125,39 +126,57 @@ td {
 	font-size: 18px;
 }
 </style>
-
-</head>
-<body>
-	<c:import url="../include/header.jsp" />
-	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
-	<div class="bodyDiv">
-		<div class="myPageSubDiv">
-			<a href="myPageMain?member_id=${mvo.member_id}"><img src="resources/image/Back.png" class="backBtn"></a>
-			<div class="myPageSubText">주문 / 배송 조회</div>
-		</div>
-		<hr>
-		<div id="view"></div>
-	</div>
-</body>
 <script>
-	
+	$(document).ready(function() {
+		waitList();
+	});
+
+	function orderDelBtn(order_num) {
+		$.ajax({
+			url : "mypage/statusUpdate",
+			type : "put",
+			contentType : 'application/json;charset=utf-8',
+			data : JSON.stringify(order_num),
+			dataType : 'JSON',
+			success : function(data) {
+				alert('취소 신청이 완료되었습니다.');
+				location.reload();
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+
+	}
+
+	function orderDeliBtn() {
+		location.href = 'http://st.sweettracker.co.kr/#/';
+	}
+
+	function waitList() {
+		$.ajax({
+			url : "mypage/all",
+			type : "get",
+			dataType : "json",
+			success : createView,
+			error : function() {
+				alert("error");
+			}
+		});
+	}
+
 	function createView(data) {
 		var list = "<div>";
 
 		$.each(data, function(index, obj) {
-			list += "<input type='hidden' id='order_num' name='order_num' value='"+obj.order_num+"'>";
 			list += "<div class = 'orderStatusBox'>";
-			if (obj.status == "주문 취소") {
-				list += "<div class = 'orderStatusText' style = 'font-size:20px; color:red; font-weight: 700;' id = 'sta"+obj.order_num+"'>" + obj.status + "</div>";
-			} else {
-				list += "<div class = 'orderStatusText' style = 'font-size:20px; font-weight: 700;' id = 'sta"+obj.order_num+"'>" + obj.status + "</div>";
-			}
+			list += "<div class = 'orderStatusText' style = 'font-size:20px;' id = 'sta"+obj.order_num+"'>" + obj.status + "</div>";
 			list += "<div class = 'orderDateText' style = 'font-size:20px;'>신청일자 " + obj.order_date + "</div>";
-			list += "<div class = 'orderInfoText' style = 'font-size:20px;'><a href = 'myPageOrderInfo?order_num=" + obj.order_num + "&member_id=${mvo.member_id }' style = 'text-decoration:none; color: black;'>주문상세<img src = 'resources/image/Go.png' class = 'goBtn'></a></div>";
+			list += "<div class = 'orderInfoText' style = 'font-size:20px;'><a href = 'myPageOrderInfo?order_num=" + obj.order_num + "' style = 'text-decoration:none; color: black;'>주문상세<img src = 'resources/image/Go.png' class = 'goBtn'></a></div>";
 			list += "</div>";
 			list += "<div class = 'productInfoBox'>";
 			list += "<div class = 'productInfoImgDiv'><img src='' class = 'productInfoImg'/></div>";
-			list += "<div>";   
+			list += "<div>";
 			list += "<table>";
 			list += "<tr>";
 			list += "<td style = 'font-size:24px; font-weight: 700;'>" + obj.product_name + "</td>";
@@ -169,7 +188,7 @@ td {
 			list += "<tr><td></td></tr>";
 			list += "<tr>";
 			if (obj.status == "주문 완료") {
-				list += "<td colspan = '2' align='right'><button type='button' class='btn btn-danger' id = 'orderDelBtn' onclick = 'orderDelBtn("+obj.order_num+")'>주문 취소</button></td>";
+				list += "<td colspan = '2' align='right'><button type='button' class='btn btn-danger' onclick = 'orderDelBtn()'>주문 취소</button></td>";
 			} else if (obj.status == "배송중") {
 				list += "<td colspan = '2' align='right'><button type='button' class='btn btn-default' onclick = 'orderDeliBtn()'>배송 조회</button></td>";
 			} else if (obj.status == "배송 완료") {
@@ -189,42 +208,18 @@ td {
 		list += "</div>";
 
 		$("#view").html(list);
-		
-		
 	}
-
-	function orderDeliBtn() {
-		location.href = 'http://st.sweettracker.co.kr/#/';
-	}
-	
-
-	function waitList() {
-		$.ajax({
-			url : "mypage/all",
-			type : "get",
-			data : $('#member_id'),
-			success : createView,
-			error : function() {
-				alert("error");
-			}
-		});
-	}
-	
-	function orderDelBtn(order_num) {
-		
-		$.ajax({
-			url : "mypage/statusUpdate?order_num="+order_num,
-			type : "put", 
-			success : function() {
-				alert('취소 신청이 완료되었습니다.');
-				location.reload();
-			},
-			error : function(xhr, status, error) {
-				alert("error");
-			}
-		});
-
-	}
-
 </script>
+</head>
+<body>
+	<c:import url="../include/header.jsp" />
+	<div class="bodyDiv">
+		<div class="myPageSubDiv">
+			<a href="myPageMain"><img src="resources/image/Back.png" class="backBtn"></a>
+			<div class="myPageSubText">주문 / 배송 조회</div>
+		</div>
+		<hr>
+		<div id="view"></div>
+	</div>
+</body>
 </html>

@@ -143,7 +143,6 @@ public class ProductController {
 	public String read(@RequestParam("product_idx") int product_idx, Model model, Reply r, Reply2 r2, Reply3 r3, HttpSession session) {
 		Products productDetail = productMapper.read(product_idx);
 		model.addAttribute("productDetail", productDetail);
-
 		List<Reply> ro = replyMapper.replyselet(r);
 		List<Reply2> ro2 = replyMapper.replyselet2(r2);
 		List<Reply3> ro3 = replyMapper.replytotal(r3);

@@ -22,4 +22,11 @@ public class Products {
 	private int reg_id;
 	private String ctgr_name;
 	private String member_id;
+	
+	
+	private String name;
+	private String addr;
+	private String detailaddr;
+	private String phone;
+	private String email;
 }

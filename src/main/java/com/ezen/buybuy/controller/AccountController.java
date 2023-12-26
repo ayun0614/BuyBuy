@@ -125,7 +125,7 @@ public class AccountController {
 
 		memVO = new Members();
 		memVO.setMember_id(full.getBigInteger("id").toString() + "_google");
-
+		
 		Members check = memberMapper.registerCheck(memVO.getMember_id());
 
 		if (check == null || check.getMember_id().equals("")) {
@@ -153,7 +153,7 @@ public class AccountController {
 
 		memVO = new Members();
 		memVO.setMember_id(response.getString("id") + "_naver");
-
+		
 		Members check = memberMapper.registerCheck(memVO.getMember_id());
 
 		if (check == null || check.getMember_id().equals("")) {
@@ -166,7 +166,7 @@ public class AccountController {
 			model.addAttribute("mem", memVO);
 			return "account/signUp";
 		}
-
+		
 		session.setAttribute("mvo", check);
 		return "redirect:/";
 	}

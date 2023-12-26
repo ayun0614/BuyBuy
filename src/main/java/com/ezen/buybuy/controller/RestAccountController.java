@@ -68,10 +68,6 @@ public class RestAccountController {
 		memberInfoMapper.productBuy(ord);
 	}
 	
-	
-	
-	
-	
 	@GetMapping("/excel/download") 
     public void excelDownload(HttpServletResponse response, @RequestParam("product_idx") int product_idx) throws IOException {
       Workbook wb = new XSSFWorkbook();

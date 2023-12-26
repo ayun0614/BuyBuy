@@ -9,6 +9,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <title>Bootstrap Example</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -235,6 +236,12 @@
 	width: 33.33%;
 	text-align: center;
 }
+.input-group .form-control:last-child{
+   width: 350px;
+}
+.input-group-addon:first-child{
+   width: 100px;
+}
 </style>
 <body>
 	<jsp:include page="../include/header.jsp" />
@@ -339,8 +346,6 @@
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#home">상품상세</a></li>
-						<li><a data-toggle="tab" href="#menu1">판매자정보</a></li>
-						<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="home" class="tab-pane fade in active">
@@ -361,14 +366,7 @@
 								<!--</form>-->
 							</div>
 						</div>
-						<div id="menu1" class="tab-pane fade">
-							<h3>게시판</h3>
-							<p>Some content in menu 1.</p>
-						</div>
-						<div id="menu2" class="tab-pane fade">
-							<h3>공지사항</h3>
-							<p>Some content in menu 2.</p>
-						</div>
+				
 					</div>
 				</div>
 			</div>

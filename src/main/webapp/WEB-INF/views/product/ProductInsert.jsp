@@ -8,11 +8,16 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
 <script>
 	// 정가와 판매가 입력란에 변화가 있을 때 할인율 계산 함수 호출
 	function calculateDiscount() {
@@ -193,18 +198,27 @@
 }
 
 .nav-tabs li {
-	width: 33.33%;
+	width: 50%;
 	text-align: center;
+}
+.input-group .form-control:last-child{
+   width: 350px;
+}
+.input-group-addon:first-child{
+   width: 100px;
 }
 </style>
 <body>
 	<jsp:include page="../include/header.jsp" />
 	<div class="container" style="max-width: 900px; height: 100px;">
 		<br>
-		<form action="${contextPath}/product/ProductListInsert" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
+		<form action="${contextPath}/product/ProductListInsert" method="post"
+			onsubmit="return validateForm()" enctype="multipart/form-data">
 			<input type="hidden" id="endDate" value="${product.end_date}">
 			<div style="display: flex;">
-				<a href="${contextPath }/product/ProductList" style="font-size: 20px;"> <span class="glyphicon glyphicon-chevron-left"></span>돌아가기
+				<a href="${contextPath }/product/ProductList"
+					style="font-size: 20px;"> <span
+					class="glyphicon glyphicon-chevron-left"></span>돌아가기
 				</a>
 				<div style="margin-left: 290px;">
 					<h3>게시글 등록</h3>
@@ -229,9 +243,11 @@
 						<br>
 						<div>
 							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1";>판매자</span>
-								<input type="hidden" name="member_id" id="member_id" value="${mvo.member_id}">
-								<input type="text" name="name" value="${mvo.name}" readonly class="form-control" aria-describedby="basic-addon1">
+								<span class="input-group-addon" id="basic-addon1";>판매자</span> <input
+									type="hidden" name="member_id" id="member_id"
+									value="${mvo.member_id}"> <input type="text"
+									name="name" value="${mvo.name}" readonly class="form-control"
+									aria-describedby="basic-addon1">
 							</div>
 							<br>
 							<div class="input-group">
@@ -288,8 +304,8 @@
 				<div class="panel panel-default">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#home">상품상세</a></li>
-						<li><a data-toggle="tab" href="#menu1">판매자정보</a></li>
-						<li><a data-toggle="tab" href="#menu2">공지사항</a></li>
+
+						<li><a data-toggle="tab" href="#menu2">판매자정보</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="home" class="tab-pane fade in active">
@@ -306,13 +322,53 @@
 								</table>
 							</div>
 						</div>
-						<div id="menu1" class="tab-pane fade">
-							<h3>게시판</h3>
-							<p>Some content in menu 1.</p>
-						</div>
 						<div id="menu2" class="tab-pane fade">
-							<h3>공지사항</h3>
-							<p>Some content in menu 2.</p>
+							<h3>판매자정보</h3>
+							<p>
+							<div class="form-group" style="height: 300px; width: 300px;">
+								<table class="table">
+									<tbody>
+
+										<tr>
+											<td class="col-sm-5 control-label">이름</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.name}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">사업장 주소</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.addr}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">상세주소</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.detailaddr}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">Email</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.email}</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td class="col-sm-5 control-label">전화번호</td>
+											<td class="col-sm-10">
+												<p class="form-control-static">${mvo.phone}</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							</p>
+
 						</div>
 					</div>
 				</div>

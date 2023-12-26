@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +14,7 @@
 <style>
 html, body {
 	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #ffffff;
 	height: 100%;
 }
 
@@ -99,12 +99,14 @@ hr {
 
 <script>
 	$(document).ready(function() {
+		waitList();
+	});
 
 	function waitList() {
 		$.ajax({
 			url : "mypage/postingAll",
 			type : "get",
-			data : $('#member_id'),
+			dataType : "json",
 			success : createView,
 			error : function() {
 				alert("error");
@@ -119,14 +121,14 @@ hr {
 			list += "<div>";
 			list += "<div class='panel-heading' style = 'background-color:#ffffff;'>";
 			list += "<h4 class='panel-title'> ";
-			list += "<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+obj.product_idx+"' style = 'text-decoration:none; color: black;'>";
+			list += "<a data-toggle='collapse' data-parent='#accordion' href='#collapse"+obj.product_idx+"' style = 'text-decoration:none;'>";
 			list += "<div class = 'productInfoBox'>";
 			list += "<div class = 'productInfoImg'>" + obj.thumbnail_img + "</div></a>";
 			list += "<div>";
 			list += "<table class = 'productInfoTbl'>";
-			list += "<tr class = 'productInfoTr'>"; 
-			list += "<td class = 'productInfoTd' style = 'font-size:24px; font-weight: 700; width:350px;'>" + obj.product_name + "</td>";
-			list += "<td class = 'productInfoTd' align = 'right' style = 'font-size:16px; width:150px;'><a href='${contextPath}/product/ProductDetail?product_idx="+obj.product_idx+"' style = 'text-decoration:none; color: black;'>상품 게시글 상세 &nbsp&nbsp <img src = 'resources/image/Go.png' class = 'goBtn'></a></td>";
+			list += "<tr class = 'productInfoTr'>";
+			list += "<td class = 'productInfoTd' style = 'font-size:24px; font-weight: 700;'>상품명</td>";
+			list += "<td class = 'productInfoTd' align = 'right' style = 'font-size:16px;'><a href='' style = 'text-decoration:none; color: black;'>상품 게시글 상세 &nbsp&nbsp <img src = 'resources/image/Go.png' class = 'goBtn'></a></td>";
 			list += "</tr>";
 			list += "<tr class = 'productInfoTr'>";
 			list += "<td style = 'font-size:17px;' class = 'productInfoTd'>마감일 " + obj.end_date + "</td>";
@@ -139,9 +141,7 @@ hr {
 			list += "<td class = 'productInfoTd' colspan = '2' align='right'><del>" + obj.original_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "<del>원</td>";
 			list += "</tr>";
 			list += "<tr class = 'productInfoTr'>";
-			
-			list += "<td class = 'productInfoTd'><button type='submit' class='btn btn-default' style = 'font-size:11px; font-weight: 700;' onclick = 'buyerExcel("+obj.product_idx+")'>구매자 정보<br>Excel</button></td>";
-			list += "<td class = 'productInfoTd' align='right' style = 'font-size:24px; font-weight: 700; color:red;'><b>" + obj.discount_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원</b></td>";
+			list += "<td class = 'productInfoTd' colspan = '2' align='right' style = 'font-size:24px; font-weight: 700; color:red;'><b>" + obj.discount_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원</b></td>";
 			list += "</tr>";
 			list += "</table>";
 			list += "</div>";
@@ -166,7 +166,7 @@ hr {
 			list += "<td class = 'panelProductInfoTd'>" + obj.product_idx + "</td>";
 			list += "<td class = 'panelProductInfoTd' style = 'width: 400px;'>" + obj.product_name + "</td>";
 			list += "<td class = 'panelProductInfoTd'>" + obj.member_id + "</td>";
-			list += "<td class = 'panelProductInfoTd'>"+ obj.cnt +"</td>";
+			list += "<td class = 'panelProductInfoTd'>" + +"</td>";
 			list += "<td class = 'panelProductInfoTd'>" + obj.view_count + "</td>";
 			list += "</tr>";
 			list += "</tbody>";
@@ -183,29 +183,13 @@ hr {
 
 		$("#view").html(list);
 	}
-	
-	function buyerExcel(product_idx) {
-		
-		$.ajax({
-			url : "mypage/excel/download?product_idx="+product_idx,
-			type : "get", 
-			success : function() {
-				location.href = "mypage/excel/download?product_idx="+product_idx;
-			},
-			error : function(xhr, status, error) {
-				alert("error");
-			}
-		});
-
-	}
 </script>
 </head>
 <body>
 	<jsp:include page="../include/header.jsp" />
-	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageMain?member_id=${mvo.member_id}"><img src="resources/image/Back.png" class="backBtn"></a>
+			<a href="myPageMain"><img src="resources/image/Back.png" class="backBtn"></a>
 			<div class="myPageSubText">등록한 게시물</div>
 		</div>
 		<hr>

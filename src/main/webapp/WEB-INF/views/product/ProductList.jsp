@@ -53,7 +53,7 @@
 <body>
 	<!-- header.jsp 파일을 포함 -->
 	<jsp:include page="../include/header.jsp" />
-	<div class="container" style="max-width: 1000px; height: 100px;">
+	<div class="container" style="max-width: 1200px; height: 100px;">
 		<br>
 		<!-- 로그인한 사용자인 경우에만 "게시글 등록" 링크 표시 -->
 		<c:if test="${!empty mvo}">
@@ -64,7 +64,7 @@
 		<input type="hidden" name="member_id" value="${mvo.member_id}" />
 		<br>
 		<div class="row middle">
-			<div class="container" style="max-width: 900px; height: 700px;">
+			<div class="container" style="max-width: 1200px; height: 700px;">
 				<div class="col-12 mx-auto">
 					<!-- ProductList에 있는 각각의 상품에 대한 정보를 출력 -->
 					<c:forEach items="${ProductList}" var="product">
@@ -72,7 +72,7 @@
 							<div class="col-sm-6 col-md-4" style="width: 216px;">
 								<div class="card-ui">
 									<div class="thumbnail" style="height: 300px;">
-										<img src="${product.thumbnail_img}" alt="thumbnail_img" style="height: 150px;">
+										<img src="${contextPath}/resources/upload/${product.thumbnail_img}" alt="thumbnail_img" style="height: 150px;">
 										<div class="caption">
 											<td>${product.product_name}</td> <br>
 											<span style="text-decoration: line-through;">
@@ -146,10 +146,13 @@
 				</div>
 			</div>
 		</div>
-		<button class="load-more">Load More</button>
+	<div style="text-align: center; margin-right: 50px;">
+    <button class="load-more btn btn-primary btn-lg" style="margin: 0 auto;">Load More</button>
+</div>
 	</div>
 	<script>
         $('.card-ui').slice(0, 8).show(); // 처음 페이지에 보여지는 사진 개수
+
         $('.load-more').click(function () {
             $('.card-ui:hidden').slice(0, 4).fadeIn();
             if ($('.card-ui:hidden').length == 0) {
