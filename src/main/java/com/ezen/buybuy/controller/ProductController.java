@@ -30,12 +30,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.buybuy.api.GoogleLoginBO;
 import com.ezen.buybuy.api.ImgurBO;
+import com.ezen.buybuy.entity.Alert;
 import com.ezen.buybuy.entity.Members;
 import com.ezen.buybuy.entity.Product;
 import com.ezen.buybuy.entity.Products;
 import com.ezen.buybuy.entity.Reply;
 import com.ezen.buybuy.entity.Reply2;
 import com.ezen.buybuy.entity.Reply3;
+import com.ezen.buybuy.mapper.AlertMapper;
 import com.ezen.buybuy.mapper.MemberInfoMapper;
 import com.ezen.buybuy.mapper.ProductMapper;
 import com.ezen.buybuy.mapper.ReplyMapper;
@@ -56,6 +58,9 @@ public class ProductController {
 
 	@Autowired
 	MemberInfoMapper memberInfoMapper;
+	
+	@Autowired
+	AlertMapper alertMapper;
 	
 	@Autowired
 	private void setImgurBO(ImgurBO imgurBO) {
@@ -222,9 +227,11 @@ public class ProductController {
 
 	@RequestMapping("/ProductTimeout")
 	public String ProductTimeout(@RequestParam("product_idx") int product_idx) {
-
 		productMapper.ProductTimeout(product_idx);
-
+		List<String>orderList =  alertMapper.orderList(product_idx);
+		for(String member_id:orderList) {
+			alertMapper.orderAlert(member_id, product_idx);
+		}
 		return "redirect:/product/ProductDetail?product_idx=" + product_idx;
 	}
 

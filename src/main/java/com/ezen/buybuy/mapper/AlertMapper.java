@@ -34,6 +34,8 @@ public interface AlertMapper {
 	
 	public void reply2alert(int reply_idx, int product_idx);
 	
-	public void orderalert(Alert a);
+	public List<String> orderList(int product_idx);
+	
+	public void orderAlert(String member_id, int product_idx);
 	
 }
