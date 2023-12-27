@@ -1,6 +1,7 @@
 package com.ezen.buybuy.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,21 +17,27 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.buybuy.api.GoogleLoginBO;
+import com.ezen.buybuy.api.ImgurBO;
+import com.ezen.buybuy.entity.Alert;
 import com.ezen.buybuy.entity.Members;
-import com.ezen.buybuy.entity.Product;
 import com.ezen.buybuy.entity.Products;
 import com.ezen.buybuy.entity.Reply;
 import com.ezen.buybuy.entity.Reply2;
 import com.ezen.buybuy.entity.Reply3;
+import com.ezen.buybuy.mapper.AlertMapper;
 import com.ezen.buybuy.mapper.MemberInfoMapper;
 import com.ezen.buybuy.mapper.ProductMapper;
 import com.ezen.buybuy.mapper.ReplyMapper;
@@ -41,6 +48,8 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 @RequestMapping("/product/*")
 public class ProductController {
 
+	ImgurBO imgurBO;
+	
 	@Autowired
 	ProductMapper productMapper;
 
@@ -49,13 +58,22 @@ public class ProductController {
 
 	@Autowired
 	MemberInfoMapper memberInfoMapper;
+	
+	@Autowired
+	AlertMapper alertMapper;
+	
+	@Autowired
+	private void setImgurBO(ImgurBO imgurBO) {
+		this.imgurBO = imgurBO;
+	}
 
 	@RequestMapping("/productBuy")
-	public String productBuy(String member_id, Model mo, Members m, Model moo, Product p, HttpSession session) {
+	public String productBuy(@RequestParam("product_idx") int product_idx, @RequestParam("order_pcs") int order_pcs, String member_id, Model mo, Members m, Model moo, Products p, HttpSession session) {
 		m = memberInfoMapper.mypageInfo(member_id);
-		p = memberInfoMapper.productInfo();
+		p = memberInfoMapper.productInfo(product_idx);
 		session.setAttribute("mo", m);
 		session.setAttribute("moo", p);
+		session.setAttribute("order_pcs", order_pcs);
 		return "product/productBuy";
 	}
 
@@ -77,27 +95,11 @@ public class ProductController {
 		String newProThumbnail = "";
 		String newProDetail = "";
 
-		File thumbnailFile = multi.getFile("thumbnail_img");
-		if (thumbnailFile != null) {
-			String ext = thumbnailFile.getName().substring(thumbnailFile.getName().lastIndexOf(".") + 1);
-			ext = ext.toUpperCase();
-			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
-				newProThumbnail = thumbnailFile.getName();
-			} else {
-				return "redirect:/product/ProductList";
-			}
-		}
-
-		File detailFile = multi.getFile("detail_img");
-		if (detailFile != null) {
-			String ext = detailFile.getName().substring(detailFile.getName().lastIndexOf(".") + 1);
-			ext = ext.toUpperCase();
-			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
-				newProDetail = detailFile.getName();
-			} else {
-				return "redirect:/product/ProductList";
-			}
-		}
+		MultipartFile thumbnailFile = new MockMultipartFile("img.png", new FileInputStream(multi.getFile("thumbnail_img")));
+		newProThumbnail = imgurBO.requestUpload(thumbnailFile.getBytes());
+		
+		MultipartFile detailFile = new MockMultipartFile("img.png", new FileInputStream(multi.getFile("detail_img")));
+		newProDetail = imgurBO.requestUpload(detailFile.getBytes());
 
 		// 이미지를 db에 업데이트
 		Products mvo = new Products();
@@ -136,7 +138,6 @@ public class ProductController {
 		rttr.addFlashAttribute("msg", "사진이 등록되었습니다.");
 
 		return "redirect:/product/ProductList";
-
 	}
 
 	@GetMapping("/ProductList")
@@ -156,7 +157,6 @@ public class ProductController {
 	public String read(@RequestParam("product_idx") int product_idx, Model model, Reply r, Reply2 r2, Reply3 r3, HttpSession session) {
 		Products productDetail = productMapper.read(product_idx);
 		model.addAttribute("productDetail", productDetail);
-
 		List<Reply> ro = replyMapper.replyselet(r);
 		List<Reply2> ro2 = replyMapper.replyselet2(r2);
 		List<Reply3> ro3 = replyMapper.replytotal(r3);
@@ -195,44 +195,11 @@ public class ProductController {
 		String newProThumbnail = "";
 		String newProDetail = "";
 
-		File thumbnailFile = multi.getFile("thumbnail_img");
-		if (thumbnailFile != null) {
-			String ext = thumbnailFile.getName().substring(thumbnailFile.getName().lastIndexOf(".") + 1);
-			ext = ext.toUpperCase();
-			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
-				String old = productMapper.read(Integer.parseInt(multi.getParameter("product_idx"))).getThumbnail_img();
-				File oldFile = new File(sPath + "/" + old);
-
-				if (oldFile.exists()) {
-					oldFile.delete();
-				}
-				newProThumbnail = thumbnailFile.getName();
-			} else {
-				if (thumbnailFile.exists()) {
-					thumbnailFile.delete();
-				}
-				return "redirect:product/ProductModify";
-			}
-		}
-
-		File detailFile = multi.getFile("detail_img");
-		if (detailFile != null) {
-			String ext = detailFile.getName().substring(detailFile.getName().lastIndexOf(".") + 1);
-			ext = ext.toUpperCase();
-			if (ext.equals("PNG") || ext.equals("GIF") || ext.equals("JPG")) {
-				String old = productMapper.read(Integer.parseInt(multi.getParameter("product_idx"))).getDetail_img();
-				File oldFile = new File(sPath + "/" + old);
-				if (oldFile.exists()) {
-					oldFile.delete();
-				}
-				newProDetail = detailFile.getName();
-			} else {
-				if (detailFile.exists()) {
-					detailFile.delete();
-				}
-				return "redirect:product/ProductModify";
-			}
-		}
+		MultipartFile thumbnailFile = new MockMultipartFile("img.png", new FileInputStream(multi.getFile("thumbnail_img")));
+		newProThumbnail = imgurBO.requestUpload(thumbnailFile.getBytes());
+		
+		MultipartFile detailFile = new MockMultipartFile("img.png", new FileInputStream(multi.getFile("detail_img")));
+		newProDetail = imgurBO.requestUpload(detailFile.getBytes());
 
 		Products mvo = new Products();
 		mvo.setThumbnail_img(newProThumbnail);
@@ -260,9 +227,11 @@ public class ProductController {
 
 	@RequestMapping("/ProductTimeout")
 	public String ProductTimeout(@RequestParam("product_idx") int product_idx) {
-
 		productMapper.ProductTimeout(product_idx);
-
+		List<String>orderList =  alertMapper.orderList(product_idx);
+		for(String member_id:orderList) {
+			alertMapper.orderAlert(member_id, product_idx);
+		}
 		return "redirect:/product/ProductDetail?product_idx=" + product_idx;
 	}
 

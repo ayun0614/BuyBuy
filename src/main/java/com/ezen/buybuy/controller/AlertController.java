@@ -29,7 +29,6 @@ public class AlertController {
 	public String alertUpdate(Alert a,RedirectAttributes rttr,Reply3 r3) {
 		alertMapper.alertUpdate(a);
 		rttr.addAttribute("product_idx", r3.getProduct_idx());
-		System.out.println(r3.getProduct_idx());
 		return "redirect:/product/ProductDetail";
 	}
 	//2번페이지

@@ -33,7 +33,7 @@ public class ReplyController {
 		alertMapper.replyalert2(product_idx);
 		
 		//alertMapper.replyalert(a);
-		alertMapper.orderalert(a);
+		
 		a.setProduct_idx(product_idx);
 		return "redirect:/product/ProductDetail?product_idx="+product_idx;
 	}

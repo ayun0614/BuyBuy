@@ -17,11 +17,15 @@
 		select *from products where ctgr_idx = #{ctgr_idx}
 	</select>
 
+
 	<select id="read" resultType="com.ezen.buybuy.entity.Products">
-		SELECT * FROM products
-		NATURAL JOIN categories
-		WHERE product_idx = #{product_idx}
+    SELECT products.*, members.*, categories.*
+    FROM products
+    INNER JOIN categories ON products.ctgr_idx = categories.ctgr_idx
+    INNER JOIN members ON products.member_id = members.member_id
+    WHERE products.product_idx = #{product_idx}
 	</select>
+	
 
 	<update id="ProductModify" parameterType="com.ezen.buybuy.entity.Products">
 		update products set

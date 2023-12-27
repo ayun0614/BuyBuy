@@ -15,6 +15,7 @@
 <body>
 	<c:import url="include/header.jsp" />
 	<c:import url="include/chat.jsp" />
+	
 	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<div class="slider-container container">
 		<div class="slider-show">

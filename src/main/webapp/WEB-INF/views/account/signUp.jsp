@@ -216,9 +216,8 @@ $(document).ready(function() {
 				<div class="panel-heading">회원가입</div>
 				<div class="panel-body">
 					<c:if test="${!empty mem}">
-						<input id="profileImg" name="profileImg" type="hidden" value="${mem.profileImg }"/>
+						<input id="profileimg" name="profileimg" type="hidden" value="${mem.profileimg }" />
 					</c:if>
-				
 					<c:if test="${empty mem}">
 						<div class="form-group">
 							<label for="name">이름</label>

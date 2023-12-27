@@ -31,15 +31,12 @@
 		values('답변','게시물에 답변이 달렸습니다.',(select member_id from reply where reply_idx=#{param1}),'alertUpdate',1,#{param2});
 	</insert>
 
-	<insert id="orderalert" parameterType="com.ezen.buybuy.entity.Alert">
-		<selectKey keyProperty="member_id" resultType="java.lang.String">
-			SELECT GROUP_CONCAT(member_id) FROM orders WHERE product_idx = #{product_idx};
-		</selectKey>
-
-		<foreach collection="member_id.split(',')" item="member_id" separator=";">
-			insert into alert(a_title, msg, member_id, a_url, a_state, product_idx)
-			values('주문', '주문신청이 마감되었습니다', #{member_id}, 'alertUpdate', 1,#{product_idx});
-		</foreach>
+	<select id="orderList" resultType="String">
+			SELECT member_id FROM orders WHERE product_idx = #{product_idx};
+	</select>
+	
+	<insert id="orderAlert" >
+		insert into alert(a_title, msg, member_id, a_url, a_state, product_idx) values('주문', '주문신청이 마감되었습니다', #{param1}, 'alertUpdate', 1,#{param2});
 	</insert>
 
 </mapper>
