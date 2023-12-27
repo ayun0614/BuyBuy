@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -63,15 +66,13 @@ public class RestAccountController {
 		return ord;
 	}	
 	
-	@PutMapping("/productBuy")
-	public void productBuy(@RequestBody Orders ord) {
-		memberInfoMapper.productBuy(ord);
-	}	
-	
 	
 	@GetMapping("/excel/download") 
     public void excelDownload(HttpServletResponse response, @RequestParam("product_idx") int product_idx) throws IOException {
       Workbook wb = new XSSFWorkbook();
+      CellStyle style = wb.createCellStyle();
+      style.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+      style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
       Sheet sheet = wb.createSheet("상품 구매자 리스트");
       sheet.setColumnWidth(4, 4000);
       sheet.setColumnWidth(5, 5000);
@@ -86,20 +87,28 @@ public class RestAccountController {
       row = sheet.createRow(rowNum++);
       cell = row.createCell(0);
       cell.setCellValue("주문 번호");
+      cell.setCellStyle(style);
       cell = row.createCell(1);
       cell.setCellValue("회원 ID");
+      cell.setCellStyle(style);
       cell = row.createCell(2);
       cell.setCellValue("수량");
+      cell.setCellStyle(style);
       cell = row.createCell(3);
       cell.setCellValue("총금액");
+      cell.setCellStyle(style);
       cell = row.createCell(4);
       cell.setCellValue("받는 사람");
+      cell.setCellStyle(style);
       cell = row.createCell(5);
       cell.setCellValue("전화 번호");
+      cell.setCellStyle(style);
       cell = row.createCell(6);
       cell.setCellValue("주소");
+      cell.setCellStyle(style);
       cell = row.createCell(7);
       cell.setCellValue("배송 메모");
+      cell.setCellStyle(style);
 
       
       List<Orders> orderList = memberInfoMapper.productBuyerList(product_idx);

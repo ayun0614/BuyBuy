@@ -70,6 +70,7 @@ IMP.init(userCode);
 
 function requestPay() {
 	
+	var product_idx = $("#product_idx").val();
 	var member_id = $("#member_id").val();
 	var deli_name = $("#buyerInfoNameInput").val();
 	var deli_phone = $("#buyerInfoTelInput").val();
@@ -88,14 +89,15 @@ function requestPay() {
 		url:"productBuy",
 		type:"put",
 		contentType:'application/json;charset=utf-8',
-		data:JSON.stringify({"member_id":member_id, "order_pcs":order_pcs, "total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
+		data:JSON.stringify({"product_idx":product_idx, "member_id":member_id, "order_pcs":order_pcs, "total_price":total_price,"deli_name":deli_name,"deli_phone":deli_phone,"deli_zipcode":deli_zipcode, "deli_addr":deli_addr, "deli_detailaddr":deli_detailaddr, "deli_memo":deli_memo, "pay_type":pay_type}), 
 		success:function(){ 
-			alert("성공");
+			
 		},
-		error:function(){
-			alert("error");
+		error:function(xhr, status, error){
+			alert(error);
 		}
 	});
+	
 	
 	if($("#cardpay").is(':checked')) {
 		IMP.request_pay({
@@ -141,7 +143,6 @@ function requestPay() {
 	}
 	else {
 		alert("결제 수단을 선택해 주세요.");
-		 
 	}
 	
 
@@ -380,6 +381,7 @@ $(document).ready(function(){
 <body>
   <jsp:include page="../include/header.jsp"/> 
   <input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
+  <input type="hidden" id="product_idx" name="product_idx" value="${moo.product_idx }">
 <div class = "bodyDiv">
 	<div class = "productInfoSubText">주문 상품 정보</div>  
 	<div class = "productInfoBox">
