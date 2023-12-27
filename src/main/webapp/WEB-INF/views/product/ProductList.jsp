@@ -72,7 +72,7 @@
 							<div class="col-sm-6 col-md-4" style="width: 285px;">
 								<div class="card-ui">
 									<div class="thumbnail" style="height: 350px;">
-										<img src="${contextPath}/resources/upload/${product.thumbnail_img}" alt="thumbnail_img" style="height: 200px;">
+										<img src="${product.thumbnail_img}" alt="thumbnail_img" style="height: 200px;">
 										<div class="caption">
 											<td>${product.product_name}</td> <br>
 											<span style="text-decoration: line-through;">
