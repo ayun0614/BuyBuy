@@ -1,38 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}" /> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
- 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>게시글 관리</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>유저관리</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- <script type="text/javascript">
-        $(document).ready(function () {
-            waitList();
-            alert("aab");
-        });
-
-        function waitList() {
-            alert("aa");
-            $.ajax({
-                url: "${contextPath}/admin/all",
-                 type: "get",
-                dataType: "json",
-                 success: createView,
-                 error: function () {
-                     alert("error");
-                }
-             });
-        }
-
-        function createView(data) {
+<script type="text/javascript">
+	$(document).ready(function(){
+		waitList();
+	});
+	
+	function waitList(){
+		$.ajax({
+			url:"admin/post",
+			type:"get",
+			dataType:"json",
+			success:createView, 
+			error:function(){
+				alert("waitlisterror");
+			}
+		});
+	}
+	  function createView(data) {
             var list = "<table class='admin_board_wrap' id='user-admin'>";
             list += "<thead class='admin_boardList'>"; 
             list += "<th class='admin_board_head'>판매자 아이디</th>"; 
@@ -42,26 +40,37 @@
             list += "<th class='admin_board_head'>작성일자</th>";
             list += "<th class='admin_board_head'>삭제</th>"; 
             list += "</thead>";
-            list += "<tbody id='user-admin-body1'>";
+            list += "<tbody id='user-admin-body1'>";	
             $.each(data, function (index, obj) {
                 list += "<tr>";
-                list += "<td>" + obj.memID + "</td>";
-                list += "<td>" + obj.productIdx + "</td>";
-                list += "<td>" + obj.productName + "</td>";
-                list += "<td>" + obj.category + "</td>";
-                list += "<td>" + obj.startDate + "</td>";
-                list += "<td><button class='custom-button' onclick='fDelete(" + obj.idx + ")'><i class='glyphicon glyphicon-remove'></i></button></td>"; // 이중 따옴표 수정
+                list += "<td>" + obj.member_id + "</td>";
+                list += "<td>" + obj.product_idx + "</td>";
+                list += "<td>" + obj.product_name + "</td>";
+                list += "<td>" + obj.ctgr_name + "</td>";
+                list += "<td>" + obj.start_date + "</td>";
+                list += "<td><button class='btn btn-danger' onclick='fDelete("+obj.product_idx+")'>삭제</button></td>";
                 list += "</tr>";
             });
+
             list += "</tbody>";
             list += "</table>";
-
-            $("#member_list").html(list);
+            
+		$("#member_list").html(list);
+          
         }
 
-        function fDelete(data) {
-            alert("meow");
-        }
+	  function fDelete(product_idx){
+			$.ajax({
+				url:"admin/"+product_idx,
+				type:"delete",
+				data:{"product_idx":product_idx},
+				success:waitList,
+				error:function(){
+					alert("삭제실패");
+				}
+					
+			});
+		}
 </script>
 <style>
     	.line {
@@ -71,10 +80,10 @@
 	    	border-top: 1px solid #E2E2E2;
 		}
 	    .container-fluid {
+		    overflow: visible !important;
 	   		margin-top: 20px;
-	    	text-align: center;
-	    	padding: 0px; 
-	    	border-radius: 5px;	       	
+	    	text-align: center;  	
+	    	height: 100vh;
 	    }
 	    .head {
         	display: flex;
@@ -103,9 +112,6 @@
         	color: #000;
         	margin-bottom: 10px;     
         }
-        .container-fluid {
-        	text-align: center;
-        }
         h1 {
         	border-bottom: 2px solid #E2E2E2;
         	padding-bottom: 20px;
@@ -131,13 +137,7 @@
         	margin-right: 8px; 
         	height: 50px;
     	}
-    	.admin_board_wrap {
-        	width: 90%; 
-        	margin-top: 20px;
-        	margin-left: auto;
-        	margin-right: auto;
-        	text-align: center;
-    	}
+    	
     	.search-input {
 	        flex-grow: 1;
 	        padding: 8px 25px;
@@ -164,8 +164,9 @@
 	        cursor: pointer;
     	}
         table {
+        	overflow: visible !important;
 	        border-collapse: collapse;
-	        width: 80%; 
+	        
 	        margin-top: 20px;
 	        margin-left: auto; 
 	        margin-right: auto; 
@@ -181,34 +182,15 @@
 	        background-color: #f2f2f2;
 	        text-align: center; 
         }
-        .search-input {
-	        flex-grow: 1;
-	        padding: 8px 25px; 
-	        border: 1px solid #E2E2E2;
-	        max-width: 80%;
-	        border-radius: 0px;
-	        margin-right: 8px;
-        }
-        .category-select,
-        .category-select1 {
-	        flex-shrink: 0;
-	        padding: 8px;
-	        border: 1px solid #E2E2E2;
-	        border-radius: 0px;
-	        margin-right: 8px;
-	        width: auto; 
-        }
-        td select {
-        	max-width: 80%; 
-        }
         .admin_board_wrap {
-		    width: 95%; 
-		    margin-top: 40px; 
-		    margin-bottom: 40px;
-		    margin-left: auto;
-		    margin-right: auto;
-		    text-align: center;
-	    }
+    		overflow: visible !important;
+        	width: 83%;
+        	margin-top: 20px;
+        	margin-left: auto;
+        	margin-right: auto;
+        	text-align: center;
+    	}
+      
         .admin_board_head {
         	padding: 8px; 
         }
@@ -249,8 +231,7 @@
 			</div>
 			</div>
 			
-				<div class="member_list">
-				</div>
+				<div id="member_list"></div>
 </div>
 </body>
 </html>

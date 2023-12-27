@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+html, body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #ffffff;
+	height: 100%;
+}
+
+.bodyDiv {
+	background-color: #ffffff;
+	width: 1000px;
+	margin: auto;
+}
+
+.myPageSubDiv {
+	margin-top: 35px;
+	display: flex;
+}
+
+.backBtn {
+	margin-left: 70px;
+	width: 24.42px;
+	height: 41.39px;
+}
+
+.myPageSubText {
+	margin-left: 340px;
+	font-weight: 900;
+	font-size: 32px;
+	text-align: center;
+}
+
+hr {
+	height: 1px;
+	background-color: #AFAFAF;
+	width: 90%;
+	margin-top: 35px;
+}
+
+.productInfoSubText, .userInfoSubText {
+	margin-left: 100px;
+	margin-top: 50px;
+	font-weight: 900;
+	font-size: 25px;
+}
+
+.productInfoBox {
+	display: flex;
+}
+
+.productInfoBox2 {
+	margin-left: 20px;
+	margin-top: 70px;
+}
+
+.productInfoImg {
+	width: 222px;
+	height: 222px;
+	margin-top: 33px;
+	margin-left: 100px;
+	background-color: #537FE7;
+}
+
+.myInfoImg {
+	width: 222px;
+	height: 222px;
+}
+
+.hrSec {
+	height: 1px;
+	background-color: #AFAFAF;
+	width: 90%;
+	margin-top: 50px;
+}
+
+.buyCheckbox {
+	margin-top: 60px;
+	margin-left: 80px;
+}
+
+#buyBtn {
+	background-color: #537FE7;
+	color: #ffffff;
+	width: 840px;
+	height: 70px;
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+.paymentRadioGroup {
+	margin-left: 120px;
+}
+
+.paymentRadio {
+	margin-top: 30px;
+	margin-right: 90px;
+}
+
+.paymentRadioDiv {
+	display: flex;
+	margin-top: 40px;
+}
+
+.form-control {
+	margin-right: 90px;
+	width: 330px;
+}
+
+.userInfoTbl {
+	width: 800px;
+	margin-left: 100px;
+	margin-top: 20px;
+}
+
+.userInfoTr {
+	height: 30px;
+}
+
+.userInfoTd {
+	width: 105px;
+}
+
+.lastPayTextTd {
+	font-size: 18px;
+	font-weight: 900;
+}
+
+.lastPayTd {
+	text-align: right;
+	font-weight: 900;
+	font-size: 18px;
+	color: #537FE7;
+}

@@ -19,7 +19,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
 <style>
@@ -74,7 +73,7 @@
             flex-direction: column; 
             align-items: flex-end;
         }
-         .btn1 {
+        .btn1 {
             width: 200px; 
             height: 80px; 
             padding: 10px 20px; 
@@ -86,14 +85,13 @@
             cursor: pointer;
             border-radius: 0px; 
         }
-	   canvas {
+	    canvas {
         	margin: 0px 0;
   		}
   		.chart-stick{
   			
         	margin-left: 1000!important;
   		}
-
    		#visitorChart {  
    			float: center; 
         	max-width: 1200px; 
@@ -121,7 +119,6 @@
 		    border: none !important; 
 		    box-shadow: none !important;
 		}
-
 		#calendar .fc-button-active {
 	    	background-color: #4251A3 !important; 
 	    	color: #fff !important; 
@@ -175,7 +172,7 @@
     <script>
     var ctxDoughnut = document.getElementById('myDoughnutChart').getContext('2d');
     var dataDoughnut = {
-        labels: ['네이버 로그인', '카카오 로그인', '구글 로그인','일반 로그인'],
+        labels: ['카카오 로그인', '구글 로그인', '네이버 로그인','일반 로그인'],
         datasets: [{
             data: [30, 40, 30,10],
             backgroundColor: [
@@ -210,103 +207,129 @@
             }
         }
     });
-   
+    $.ajax({
+        url: "admin/admindonut", 
+        method: "get",
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            dataDoughnut.datasets[0].data = [response[0].kakao, response[0].google, response[0].naver, response[0].normal];
+            myDoughnutChart.update();
+        },
+        error: function (error) {
+            console.error('데이터를 불러오는 중 에러 발생:', error);
+        }
+    });
     </script>
 </div>
-   	
 <div id="calendar"></div>
-       <script>
-       jQuery.noConflict();
-       jQuery(document).ready(function () {
-    	   $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    
-                    right: 'prev,next today' 
-                },
-                editable: false,
-                events: [
-                   
-                ],
-                dayClick: function (date, jsEvent, view) {
-                    alert('Clicked on: ' + date.format());
-                }
-            });
-        });
-    </script>
-   	
-    	<div class="chart-stick">  
-        <canvas id="visitorChart" style="width: 100%; height: 200px; margin: 0 auto; float: left; display: block;"></canvas>    
-        <script>
-    const visitorData = {
-        labels: ['1시', '2시', '3시', '4시', '5시', '6시', '7시', '8시', '9시', '10시',
-            '11시', '12시', '13시', '14시', '15시', '16시', '17시', '18시', '19시', '20시', '21시', '22시', '23시', '24시'],
-        datasets: [{
-            label: '공동구매 진행 통계',
-            data: [150, 200, 300, 250, 400, 350, 150, 200, 300, 250, 400, 350,
-                150, 200, 300, 250, 400, 350, 150, 200, 300, 250, 400, 350],
-            backgroundColor: 'rgba(83, 127, 231, 0.2)',
-            borderColor: 'rgba(83, 127, 231, 1)',
-            borderWidth: 2,
-            pointRadius: 5,
-            pointBackgroundColor: 'rgba(83, 127, 231, 1)',
-            pointBorderColor: '#fff',
-            pointHoverRadius: 8,
-            lineTension: 0.3,
-        }]
-    };
+    <div class="chart-stick">
+        <canvas id="myChart" style="width: 100%; height: 200px; margin: 0 auto; float: left; display: block;"></canvas>
+    </div>
 
-    const ctx = document.getElementById('visitorChart').getContext('2d');
-    const visitorChart = new Chart(ctx, {
-        type: 'line',
-        data: visitorData,
-        options: {
-            scales: {
-                x: {
-                    grid: {
-                        drawOnChartArea: true,
+   <script>
+    jQuery.noConflict();
+    jQuery(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'prev,next today'
+            },
+            editable: false,
+            events: [],
+            dayClick: function (date, jsEvent, view) {
+                alert('Clicked on: ' + date.format());
+                fetchData(date.format());
+            }
+        });
+    });
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    const datavisitorDatasets = [{
+        label: 'sales rate',
+        data: [],
+        backgroundColor: 'rgba(83, 127, 231, 0.2)',
+        borderColor: 'rgba(83, 127, 231, 1)',
+        borderWidth: 2,
+        pointRadius: 5,
+        pointBackgroundColor: 'rgba(83, 127, 231, 1)',
+        pointBorderColor: '#fff',
+        pointHoverRadius: 8,
+        lineTension: 0.3,
+    }];
+
+    let myChart;
+
+    function initChart() {
+        myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['0시', '1시', '2시', '3시', '4시', '5시', '6시', '7시', '8시', '9시', '10시', '11시', '12시',
+                    '13시', '14시', '15시', '16시', '17시', '18시', '19시', '20시', '21시', '22시', '23시'],
+                datasets: datavisitorDatasets,
+            },
+            options: {
+                scales: {
+                    x: {
+                        grid: {
+                            drawOnChartArea: true,
+                        },
+                        ticks: {
+                            display: true,
+                        }
                     },
-                    ticks: {
-                        display: true,
+                    y: {
+                        display: false,
                     }
                 },
-                y: {
-                    type: 'linear',
-                    grid: {
-                        drawOnChartArea: false,
-                        borderDash: [5, 5] 
-                    },
-                    ticks: {
-                        callback: function (value, index, values) {
-                            return '\u2022 ' + value;
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        onClick: function (event, legendItem) {
+                            // 레전드 클릭 시 동작
                         }
                     }
                 }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    onClick: function (event, legendItem) {
-                       
-                    }
-                }
             }
-        }
-    });
+        });
+    }
 
-    
-    document.getElementById('visitorChart').onclick = function (e) {
-        const activePoint = visitorChart.getElementsAtEvent(e);
-        if (activePoint.length > 0) {
-            const dataset = visitorChart.data.datasets[activePoint[0].datasetIndex];
-            const index = activePoint[0].index;
-            dataset.pointRadius[index] = (dataset.pointRadius[index] === 0) ? 5 : 0;
-            visitorChart.update();
-        }
-    };
+    // 페이지 로드시 차트 초기화
+    initChart();
+
+    function fetchData(date) {
+        $.ajax({
+            url: "admin/adminchart",
+            method: "get",
+            dataType: "json",
+            data: { date: date },
+            success: function (response) {
+                console.log(response);
+                if (response && response[0]) {
+                    datavisitorDatasets[0].data = [
+                        response[0].total_quantity_0, response[0].total_quantity_1, response[0].total_quantity_2, response[0].total_quantity_3,
+                        response[0].total_quantity_4, response[0].total_quantity_5, response[0].total_quantity_6, response[0].total_quantity_7,
+                        response[0].total_quantity_8, response[0].total_quantity_9, response[0].total_quantity_10, response[0].total_quantity_11,
+                        response[0].total_quantity_12, response[0].total_quantity_13, response[0].total_quantity_14, response[0].total_quantity_15,
+                        response[0].total_quantity_16, response[0].total_quantity_17, response[0].total_quantity_18, response[0].total_quantity_19,
+                        response[0].total_quantity_20, response[0].total_quantity_21, response[0].total_quantity_22, response[0].total_quantity_23
+                    ];
+                } else {
+                    console.error('Invalid server response:', response);
+                }
+                myChart.update();
+            },
+            error: function (error) {
+                console.error('데이터를 불러오는 중 에러 발생:', error);
+                alert("에러");
+            }
+        });
+    }
 </script>
+
 </div>
     </div>   	
 </body>

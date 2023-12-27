@@ -1,9 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.buybuy.mapper.AdminMapper">
-	<select id="getList" resultType="com.ezen.buybuy.entity.Admin">
-	
-	select * from 
+	<select id="getList" resultType="com.ezen.buybuy.entity.AdminPost">
+		SELECT m.member_id, p.product_idx,p.product_name, c.ctgr_name, p.start_date
+		FROM members m, products p, categories c
+		WHERE m.member_id = p.member_id AND p.ctgr_idx = c.ctgr_idx;
 	</select>
+	<select id="getuserInfo" resultType="com.ezen.buybuy.entity.AdminUser">
+		SELECT m.member_id, m.name, m.phone, m.join_date
+		FROM members m
+		INNER JOIN applydealeraccount a ON m.member_id = a.member_id
+		WHERE m.account_type = 'user';
+	</select>
+	<select id="searchInfo" resultType="com.ezen.buybuy.entity.AdminReq">
+		SELECT account_type, member_id, name, phone,join_date, account_status
+		FROM members
+		WHERE name=	#{name}</select>
+	<select id="getuserReq" resultType="com.ezen.buybuy.entity.AdminReq">
+		SELECT account_type, member_id, name, phone,join_date, account_status
+		FROM members
+	</select>
+			
+	 <update id="disableForeignKeyChecks">
+        SET foreign_key_checks = 0
+    </update>
+
+    <update id="enableForeignKeyChecks">
+        SET foreign_key_checks = 1
+    </update>
+
+    <delete id="postDelete" parameterType="int">
+        DELETE FROM products WHERE product_idx = #{product_idx}
+    </delete>
+    <select id="getChartData" resultType="java.lang.Integer" >
+        SELECT data_value FROM your_chart_data_table
+    </select>  
+	<select id="donutList" resultType="com.ezen.buybuy.entity.AdminDonut">
+		SELECT
+    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_kakao') AS kakao,
+    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_google') AS google,
+    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_naver') AS naver,
+    (SELECT COUNT(*) FROM members WHERE member_id NOT LIKE '%_kakao' AND member_id NOT LIKE '%_google' AND member_id NOT LIKE '%_naver') AS normal;
+	</select>
+    <update id="updateMember" parameterType="com.ezen.buybuy.entity.Members">
+		UPDATE members 
+		SET account_type='dealer'
+		WHERE  member_id = #{member_id}
+	</update>	
+  	<update id="updateStatus" parameterType="com.ezen.buybuy.entity.Members">
+    UPDATE members
+    SET account_status = #{account_status}
+    WHERE member_id = #{member_id}
+	</update>
+	
+	<insert id="insertBannerImg" parameterType="com.ezen.buybuy.entity.Banner">
+    INSERT INTO banner (image_url, banner_text, banner_name, banner_url) 
+    VALUES (#{image_url}, #{banner_text}, #{banner_name}, #{banner_url})
+</insert>
+	
+	 <select id="getHourlyTotal" resultType="com.ezen.buybuy.entity.AdminChart">
+    SELECT
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_0,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_1,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_2,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_3,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_4,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_5,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_6,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_7,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_8,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_9,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_10,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_11,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_12,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_13,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_14,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_15,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_16,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_17,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_18,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_19,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_20,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_21,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_22,
+        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_23
+    FROM
+        ( SELECT #{date} + INTERVAL (tens.ten + units.unit) HOUR AS hourly_time
+            FROM
+                (SELECT 0 AS unit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) units,
+                (SELECT 0 AS ten UNION ALL SELECT 10 UNION ALL SELECT 20) tens
+            WHERE #{date} + INTERVAL (tens.ten + units.unit) HOUR BETWEEN #{date} AND #{date} + INTERVAL 23 HOUR
+        ) all_hours
+    LEFT JOIN
+        orders ON DATE_FORMAT(orders.order_date, '%Y-%m-%d %H') = DATE_FORMAT(all_hours.hourly_time, '%Y-%m-%d %H')
+    GROUP BY #{date}, hourly_time
+    ORDER BY hourly_time;
+</select>
 
 </mapper>
