@@ -160,18 +160,29 @@
 				 <c:if test="${empty mvo}">
 				 <button class="header-loginBtn btn" style="border-color: black;">Login</button>
          </c:if>
-                  <c:if test="${!empty mvo}">
-                  <input type="hidden" id="member_id" name=member_id value="${mvo.member_id }"/>
-                   <button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
-                   <button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
-						<div id="notification">
-							<table id="notificationTable"></table>
-						</div>
-						<div id="notificationDot"></div>
-						
-					</button>
-                   </c:if>
-                   
+                 
+    <c:if test="${!empty mvo}">
+    <input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }"/>
+    <div class="header-profile">
+        <a href="${contextPath}/account/membermodify?member_id=${mvo.member_id}" class="btn btn-primary">정보수정</a>
+        <button class="header-logoutBtn btn" style="border-color: black;">Logout</button>
+        <button id="bell" class="glyphicon glyphicon-bell btn-lg" onclick="showNotification1()">
+            <div id="notification">
+                <table id="notificationTable"></table>
+            </div>
+            <div id="notificationDot"></div>
+        </button>
+        <c:if test="${empty mvo.profileimg}">
+            <!-- 프로필 이미지가 없는 경우 -->
+            <img src="${contextPath}/resources/image/kakaotalkimg.jpg" style="width: 50px; height: 50px; border-radius: 50%;" />
+        </c:if>
+        <c:if test="${!empty mvo.profileimg}">
+            <!-- 프로필 이미지가 있는 경우 -->
+            <img src="${contextPath}/resources/upload/${mvo.profileimg}" style="width: 50px; height: 50px; border-radius: 50%;" />
+        </c:if>
+    </div>
+</c:if>
+</div>                   
 			</div>
 		</div>
 	</div>

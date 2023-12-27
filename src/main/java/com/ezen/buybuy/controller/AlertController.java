@@ -50,8 +50,8 @@ public class AlertController {
 	@ResponseBody
 	public ResponseEntity<List<Alert>> checkForUpdates(@RequestParam(value = "member_id") String member_id, HttpSession session) {
 	    // memID를 기반으로 최신 알림을 가져옵니다.
-	    Members mvo = alertMapper.Login(new Members());
-	    session.setAttribute("mvo", mvo);
+
+	
 	    List<Alert> ao = alertMapper.AlertList(member_id);
 
 	    // 최신 알림을 JSON으로 반환

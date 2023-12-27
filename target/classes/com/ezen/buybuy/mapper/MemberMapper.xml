@@ -7,9 +7,9 @@
 	
 	
 
- <insert id="insert" parameterType="com.ezen.buybuy.entity.Members">
-      INSERT INTO members(name, member_id, password,phone, email,zipcode, addr)
-        VALUES(#{name},#{member_id},#{password},#{phone},#{email},#{zipcode},#{addr})
+        <insert id="insert" parameterType="com.ezen.buybuy.entity.Members">
+      INSERT INTO members(name, member_id, password,phone, email,zipcode, addr, detailaddr, account_type, join_date, account_status)
+        VALUES(#{name},#{member_id},#{password},#{phone},#{email},#{zipcode},#{addr},#{detailaddr}, 'user', now(), 'activate')
   </insert>
     
 	<select id="check" parameterType="com.ezen.buybuy.entity.Members" resultType="com.ezen.buybuy.entity.Members">
@@ -23,5 +23,37 @@
 		<select id="emailCheck" resultType="int">
 		select count(*) from members where email=#{email}
 	</select>
+	
+<select id="findId" resultType="com.ezen.buybuy.entity.Members">
+SELECT member_id 
+FROM members 
+WHERE email = #{param1} AND name = #{param2}
+</select>
+
+<select id="findPw" resultType="com.ezen.buybuy.entity.Members">
+SELECT password
+FROM members 
+WHERE member_id = #{param1} AND email = #{param2}
+</select>
+
+<update id="membermodify" parameterType="com.ezen.buybuy.entity.Members">
+    UPDATE members
+    SET
+    name = COALESCE(#{name}, name),
+    profileimg = COALESCE(#{profileimg}, profileimg),
+    password = COALESCE(#{password}, password),
+    phone = COALESCE(#{phone}, phone),
+    email = COALESCE(#{email}, email),
+    zipcode = COALESCE(#{zipcode}, zipcode),
+    addr = COALESCE(#{addr}, addr),
+    detailaddr = COALESCE(#{detailaddr}, detailaddr)
+    WHERE member_id = #{member_id}
+</update>
+
+<delete id="memberdelete" parameterType="com.ezen.buybuy.entity.Members">
+delete from members where member_id=#{member_id}
+
+</delete>
+
 
 </mapper>

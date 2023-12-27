@@ -5,7 +5,6 @@ import lombok.Data;
 public class Members {
 	private String member_id;	
 	private String password;
-	private String password2;
 	private String name;
 	private String nickname; 
 	private String zipcode;
@@ -16,8 +15,4 @@ public class Members {
 	private String profileimg;
 	private String join_date;
 	private String account_status; 
-
-	
-	
-	
 }

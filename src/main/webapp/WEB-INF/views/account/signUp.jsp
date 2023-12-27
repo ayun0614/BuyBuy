@@ -124,10 +124,10 @@ $(document).ready(function(){
               }
 
               // 우편번호와 주소 정보를 해당 필드에 넣는다.
-              document.getElementById('sample6_postcode').value = data.zonecode;
-              document.getElementById("sample6_address").value = addr;
+              document.getElementById('zipcode').value = data.zonecode;
+              document.getElementById("addr").value = addr;
               // 커서를 상세주소 필드로 이동한다.
-              document.getElementById("sample6_detailAddress").focus();
+              document.getElementById("detailaddr").focus();
           }
       }).open();
   }
@@ -205,6 +205,7 @@ div.main i {
 	font-size: 22px;
 	cursor: pointer;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -270,11 +271,11 @@ function validateForm() {
     var password2 = document.getElementById("password2").value;
     var phone = document.getElementById("phone").value;
     var email = document.getElementById("email").value; // 이메일 값 추가
-    var postcode = document.getElementById("sample6_postcode").value;
-    var address = document.getElementById("sample6_address").value;
-    var detailAddress = document.getElementById("sample6_detailAddress").value;
+    var zipcode = document.getElementById("zipcode").value;
+    var addr = document.getElementById("addr").value;
+    var detailaddr = document.getElementById("detailaddr").value;
 
-    if (name === "" || member_id === "" || password === "" || password2 === "" || phone === "" || email === "" || postcode === "" || address === "" || detailAddress === "") {
+    if (name === "" || member_id === "" || password === "" || password2 === "" || phone === "" || email === "" || zipcode === "" || addr === "" || detailaddr === "") {
         alert("모든 필수 항목을 작성해주세요.");
         return false; // 회원가입 제한
     }
@@ -311,8 +312,8 @@ function autoHyphen2(target) {
   </script>
 </head>
 <body>
+<jsp:include page="../include/header.jsp" />
 	<div class="container">
-		<jsp:include page="../include/header.jsp" />
 		<form action="${contextPath }/account/insert" method="post" onsubmit="return validateForm()">
 			<div class="panel panel-default">
 				<div class="panel-heading">회원가입</div>
@@ -371,7 +372,7 @@ function autoHyphen2(target) {
 						<label for="address">주소</label>
 						<div class="input-group">
 							<!-- Bootstrap input-group 사용 -->
-							<input type="text" id="sample6_postcode" class="form-control" name="zipcode" placeholder="우편번호">
+							<input type="text" id="zipcode" name="zipcode" class="form-control"  placeholder="우편번호">
 							<span class="input-group-btn">
 								<button class="btn btn-primary" type="button" onclick="sample6_execDaumPostcode()">주소찾기</button>
 							</span>
@@ -380,13 +381,13 @@ function autoHyphen2(target) {
 					</div>
 				</div>
 				<div class="address-field">
-					<input type="text" id="sample6_address" name="addr" class="form-control" placeholder="주소">
+					<input type="text" id="addr" name="addr"  class="form-control" placeholder="주소">
 				</div>
 				<div class="address-field">
-					<input type="text" id="sample6_detailAddress" name="addr" class="form-control" placeholder="상세주소">
+					<input type="text" id="detailaddr" name="detailaddr" class="form-control" placeholder="상세주소">
 				</div>
 				<div class="address-field">
-					<input type="text" id="sample6_extraAddress" name="addr" class="form-control" placeholder="참고항목">
+					<input type="text" id="sample6_extraAddress"  class="form-control" placeholder="참고항목">
 				</div>
 			</div>
 
