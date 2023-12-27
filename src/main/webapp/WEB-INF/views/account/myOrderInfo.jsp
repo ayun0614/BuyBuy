@@ -158,7 +158,7 @@ hr {
 	<input type="hidden" id="order_num" name="order_num" value="${mo.order_num }">
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageOrder?member_id=${mvo.member_id }"><img src="resources/image/Back.png" class="backBtn"></a>
+			<a href="myPageOrder?member_id=${mvo.member_id }"><img src="${contextPath}/resources/image/Back.png" class="backBtn"></a>
 			<div class="myPageSubText">주문 상세</div>
 		</div>
 		<hr>
