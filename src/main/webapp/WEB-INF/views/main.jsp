@@ -15,6 +15,8 @@
 <body>
 	<c:import url="include/header.jsp" />
 	<c:import url="include/chat.jsp" />
+		<button onclick="location.href='${contextPath }/admin'">관리자페이지 이동</button>
+	
 	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<div class="slider-container container">
 		<div class="slider-show">
