@@ -100,7 +100,7 @@
                               + "&a_idx="
                               + ao.a_idx
                               + "&product_idx="
-                              + ao.product_idx + "'>" + ao.a_title + "</a></div>" + "<div style='text-align:left;'>" + ao.msg + "</div>" + "</td>");
+                              + ao.product_idx + "'>" + ao.a_title + "</div>" + "<div style='text-align:left;'>" + ao.msg + "</div>" + "</td></a>");
 
                   row.addClass(ao.a_state === 0 ? "grayed" : "");
                   notificationTable.append(row);
@@ -141,7 +141,7 @@
             <c:if test="${!empty mvo}">
                <input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }" />
                <div class="header-profile" style = "display:flex;"> 
-                  <button class="header-logoutBtn btn" style="border-color: black; margin-right:10px; margin-left:-100px;">Logout</button>
+                  <button class="header-logoutBtn btn" style="border-color: black; margin-right:10px; margin-left:-100px; margin-top:8px; height: 35px; background-color:#ffffff;">Logout</button>
                   <c:if test="${empty mvo.profileimg}">
                      <!-- 프로필 이미지가 없는 경우 -->
                      <c:if test="${mvo.account_type eq 'user' or mvo.account_type eq 'dealer' }">
@@ -190,52 +190,52 @@
       <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=1'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuCloth.svg" /> 의류
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=2'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=5'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuCosmetics.svg" /> 화장품
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=3'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=9'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuFood.svg" /> 식품
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=4'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=13'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuDaily.svg" /> 생필품
       </div>
    </div>
    <div class="menu-grid col-md-5">
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=5'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=2'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuDeco.svg" /> 홈데코
       </div>
       <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=6'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuPencil.svg" /> 문구
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=7'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=10'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuHobby.svg" /> 취미
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=8'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=14'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuPet.svg" /> 반려동물
       </div>
    </div>
    <div class="menu-grid col-md-5">
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=9'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=3'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuComputer.svg" /> 컴퓨터
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=10'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=7'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuMobile.svg" /> 모바일
       </div>
       <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=11'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuTv.svg" /> 가전제품
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=12'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=15'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuSport.svg" /> 스포츠
       </div>
    </div>
    <div class="menu-grid col-md-5">
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=13'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=4'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuHealth.svg" /> 건강
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=14'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=8'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuTools.svg" /> 공구
       </div>
-      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=15'">
+      <div class="menu-item" onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=12'">
          <img class="menu-icon" alt="" src="${contextPath }/resources/image/menuOthers.svg" /> 기타
       </div>
       <div class="menu-item">

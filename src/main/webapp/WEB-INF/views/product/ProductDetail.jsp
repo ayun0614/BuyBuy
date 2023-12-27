@@ -27,44 +27,42 @@
 
 var countDownDate_${productDetail.product_idx} = new Date("${productDetail.end_date}").getTime();
 
-//1초마다 카운트다운 업데이트
+//Update the countdown every 1 second
+var x_${productDetail.product_idx} = setInterval(function () {
+ // Get the current date and time
+ var now = new Date().getTime();
 
+ // Calculate the remaining time
+ var distance = countDownDate_${productDetail.product_idx} - now;
 
-    // Set the date we're counting down to
-    var countDownDate_${productDetail.product_idx} = new Date("${productDetail.end_date}").getTime();
+ // Calculate days, hours, minutes, and seconds
+ var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+ var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+ var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+ var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Update the countdown every 1 second
-  var x_${productDetail.product_idx} = setInterval(function () {
-    // Get the current date and time
-    var now = new Date().getTime();
-
-    // Calculate the remaining time
-    var distance = countDownDate_${productDetail.product_idx} - now;
-
-    // Calculate days, hours, minutes, and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Display the countdown
-    document.getElementById("countdown_${productDetail.product_idx}").innerHTML =
-        days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
-
-    if (distance < 0) {
-        clearInterval(x_${productDetail.product_idx});
-        document.getElementById("countdown_${productDetail.product_idx}").innerHTML = "공구종료";
-      if('${productDetail.content_state}'==='판매중')
-      {
+ // Display the countdown with different styles based on remaining time
+ var countdownElement = document.getElementById("countdown_${productDetail.product_idx}");
+ if (distance < 0) {
+     clearInterval(x_${productDetail.product_idx});
+     countdownElement.innerHTML = "공구종료";
+     if ('${productDetail.content_state}' === '판매중') {
          alert("마감");
          ProductTimeout();
-      }
-        
+     }
+     $(".btn-primary.btn-sm.pull-right").hide();
+ } else {
+     var countdownText = days + "일 " + hours + "시간 " + minutes + "분 " + seconds + "초 ";
+     countdownElement.innerHTML = countdownText;
 
-        $(".btn-primary.btn-sm.pull-right").hide();
-    }
+     // Change text color to red if remaining time is 30 minutes or less
+     if (days === 0 && hours <=12) {
+         countdownElement.style.color = "blue";
+     } else {
+         countdownElement.style.color = ""; // Reset to default color
+     }
+ }
 }, 1000);
-
 
 function ProductTimeout() {
    
@@ -253,7 +251,7 @@ $(document).ready(function () {
                      <br>
                      <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">남은시간</span>
-                        <div id="countdown_${productDetail.product_idx}" readonly
+                        <div id="countdown_${productDetail.product_idx}" readonly style="font-weight:bold;"
                            class="form-control input-sm"></div>
                      </div>
                      <br>

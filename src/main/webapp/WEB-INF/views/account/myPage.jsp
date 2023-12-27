@@ -50,7 +50,6 @@ hr {
    margin-left: 140px;
    width: 175px;
    height: 175px;
-   background-color: #000000;
    border-radius: 50%;
 }
 
@@ -156,7 +155,12 @@ hr {
       <hr>
       <div class="myInfoBox">
          <div class="myInfoImgDiv">
-            <img src="" class="myInfoImg" />
+         <c:if test="${empty mvo.profileimg}">
+             <img src="${contextPath}/resources/image/kakaotalkimg.jpg" class="myInfoImg" />
+         </c:if>
+         <c:if test="${!empty mvo.profileimg}">
+             <img src="${mvo.profileimg}" class="myInfoImg" />
+         </c:if>
          </div>
          <table class="myInfotbl">
             <tr>
