@@ -77,11 +77,6 @@ public class AccountController {
 		this.googleLoginBO = googleLoginBO;
 	}
 
-	@Autowired
-	private void setImgurBO(ImgurBO imgurBO) {
-		this.imgurBO = imgurBO;
-	}
-
 	@GetMapping("/signIn")
 	public String signIn() throws Exception {
 		return "account/signIn";
@@ -106,7 +101,8 @@ public class AccountController {
 	}
 
 	@RequestMapping("/kakaoCallBack")
-	public String kakaoCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
+	public String kakaoCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state,
+			HttpSession session)
 			throws IOException {
 		String token = kakaoLoginBO.requestToken(session, code, state);
 		apiResult = kakaoLoginBO.requestProfile(token);
@@ -135,7 +131,8 @@ public class AccountController {
 	}
 
 	@RequestMapping("/googleCallBack")
-	public String googleCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
+	public String googleCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state,
+			HttpSession session)
 			throws IOException {
 		String token = googleLoginBO.requestToken(session, code, state);
 		apiResult = googleLoginBO.requestProfile(token);
@@ -143,7 +140,6 @@ public class AccountController {
 
 		memVO = new Members();
 		memVO.setMember_id(full.getBigInteger("id").toString() + "_google");
-
 		Members check = memberMapper.registerCheck(memVO.getMember_id());
 
 		if (check == null || check.getMember_id().equals("")) {
@@ -161,7 +157,8 @@ public class AccountController {
 	}
 
 	@RequestMapping("/naverCallBack")
-	public String naverCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
+	public String naverCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state,
+			HttpSession session)
 			throws IOException {
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -171,7 +168,6 @@ public class AccountController {
 
 		memVO = new Members();
 		memVO.setMember_id(response.getString("id") + "_naver");
-
 		Members check = memberMapper.registerCheck(memVO.getMember_id());
 
 		if (check == null || check.getMember_id().equals("")) {
@@ -184,7 +180,6 @@ public class AccountController {
 			model.addAttribute("mem", memVO);
 			return "account/signUp";
 		}
-
 		session.setAttribute("mvo", check);
 		return "redirect:/";
 	}
@@ -211,7 +206,8 @@ public class AccountController {
 
 	@RequestMapping("/check")
 	public String memLogin(Members m, RedirectAttributes rttr, HttpSession session) {
-		if (m.getMember_id() == null || m.getMember_id().isEmpty() || m.getPassword() == null || m.getPassword().isEmpty()) {
+		if (m.getMember_id() == null || m.getMember_id().isEmpty() || m.getPassword() == null
+				|| m.getPassword().isEmpty()) {
 			rttr.addFlashAttribute("msgType", "실패");
 			rttr.addFlashAttribute("msg", "값을 모두 입력하세요");
 			return "redirect:/account/signIn";
@@ -298,14 +294,14 @@ public class AccountController {
 	public String membermodify(@RequestParam("member_id") String member_id, Model model) {
 		Members mvo = memberMapper.registerCheck(member_id);
 		model.addAttribute("mvo", mvo);
-		
+
 		String id = mvo.getMember_id();
-		if(id.contains("_kakao")||id.contains("_google")||id.contains("_naver")) {
+		if (id.contains("_kakao") || id.contains("_google") || id.contains("_naver")) {
 			model.addAttribute("isSocial", true);
-		}else {
+		} else {
 			model.addAttribute("isSocial", false);
 		}
-		
+
 		return "account/membermodify";
 	}
 
@@ -322,7 +318,8 @@ public class AccountController {
 	}
 
 	@PostMapping("/membermodify")
-	public String membermodify(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) throws IOException {	
+	public String membermodify(HttpServletRequest request, HttpSession session, RedirectAttributes rttr)
+			throws IOException {
 		MultipartRequest multi = null;
 		int fileSize = 40 * 1024 * 1024; // 10MB
 		@SuppressWarnings("deprecation")
@@ -335,17 +332,17 @@ public class AccountController {
 		MultipartFile thumbnailFile = new MockMultipartFile("img.png", new FileInputStream(imgFile));
 		Members m = (Members) session.getAttribute("mvo");
 		Members mvo = new Members();
-		
-		if(thumbnailFile.isEmpty()) {
+
+		if (thumbnailFile.isEmpty()) {
 			mvo.setProfileimg(m.getProfileimg());
-		}else {
+		} else {
 			System.out.println("업로드 전");
 			newProThumbnail = imgurBO.requestUpload(thumbnailFile.getBytes());
-			System.out.println("업로드 후 : "+newProThumbnail);
+			System.out.println("업로드 후 : " + newProThumbnail);
 			mvo.setProfileimg(newProThumbnail);
 			System.out.println("파일설정완료");
 		}
-		
+
 		mvo.setMember_id(multi.getParameter("member_id"));
 		mvo.setName(multi.getParameter("name"));
 		mvo.setPassword(multi.getParameter("password"));
@@ -354,11 +351,11 @@ public class AccountController {
 		mvo.setZipcode(Integer.parseInt(multi.getParameter("zipcode")));
 		mvo.setAddr(multi.getParameter("addr"));
 		mvo.setDetailaddr(multi.getParameter("detailaddr"));
-		
+
 		memberMapper.membermodify(mvo);
-		
+
 		session.setAttribute("mvo", mvo);
-		
+
 		return "redirect:/";
 	}
 
@@ -424,7 +421,8 @@ public class AccountController {
 	}
 
 	@PostMapping("/memberdelete")
-	public String memberdelete(@RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes) {
+	public String memberdelete(@RequestParam("password") String password, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		Members mem = (Members) session.getAttribute("mvo");
 		System.out.println(mem);
 		// 회원의 정보를 DB에서 불러옵니다.
@@ -450,7 +448,8 @@ public class AccountController {
 	}
 
 	@RequestMapping("/myPage")
-	public String myPageMain(@RequestParam("member_id") String member_id, Model mo, Model mvo, Model moo, Members mem, MypageMain mpm, MyPageCNT cnt,
+	public String myPageMain(@RequestParam("member_id") String member_id, Model mo, Model mvo, Model moo, Members mem,
+			MypageMain mpm, MyPageCNT cnt,
 			HttpSession session, HttpServletRequest request) {
 
 		cnt.setMember_id(member_id);
@@ -465,13 +464,13 @@ public class AccountController {
 	}
 
 	@RequestMapping("/myOrderList")
-	public String myPageOrder(String member_id) {
+	public String myOrderList(String member_id) {
 		return "account/myOrderList";
 	}
 
-	@RequestMapping("/myOrderInfo")
-	public String myPageOrderInfo(@RequestParam("order_num") int order_num, @RequestParam("member_id") String member_id, Model mo, OrderInfo oi,
-			HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/myOrderInfo", method = RequestMethod.GET)
+	public String myOrderInfo(@RequestParam("order_num") int order_num, @RequestParam("member_id") String member_id,
+			Model mo, OrderInfo oi, HttpSession session, HttpServletRequest request) {
 		oi.setMember_id(member_id);
 		oi.setOrder_num(order_num);
 		oi = memberInfoMapper.mypageOrderInfo(order_num, member_id);
@@ -480,7 +479,7 @@ public class AccountController {
 	}
 
 	@RequestMapping("/myProducts")
-	public String myPagePostingProduct() {
+	public String myProducts() {
 		return "account/myProducts";
 	}
 }

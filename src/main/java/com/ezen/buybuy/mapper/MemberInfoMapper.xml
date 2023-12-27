@@ -7,7 +7,7 @@
 	</select>
 
 	<select id="productInfo" resultType="com.ezen.buybuy.entity.Products">
-		select * from products where product_idx = 161
+		select * from products where product_idx = #{product_idx}
 	</select>
 
 	<select id="dealerRequestInfo" resultType="com.ezen.buybuy.entity.MypageMain">
@@ -54,7 +54,7 @@
 	
 	<insert id="productBuy" parameterType="com.ezen.buybuy.entity.Orders">
 		INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
-		VALUES (161, #{member_id}, 3, #{total_price}, now(), #{deli_name}, #{deli_phone}, #{deli_zipcode}, #{deli_addr}, #{deli_detailaddr}, #{deli_memo}, #{pay_type}, '주문 완료');
+		VALUES (#{product_idx}, #{member_id}, #{order_pcs}, #{total_price}, now(), #{deli_name}, #{deli_phone}, #{deli_zipcode}, #{deli_addr}, #{deli_detailaddr}, #{deli_memo}, #{pay_type}, '주문 완료')
 	</insert>
 	
 	

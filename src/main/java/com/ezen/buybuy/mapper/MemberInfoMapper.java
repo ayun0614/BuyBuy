@@ -19,7 +19,7 @@ public interface MemberInfoMapper {
 
 	public Members mypageInfo(String member_id);
 
-	public Products productInfo();
+	public Products productInfo(int product_idx);
 
 	public MypageMain dealerRequestInfo(String member_id);
 

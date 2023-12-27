@@ -125,18 +125,14 @@ hr {
 
 <script>
 	$(document).ready(function() {
-
 		$('#dealerChangeReq').click(function(){
-			
 			var member_id = $('#member_id').val();
-			
 			if('${mvo.account_type}' === 'dealer') {
 				alert("판매자 계정입니다.");
 			}
 			else { 
-				
 				$.ajax({
-					url:"mypage/dealerRequest",
+					url:"dealerRequest",
 					type:"put",
 					contentType:'application/json;charset=utf-8',
 					data:JSON.stringify({"member_id":member_id}),
@@ -147,12 +143,8 @@ hr {
 						alert("이미 신청한 계정입니다.");
 					}
 				});	
-				
 			}
-
-				
 		});
-		
 	});
 </script>
 </head>
@@ -176,7 +168,7 @@ hr {
 				</tr>
 			</table>
 			<div class="myInfoEditPage">
-				<a href="" style="text-decoration: none; color: black;"><img src="resources/image/Settings.png"><br>회원 정보 수정</a>
+				<a href="" style="text-decoration: none; color: black;"><img src="${contextPath}/resources/image/Settings.png"><br>회원 정보 수정</a>
 			</div>
 		</div>
 		<div class="orderStatus">
@@ -197,21 +189,21 @@ hr {
 		<div class="myPageMoveBox">
 			<c:if test="${mvo.account_type eq 'user' }">
 				<div class="myPageMoveDiv" style="font-size: 20px;"> 
-					<a href="myPageOrder?member_id=${mvo.member_id}" style="text-decoration: none; color: black;"><img src="resources/image/Shopping Cart.png"><br>구매한 상품</a>
+					<a href="myOrderList?member_id=${mvo.member_id}" style="text-decoration: none; color: black;"><img src="${contextPath}/resources/image/Shopping Cart.png"><br>구매한 상품</a>
 				</div>
 			</c:if>
 			<c:if test="${mvo.account_type eq 'dealer' }">
 				<div class="myPageMoveDiv" style="font-size: 20px;">
-					<a href="myPagePostingProduct?member_id=${mvo.member_id}" style="text-decoration: none; color: black;"><img src="resources/image/Bulleted List.png"><br>등록한 상품</a>
+					<a href="myProducts?member_id=${mvo.member_id}" style="text-decoration: none; color: black;"><img src="${contextPath}/resources/image/Bulleted List.png"><br>등록한 상품</a>
 				</div>
 			</c:if>
 			<div class="vl"></div>
 			<div class="myPageMoveDiv" id="dealerChangeReq" style="font-size: 20px;">
-				<a href="" style="text-decoration: none; color: black;"><img src="resources/image/User Male.png"><br>판매자 계정 신청</a>
+				<a href="" style="text-decoration: none; color: black;"><img src="${contextPath}/resources/image/User Male.png"><br>판매자 계정 신청</a>
 			</div>
 			<div class="vl"></div>
 			<div class="myPageMoveDiv" style="font-size: 20px;">
-				<a href="" style="text-decoration: none; color: black;"><img src="resources/image/Key.png"><br>계정 탈퇴</a>
+				<a href="" style="text-decoration: none; color: black;"><img src="${contextPath}/resources/image/Key.png"><br>계정 탈퇴</a>
 			</div>
 		</div>
 	</div>

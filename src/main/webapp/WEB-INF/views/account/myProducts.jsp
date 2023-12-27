@@ -15,6 +15,7 @@
 <style>
 html, body {
 	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #ffffff;
 	height: 100%;
 }
 
@@ -99,10 +100,12 @@ hr {
 
 <script>
 	$(document).ready(function() {
+		waitList();
+	});
 
 	function waitList() {
 		$.ajax({
-			url : "mypage/postingAll",
+			url : "postingAll",
 			type : "get",
 			data : $('#member_id'),
 			success : createView,
@@ -126,7 +129,7 @@ hr {
 			list += "<table class = 'productInfoTbl'>";
 			list += "<tr class = 'productInfoTr'>"; 
 			list += "<td class = 'productInfoTd' style = 'font-size:24px; font-weight: 700; width:350px;'>" + obj.product_name + "</td>";
-			list += "<td class = 'productInfoTd' align = 'right' style = 'font-size:16px; width:150px;'><a href='${contextPath}/product/ProductDetail?product_idx="+obj.product_idx+"' style = 'text-decoration:none; color: black;'>상품 게시글 상세 &nbsp&nbsp <img src = 'resources/image/Go.png' class = 'goBtn'></a></td>";
+			list += "<td class = 'productInfoTd' align = 'right' style = 'font-size:16px; width:150px;'><a href='${contextPath}/product/ProductDetail?product_idx="+obj.product_idx+"' style = 'text-decoration:none; color: black;'>상품 게시글 상세 &nbsp&nbsp <img src = '${contextPath}/resources/image/Go.png' class = 'goBtn'></a></td>";
 			list += "</tr>";
 			list += "<tr class = 'productInfoTr'>";
 			list += "<td style = 'font-size:17px;' class = 'productInfoTd'>마감일 " + obj.end_date + "</td>";
@@ -187,10 +190,10 @@ hr {
 	function buyerExcel(product_idx) {
 		
 		$.ajax({
-			url : "mypage/excel/download?product_idx="+product_idx,
+			url : "excel/download?product_idx="+product_idx,
 			type : "get", 
 			success : function() {
-				location.href = "mypage/excel/download?product_idx="+product_idx;
+				location.href = "excel/download?product_idx="+product_idx;
 			},
 			error : function(xhr, status, error) {
 				alert("error");
@@ -205,7 +208,7 @@ hr {
 	<input type="hidden" id="member_id" name="member_id" value="${mvo.member_id }">
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageMain?member_id=${mvo.member_id}"><img src="resources/image/Back.png" class="backBtn"></a>
+			<a href="myPage?member_id=${mvo.member_id}"><img src="${contextPath}/resources/image/Back.png" class="backBtn"></a>
 			<div class="myPageSubText">등록한 게시물</div>
 		</div>
 		<hr>
