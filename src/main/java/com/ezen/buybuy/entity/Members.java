@@ -15,7 +15,7 @@ public class Members {
 	private String detailaddr;
 	private String phone;
 	private String email;
-	private String profileImg;
+	private String profileimg;
 	private Date join_date;
 	private String account_status;
 	private int applydealer_status;

@@ -1,20 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.ezen.buybuy.mapper.MemberMapper">
-	<insert id="insert" parameterType="com.ezen.buybuy.entity.Members">
-		INSERT INTO members(name, nickname, account_type, member_id, password,phone, email,zipcode, addr, detailaddr, join_date,
-		account_status, profileimg)
-		VALUES(#{name}, #{name}, 'user', #{member_id},#{password},#{phone},#{email},#{zipcode},#{addr}, #{detailaddr}, DATE_FORMAT(now(),
-		'%Y-%m-%d'),'activate', #{profileImg})
-	</insert>
-	<select id="check" parameterType="com.ezen.buybuy.entity.Members" resultType="com.ezen.buybuy.entity.Members">
-		select * from members where member_id=#{member_id} and
-		password=#{password}
-	</select>
-	<select id="registerCheck" resultType="com.ezen.buybuy.entity.Members">
-		select * from members where member_id=#{member_id}
-	</select>
-	<select id="emailCheck" resultType="int">
-		select count(*) from members where email=#{email}
-	</select>
+
+<insert id="insert" parameterType="com.ezen.buybuy.entity.Members">
+     INSERT INTO members(name, nickname, account_type, member_id, password,phone, email,zipcode, addr, detailaddr, join_date,
+	account_status, profileimg)
+	VALUES(#{name}, #{name}, 'user', #{member_id},#{password},#{phone},#{email},#{zipcode},#{addr}, #{detailaddr}, DATE_FORMAT(now(),
+	'%Y-%m-%d'),'activate', #{profileimg})
+  </insert>
+    
+<select id="check" parameterType="com.ezen.buybuy.entity.Members" resultType="com.ezen.buybuy.entity.Members">
+	select * from members where member_id=#{member_id} and password=#{password}
+</select>
+	
+<select id="registerCheck" resultType="com.ezen.buybuy.entity.Members">
+	select * from members where member_id=#{member_id}
+</select>
+	
+<select id="emailCheck" resultType="int">
+	select count(*) from members where email=#{email}
+</select>
+	
+<select id="findId" resultType="com.ezen.buybuy.entity.Members">
+SELECT member_id 
+FROM members 
+WHERE email = #{param1} AND name = #{param2}
+</select>
+
+<select id="findPw" resultType="com.ezen.buybuy.entity.Members">
+SELECT password
+FROM members 
+WHERE member_id = #{param1} AND email = #{param2}
+</select>
+
+<update id="membermodify" parameterType="com.ezen.buybuy.entity.Members">
+    UPDATE members
+    SET
+    name = COALESCE(#{name}, name),
+    profileimg = COALESCE(#{profileimg}, profileimg),
+    password = COALESCE(#{password}, password),
+    phone = COALESCE(#{phone}, phone),
+    email = COALESCE(#{email}, email),
+    zipcode = COALESCE(#{zipcode}, zipcode),
+    addr = COALESCE(#{addr}, addr),
+    detailaddr = COALESCE(#{detailaddr}, detailaddr)
+    WHERE member_id = #{member_id}
+</update>
+
+<delete id="memberdelete" parameterType="com.ezen.buybuy.entity.Members">
+	delete from members where member_id=#{member_id}
+</delete>
 </mapper>
