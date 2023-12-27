@@ -101,8 +101,6 @@ public class ProductController {
 		MultipartFile detailFile = new MockMultipartFile("img.png", new FileInputStream(multi.getFile("detail_img")));
 		newProDetail = imgurBO.requestUpload(detailFile.getBytes());
 
-		System.out.println(newProThumbnail);
-		
 		// 이미지를 db에 업데이트
 		Products mvo = new Products();
 		mvo.setThumbnail_img(newProThumbnail);
