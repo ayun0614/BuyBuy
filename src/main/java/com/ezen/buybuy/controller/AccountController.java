@@ -12,6 +12,10 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import com.ezen.buybuy.api.GoogleLoginBO;
+import com.ezen.buybuy.api.KakaoLoginBO;
+import com.ezen.buybuy.api.NaverLoginBO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,7 +62,7 @@ public class AccountController {
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
 		this.naverLoginBO = naverLoginBO;
 	}
-
+	
 	@Autowired
 	private void setGoogleLoginBO(GoogleLoginBO googleLoginBO) {
 		this.googleLoginBO = googleLoginBO;
@@ -140,6 +144,16 @@ public class AccountController {
 
 		session.setAttribute("mvo", check);
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/googleCallBack")
+	public String googleCallBack(Model model, @RequestParam("code") String code, @RequestParam("state") String state, HttpSession session)
+			throws IOException {
+		String token = googleLoginBO.requestToken(session, code, state);
+		apiResult = googleLoginBO.requestProfile(token);
+		model.addAttribute("result", apiResult);
+		
+		return "account/googlecallback";
 	}
 
 	@RequestMapping("/naverCallBack")
