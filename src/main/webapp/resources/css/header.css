@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap')
+	;
 
 * {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -51,7 +53,7 @@
 .header-search input {
 	background: transparent;
 	border: none;
-	padding: 10px 10px 10px 20px;
+	padding: 10px 10px 10px 10px;
 	outline-width: 0px;
 	flex-grow: 1;
 	font-size: large;
@@ -64,6 +66,8 @@
 }
 
 .header-icon {
+	margin-right: -3px;
+	margin-top: -5px;
 	align-items: center;
 	width: 25px;
 	height: 25px;
@@ -79,6 +83,10 @@
 	font-size: 22px;
 	font-weight: 500;
 	display: inline-block;
+}
+
+.header-pop, .header-new, .header-second {
+	cursor: pointer;
 }
 
 .header-overlay {
@@ -102,6 +110,7 @@
 	user-select: none;
 	font-size: 20px;
 	font-weight: 300;
+	cursor: pointer;
 }
 
 .menu-grid {
@@ -109,6 +118,45 @@
 	position: static;
 }
 
-.menu-box{
+.menu-box {
 	justify-content: center;
+}
+
+#notification {
+	display: none;
+	position: fixed;
+	background-color: white;
+	color: black;
+	padding: 15px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-height: 300px;
+	overflow: auto;
+	z-index: 999;
+}
+
+#notificationDot {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 5px;
+	height: 5px;
+	background-color: red;
+	border-radius: 50%;
+	display: none;
+}
+
+#bell {
+	background: none;
+	border: none;
+	position: relative;
+}
+
+.grayed {
+	background-color: #f2f2f2; /*이거 회색임*/
+}
+
+#notificationTable {
+	width: 270px;
+	border-collapse: collapse;
 }
