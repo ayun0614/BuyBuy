@@ -10,7 +10,7 @@
 	</insert>
 
 	<select id="ProductList" resultType="com.ezen.buybuy.entity.Products">
-		select *from products
+		select *from products order by product_idx desc
 	</select>
 
 	<select id="ProductListCtgr" parameterType="int" resultType="com.ezen.buybuy.entity.Products">
