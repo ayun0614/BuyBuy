@@ -189,8 +189,7 @@ div.main i {
 				<div class="panel-body">
 					<!-- 이미지 업로드 -->
 					<div class="form-group">
-						<label for="profileimg" class="btn btn-default"> 이미지 업로드하세요 <input type="file" id="profileimg" name="profileimg" multiple onchange="previewImages(this)" style="display: none;">
-						</label>
+						<input type="file" style="width: 300px;" name="profileimg" multiple onchange="previewImages(this)" />
 					</div>
 					<!-- 이름, 아이디 -->
 					<div class="form-group">
@@ -260,7 +259,7 @@ div.main i {
 					</div>
 					<!-- 수정하기 버튼 -->
 					<div class="form-group">
-						<div style="width: 1100px; margin: 0 auto;">
+						<div style="width: auto; margin: 0 auto;">
 							<input type="submit" value="수정하기" class="btn btn-primary btn-block">
 						</div>
 					</div>
