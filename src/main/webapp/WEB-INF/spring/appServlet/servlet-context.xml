@@ -4,10 +4,28 @@
     xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
+         xmlns:mvc="http://www.springframework.org/schema/mvc">
 
+	<beans:bean id="members" class="com.ezen.buybuy.entity.Members" />
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-
+	<mvc:interceptors>
+	    <mvc:interceptor>
+	        <mvc:mapping path="/account/myPage/**" />
+	        <beans:bean class="com.ezen.buybuy.interceptor.LoginInterceptor" />
+	    </mvc:interceptor>
+	    
+	    <mvc:interceptor>
+	        <mvc:mapping path="/admin/**" />
+	        <beans:bean class="com.ezen.buybuy.interceptor.AdminInterceptor" />
+	    </mvc:interceptor>
+	    
+	    <mvc:interceptor>
+	        <mvc:mapping path="/product/ProductListInsert/" />
+	        <beans:bean class="com.ezen.buybuy.interceptor.DealerInterceptor" />
+	    </mvc:interceptor>
+	</mvc:interceptors>
+		
     <!-- Enables the Spring MVC @Controller programming model -->
     <annotation-driven />
 
@@ -24,7 +42,8 @@
 	<beans:bean id="kakaoLoginBO" class="com.ezen.buybuy.api.KakaoLoginBO" />
 	<beans:bean id="googleLoginBO" class="com.ezen.buybuy.api.GoogleLoginBO" />
 	<beans:bean id="imgurBO" class="com.ezen.buybuy.api.ImgurBO" />
-
+	
+	
     <!-- Mail Sender Bean -->
     <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <beans:property name="host" value="smtp.gmail.com"/>
@@ -43,6 +62,7 @@
             </beans:props>
         </beans:property>
     </beans:bean>
-
+		
+		
     <context:component-scan base-package="com.ezen.buybuy.controller" />
 </beans:beans>

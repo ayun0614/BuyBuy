@@ -1,5 +1,4 @@
 package com.ezen.buybuy.entity;
-
 import java.util.Date;
 import lombok.Data;
 

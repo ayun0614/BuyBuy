@@ -2,10 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var='root' value="${pageContext.request.contextPath }/" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -147,7 +147,6 @@ hr {
 	color: #537FE7;
 }
 </style>
-
 <script type="text/javascript">
 	
 </script>
@@ -158,7 +157,7 @@ hr {
 	<input type="hidden" id="order_num" name="order_num" value="${mo.order_num }">
 	<div class="bodyDiv">
 		<div class="myPageSubDiv">
-			<a href="myPageOrder?member_id=${mvo.member_id }"><img src="${contextPath}/resources/image/Back.png" class="backBtn"></a>
+			<a href="myOrderList?member_id=${mvo.member_id }"><img src="${contextPath}/resources/image/Back.png" class="backBtn"></a>
 			<div class="myPageSubText">주문 상세</div>
 		</div>
 		<hr>
@@ -167,7 +166,7 @@ hr {
 			<div class="productInfoImg">
 				<img src="" class="myInfoImg" "/>
 			</div>
-			<div class="productInfoBox2">
+			<div class=" productInfoBox2">
 				<div style="font-weight: 900; font-size: 18px;">${mo.product_name}</div>
 				<br>
 				<div style="font-size: 12px;">수량 ${mo.order_pcs}개</div>

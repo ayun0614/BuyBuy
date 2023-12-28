@@ -14,8 +14,6 @@ import org.springframework.web.client.RestTemplate;
 public class ImgurBO {
 	private final String API_URI = "https://api.imgur.com/3/image?privacy=private";
 	private final String CLIENT_ID = "32e50e1b9e984d9";
-	private final String CLIENT_SECRET = "8e3f8ab6aaadf8e12e6468d0147839ffaeee7478";
-	private final String REDIRECT_URI = "http://localhost:8080/buybuy/imgur";
 
 	RestTemplate restTemplate = new RestTemplate();
 
