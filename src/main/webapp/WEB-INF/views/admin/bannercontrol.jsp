@@ -21,16 +21,6 @@
 		    margin-top: 0px;
 		    border-top: 1px solid #E2E2E2;
 		}
-	    .container-fluid {
-	    	display:flex;
-		   	margin-top: 20px;
-		    text-align: center;
-		    border-radius: 0px;	 
-		    border: 2px solid #E2E2E2;
-		    max-width:80%;
-		    height: 100vh;
-		    font-size: 18px;      	
-	    }
 	    .head {
 	        display: flex;
 	        justify-content: center;
@@ -58,122 +48,161 @@
 	        color: #000;
 	        margin-bottom: 10px;     
         }
-		
-		.icon-container {
+        .container-fluid {
+		   	margin-top: 20px;
+		    border-radius: 0px;	 
+		    border: 2px solid #E2E2E2;
+		    max-width:80%;
+		    height: 100vh;
+		    font-size: 18px;
+		    position: relative;
+	    }
+        .icon-container {
 		    background-color: #537FE7;
 		    border-radius: 50%;
 		    padding: 15px; 
 		    position: absolute; 
-		    top: 270px;
-		    left: 170px; 
+		    top: 240px;
+		    left: 160px; 
 			}
-		
 		.bi-file-earmark-image {
 		    font-size: 2em; 
 		    color: white; 
 		}
-        h1 {
-	        border-bottom: 2px solid #E2E2E2;
-	        padding-bottom: 20px;
-	        margin-bottom: 20px;
-        }
-        .banner {
-   	 		border: 1px solid gray;
-		}
-		 #upload {
-		 	margin-top: 120px;
-		    margin-left: 70px;
-		    align-items: center;
-		    justify-content: flex-start;
-		    margin-bottom: 10px;
-		    width: 150px;
-            
-        }
-        #up {
-		    width: 300px;
-		    height: 300px; 
-		    border: 2px solid #E2E2E2; 
-		}
-
-        #pic {
-            margin-right: 10px;
-            font-weight: bold;
-        
-        }
-
-        #input {
-        	margin-top:80px;
-            margin-left:700px;
-        }
-        #preview {
-        	display:flex;
-        	margin-top: 380px;
-        }
-        #upload .bi-file-plus {
+		#upload .bi-file-plus {
     		font-size: 10em;
     		max-width:100px; 
     		color: #E2E2E2;
 		}
+		#upload {
+			justify-content: center;
+		    width: 550px;
+		    margin: 100px;
+		    margin-left: 100px; 
+		    margin-bottom:0px;
+		    padding: 10px; 
+		    border: 2px solid #E2E2E2;
+		    border-radius: 10px;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		}
+		
+		
+		.sub{
+		position: absolute;
+        top: 100px;
+        right: 150px;
+			
+		}
+		.sub input,
+		.sub div {
+		    font-size: 1em; 
+		    width: 100%; 
+		    box-sizing: border-box;
+		    margin-bottom: 20px; 
+		}
+	    .preview-container {
+	        display: flex;
+	        overflow-x: auto;
+	        white-space: nowrap;
+	    }
+	
+	    .preview {
+	        display: inline-block;
+	        margin: 30px;
+	        margin-right: 20px; 
+	    }
 </style>
+<script>
+    function validateForm() {
+        var title = document.getElementById('title').value;
+        var content = document.getElementById('content').value;
+        var url = document.getElementById('url').value;
+        var fileInput = document.querySelector('input[type="file"]');
+
+        if (title.trim() === '' || content.trim() === '' || url.trim() === '' || !fileInput.files.length) {
+            alert('모든 필드를 작성하고 이미지를 선택하세요.');
+            return false; 
+        }
+
+        return true;
+    }
+</script>
 </head>
 <body>
 	<jsp:include page="../include/header.jsp"/>
 	
-<div class="name">
-    <div class="headhead">
-        <div class="head">
-            <div class="left" onclick="location.href='${contextPath }/admin'">
-                <i class="glyphicon glyphicon-chevron-left backleft"></i>
+ <div class="name">
+        <div class="headhead">
+            <div class="head">
+                <div class="left" onclick="location.href='${contextPath }/admin/admin'">
+                    <i class="glyphicon glyphicon-chevron-left backleft"></i>
+                </div>
+                <div class="title">
+                    <span class="title1">배너 관리</span>
+                </div>
             </div>
-            <div class="title">
-                <span class="title1">배너 관리</span>
-            </div>
-        </div>
         </div>
     </div>
+    
     <div class="line"></div>
+     <div class="d-flex align-items-center justify-content-center icon-container">
+            <i class="bi bi-file-earmark-image bi-file-earmark-image"></i>
+        </div>
     <div class="container-fluid"> 
-    <form action="${contextPath}/insertBannerImg" method="post" enctype="multipart/form-data">
-	     <div class="d-flex align-items-center justify-content-center icon-container">
-	        <i class="bi bi-file-earmark-image bi-file-earmark-image"></i>
-	     </div>
-	     <div id="upload">
-	     <div id="pic">사진 업로드</div>
-	     
-	     
-	      <div>
-                     <i class="bi bi-file-plus"></i><input type="file" name="image_url" multiple
-                        style="margin-bottom: 6px;"/>
-                  </div>
-	     
-	     
-	    <!--   <button id="up">
-	     <i class="bi bi-file-plus"></i>
-	     </button>-->
-	     </div>
-	     <div id="preview">
-	     <div><i class="bi bi-x-circle"></i></div>
-	     <div><i class="bi bi-x-circle"></i></div>
-	     <div><i class="bi bi-x-circle"></i></div>
-	     </div>
-	     <div id="input">
-	     <div>제목</div>
-	     <input id="title" type="text" name="banner_name">
-	     <div>내용</div>
-	     <input id="content" type="text" name="banner_text">
-	     <div>연결될 url</div>
-	     <input id="url" type="text" name="banner_url">
-	     </div>
-	     
-	        <input type="submit" class="btn btn-primary btn-sm pull-right"
-                           style="margin-right: 10px;" value="등록하기" />
-	     <div>
-    ${message}
+       
+        
+        <form action="${contextPath}/admin/insertBannerImg" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div id="upload">
+                <div id="pic">사진 업로드</div>
+                <div><i class="bi bi-file-plus"></div></i>
+                <div><input type="file" name="image_url" multiple style="margin-bottom: 6px;"/></div>
+            </div>
+            
+            <div id="sub" class="sub">
+                
+                    <div>제목</div>
+                    <input id="title" type="text" name="banner_name">
+                    <div>내용</div>
+                    <input id="content" type="text" name="banner_text">
+                    <div>연결될 url</div>
+                    <input id="url" type="text" name="banner_url">
+                	<input type="submit" class="btn btn-primary btn-sm pull-right"  value="등록하기" />
+            </div> 
+             </form>
+             <div class="preview-container">
+    <c:forEach items="${bo}" var="bo" varStatus="loop">
+        <div class="preview" data-url="${bo.image_url}">
+            <div class="banner1" style="position: relative; width:200px;">
+                <img src="${bo.image_url}" style="width: 180px; height: 180px; object-fit: contain;">
+                <button class="bi bi-x-circle" onclick="deleteBanner('${bo.image_url}')" style="position: absolute; top: 0; right: 0; border: none; background:none;"></button>
+            </div>
+        </div>
+    </c:forEach>
 </div>
-	     
-	     
-  
-    </form>
-  </div>
+
+<script>
+
+
+function deleteBanner(image_url){
+	$.ajax({
+		url:"${contextPath}/admin/deleteBanner?image_url="+image_url,
+		type:"DELETE",
+		success:function(){
+			alert("삭제되었습니다");
+			location.reload();
+		},
+		error:function(){
+			alert("삭제실패");
+		}
+			
+	});
+}
+
+</script>
+
+       
+    </div>
 </body>
 </html>

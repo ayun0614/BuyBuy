@@ -28,7 +28,7 @@
 
 function waitList(){
 		$.ajax({
-			url:"admin/user",
+			url:"user",
 			type:"get",
 			dataType:"json",
 			success:
@@ -70,7 +70,7 @@ function waitList(){
 		    var member_id_value = $(button).closest('tr').find('td:first').text();
 		    $.ajax({
 		        type: 'POST', 
-		        url: 'admin/updateMember', 
+		        url: 'updateMember', 
 		        data: { member_id: member_id_value },
 		        success: function(response) {
 		            alert('업데이트가 성공적으로 수행되었습니다.');
@@ -89,7 +89,7 @@ function waitList(){
 	
 	  function DataApproveView() {
 		    $.ajax({
-		        url: "admin/approve",
+		        url: "approve",
 		        type: "get",
 		        dataType: "json",
 		        success: createApproveView,
@@ -153,7 +153,7 @@ function waitList(){
 		        console.log("Member ID: " + memberId);
 		        
 		        $.ajax({
-		            url: "admin/updateStatus",
+		            url: "updateStatus",
 		            type: "post",
 		            dataType: "text",
 		            data: {
@@ -443,7 +443,7 @@ function waitList(){
 			});
 			  function search(name) {
 			        $.ajax({
-			            url: "admin/search",
+			            url: "search",
 			            method: "get",
 			            dataType: "json",
 			            data: { name: name },

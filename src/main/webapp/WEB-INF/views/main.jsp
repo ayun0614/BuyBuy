@@ -15,28 +15,24 @@
 <body>
 	<c:import url="include/header.jsp" />
 	<c:import url="include/chat.jsp" />
-		<button onclick="location.href='${contextPath }/admin'">관리자페이지 이동</button>
 	
 	<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<div class="slider-container container">
-		<div class="slider-show">
-			<div>
-				<img class="main-slickImg" alt="" src="${contextPath }/resources/image/slideImage1.jpg">
-			</div>
-			<div>
-				<img class="main-slickImg" alt="" src="${contextPath }/resources/image/slideImage2.jpg">
-			</div>
-			<div>
-				<img class="main-slickImg" alt="" src="${contextPath }/resources/image/slideImage3.jpg">
-			</div>
-		</div>
-		<div class="slick-status">
-			<h3>1</h3>
-			<h4>/ 3</h4>
-		</div>
-		<button class="slick-prevBtn"><</button>
-		<button class="slick-nextBtn">></button>
-	</div>
+      <div class="slider-show">
+         <c:forEach var="list" items="${bannerList }">
+            <div>
+               <a href="${list.banner_url }"> <img class="main-slickImg" alt="" src="${list.image_url}">
+               </a>
+            </div>
+         </c:forEach>
+      </div>
+      <div class="slick-status">
+         <h3>1</h3>
+         <h4>/ ${bannerCount }</h4>
+      </div>
+      <button class="slick-prevBtn"><</button>
+      <button class="slick-nextBtn">></button>
+   </div>
 	<div class="product-container container">
 		<h3 class="product-header">인기 공동구매 상품</h3>
 		<div class="product-flex">
@@ -51,20 +47,20 @@
 					<h1 onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=${list.ctgr_idx }'">
 						<c:choose>
 							<c:when test="${list.ctgr_idx eq 1 }">의류</c:when>
-							<c:when test="${list.ctgr_idx eq 2 }">화장품</c:when>
-							<c:when test="${list.ctgr_idx eq 3 }">식품</c:when>
-							<c:when test="${list.ctgr_idx eq 4 }">생필품</c:when>
-							<c:when test="${list.ctgr_idx eq 5 }">홈데코</c:when>
+							<c:when test="${list.ctgr_idx eq 5 }">화장품</c:when>
+							<c:when test="${list.ctgr_idx eq 9 }">식품</c:when>
+							<c:when test="${list.ctgr_idx eq 13 }">생필품</c:when>
+							<c:when test="${list.ctgr_idx eq 2 }">홈데코</c:when>
 							<c:when test="${list.ctgr_idx eq 6 }">문구</c:when>
-							<c:when test="${list.ctgr_idx eq 7 }">취미</c:when>
-							<c:when test="${list.ctgr_idx eq 8 }">반려동물</c:when>
-							<c:when test="${list.ctgr_idx eq 9 }">컴퓨터</c:when>
-							<c:when test="${list.ctgr_idx eq 10 }">모바일</c:when>
+							<c:when test="${list.ctgr_idx eq 10 }">취미</c:when>
+							<c:when test="${list.ctgr_idx eq 14 }">반려동물</c:when>
+							<c:when test="${list.ctgr_idx eq 3 }">컴퓨터</c:when>
+							<c:when test="${list.ctgr_idx eq 7 }">모바일</c:when>
 							<c:when test="${list.ctgr_idx eq 11 }">가전제품</c:when>
-							<c:when test="${list.ctgr_idx eq 12 }">스포츠</c:when>
-							<c:when test="${list.ctgr_idx eq 13 }">건강</c:when>
-							<c:when test="${list.ctgr_idx eq 14 }">공구</c:when>
-							<c:when test="${list.ctgr_idx eq 15 }">기타</c:when>
+							<c:when test="${list.ctgr_idx eq 15 }">스포츠</c:when>
+							<c:when test="${list.ctgr_idx eq 4 }">건강</c:when>
+							<c:when test="${list.ctgr_idx eq 8 }">공구</c:when>
+							<c:when test="${list.ctgr_idx eq 12 }">기타</c:when>
 						</c:choose>
 					</h1>
 					<h2 onclick="location.href='${contextPath}/product/ProductDetail?product_idx=${list.product_idx }'">${list.product_name }</h2>
@@ -117,20 +113,20 @@
 					<h1 onclick="location.href='${contextPath}/product/ProductList?ctgr_idx=${list.ctgr_idx }'">
 						<c:choose>
 							<c:when test="${list.ctgr_idx eq 1 }">의류</c:when>
-							<c:when test="${list.ctgr_idx eq 2 }">화장품</c:when>
-							<c:when test="${list.ctgr_idx eq 3 }">식품</c:when>
-							<c:when test="${list.ctgr_idx eq 4 }">생필품</c:when>
-							<c:when test="${list.ctgr_idx eq 5 }">홈데코</c:when>
+							<c:when test="${list.ctgr_idx eq 5 }">화장품</c:when>
+							<c:when test="${list.ctgr_idx eq 9 }">식품</c:when>
+							<c:when test="${list.ctgr_idx eq 13 }">생필품</c:when>
+							<c:when test="${list.ctgr_idx eq 2 }">홈데코</c:when>
 							<c:when test="${list.ctgr_idx eq 6 }">문구</c:when>
-							<c:when test="${list.ctgr_idx eq 7 }">취미</c:when>
-							<c:when test="${list.ctgr_idx eq 8 }">반려동물</c:when>
-							<c:when test="${list.ctgr_idx eq 9 }">컴퓨터</c:when>
-							<c:when test="${list.ctgr_idx eq 10 }">모바일</c:when>
+							<c:when test="${list.ctgr_idx eq 10 }">취미</c:when>
+							<c:when test="${list.ctgr_idx eq 14 }">반려동물</c:when>
+							<c:when test="${list.ctgr_idx eq 3 }">컴퓨터</c:when>
+							<c:when test="${list.ctgr_idx eq 7 }">모바일</c:when>
 							<c:when test="${list.ctgr_idx eq 11 }">가전제품</c:when>
-							<c:when test="${list.ctgr_idx eq 12 }">스포츠</c:when>
-							<c:when test="${list.ctgr_idx eq 13 }">건강</c:when>
-							<c:when test="${list.ctgr_idx eq 14 }">공구</c:when>
-							<c:when test="${list.ctgr_idx eq 15 }">기타</c:when>
+							<c:when test="${list.ctgr_idx eq 15 }">스포츠</c:when>
+							<c:when test="${list.ctgr_idx eq 4 }">건강</c:when>
+							<c:when test="${list.ctgr_idx eq 8 }">공구</c:when>
+							<c:when test="${list.ctgr_idx eq 12 }">기타</c:when>
 						</c:choose>
 					</h1>
 					<h2 onclick="location.href='${contextPath}/product/ProductDetail?product_idx=${list.product_idx }'">${list.product_name }</h2>

@@ -228,7 +228,7 @@
 		<div class="answertitle">
 			<div class="answerimg1" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin:3px; display:none;"><img src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2023/02/urban-20230228144115810458.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>		
 			<div class="answer" id="answer1">
-			<span>비회원으로는 구매신청이 불가능합니다.<br>간편회원가입을 이용하여 빠르게 가입 후 신청이 가능합니다.</span>
+			<span>비회원으로는 구매 신청이 불가능합니다.<br>간편회원가입을 이용하여 빠르게 가입 후 신청이 가능합니다.</span>
 		</div>
 		</div>
 
@@ -243,18 +243,18 @@
 		</div>
 
 		<button class="question" id="question2" onclick="showAnswer2()">
-			<span class="content-box">배송전 취소가 가능한가요? </span>
+			<span class="content-box">배송 전 취소가 가능한가요? </span>
 		</button>
 
 		<div class="answertitle">
 			<div class="answerimg3" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin:3px; display:none;"><img src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2023/02/urban-20230228144115810458.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
 			<div class="answer" id="answer3">
-				<span>마이페이지에서 등록한 게시물의 상품이미지를 누르면 총 구매 수량을 알 수 있습니다.</span>
+				<span>마이페이지에서 등록한 게시물의 상품 이미지를 누르면 총 구매 수량을 알 수 있습니다.</span>
 			</div>
 		</div>
 
 		<button class="question" id="question3" onclick="showAnswer3()">
-			<span class="content-box">등록한 게시물의 주문수량은 어디서 볼 수 있나요? </span>
+			<span class="content-box">등록한 게시물의 주문 수량은 어디서 볼 수 있나요? </span>
 		</button>
 		
 		

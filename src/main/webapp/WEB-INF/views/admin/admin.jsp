@@ -163,9 +163,9 @@
     </div>
 <div class="container" style="text-align: center;">
 		<div class="fast">
-    	<button class="btn1" style="background-color: #537FE7; color: #fff;" onclick="location.href='${contextPath }/postmanagement'">게시글 관리</button>
-    	<button class="btn1" style="background-color: #537FE7; color: #fff;" onclick="location.href='${contextPath }/usermanagement'">계정관리</button>
-   		<button class="btn1" style="background-color: #537FE7; color: #fff;" onclick="location.href='${contextPath }/bannercontrol'">배너관리</button>
+    	<button class="btn1" style="background-color: #537FE7; color: #fff;" onclick="location.href='${contextPath }/admin/postmanagement'">게시글 관리</button>
+    	<button class="btn1" style="background-color: #537FE7; color: #fff;" onclick="location.href='${contextPath }/admin/usermanagement'">계정관리</button>
+   		<button class="btn1" style="background-color: #537FE7; color: #fff;" onclick="location.href='${contextPath }/admin/bannercontrol'">배너관리</button>
    		</div>
 <div class="chart-circle">
 	<canvas id="myDoughnutChart" width="300" height="300"></canvas>
@@ -302,7 +302,7 @@
 
     function fetchData(date) {
         $.ajax({
-            url: "admin/adminchart",
+            url: "adminchart",
             method: "get",
             dataType: "json",
             data: { date: date },

@@ -19,4 +19,7 @@ public class Members {
 	private Date join_date;
 	private String account_status;
 	private int applydealer_status;
+	
+	
+	
 }

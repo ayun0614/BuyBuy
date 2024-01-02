@@ -21,7 +21,7 @@
 	
 	function waitList(){
 		$.ajax({
-			url:"admin/post",
+			url:"post",
 			type:"get",
 			dataType:"json",
 			success:createView, 
@@ -61,7 +61,7 @@
 
 	  function fDelete(product_idx){
 			$.ajax({
-				url:"admin/"+product_idx,
+				url:"/"+product_idx,
 				type:"delete",
 				data:{"product_idx":product_idx},
 				success:waitList,
@@ -221,14 +221,51 @@
      <div class="search-bar">
      <div class="search-bar-content">
 		<select id="categorySelect" class="category-select">
-			  <option value="all">전체 </option>
-			  <option value="category1">카테고리 1</option>
-			  <option value="category2">카테고리 2</option>
-			  <option value="category3">카테고리 3</option> 
+			  <option value="product_name">제목 </option>
+			  <option value="member_id">판매자 아이디</option>
+			  <option value="product_idx">상품 ID</option>
+			  <option value="ctgr_name">카테고리</option>
 		</select>
 	<input id="searchInput" type="text" class="search-input" placeholder="검색어를 입력하세요.">
 	<button id="searchButton" class="search-button"><i class="fas fa-search"></i></button> 
 			</div>
+			<script>
+    $(document).ready(function () {
+        $("#searchButton").on("click", function () {
+            performSearch();
+        });
+        $("#searchInput").keypress(function (e) {
+            if (e.which === 13) {
+                performSearch();
+            }
+        });
+        function performSearch() {
+            var category = $("#categorySelect").val();
+            var searchTerm = $("#searchInput").val();
+
+            alert("선택한 카테고리: " + category + "\n검색어: " + searchTerm);
+           searchpost(category,searchTerm);
+        }
+        function searchpost(category, searchTerm) {
+            $.ajax({
+                url: "searchpost",
+                method: "get",
+                dataType: "json",
+                data: {
+                    category: category,
+                    searchTerm: searchTerm
+                },
+                success: function (response) {
+                	createView(response); 
+                },
+                error: function (error) {
+                    console.error('데이터를 불러오는 중 에러 발생:', error);
+                    alert("에러");
+                }
+            });
+        }
+    });
+</script>
 			</div>
 			
 				<div id="member_list"></div>

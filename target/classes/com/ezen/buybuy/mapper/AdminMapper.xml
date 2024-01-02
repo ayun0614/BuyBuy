@@ -20,7 +20,27 @@
 		SELECT account_type, member_id, name, phone,join_date, account_status
 		FROM members
 	</select>
-			
+	
+	<select id="searchpost" resultType="com.ezen.buybuy.entity.AdminPo">
+    SELECT member_id, product_idx, product_name, ctgr_idx, start_date
+        FROM products
+        WHERE
+    <choose>
+        <when test="category == 'member_id'">
+            member_id = #{searchTerm}
+        </when>
+        <when test="category == 'product_idx'">
+            product_idx = #{searchTerm}
+        </when>
+        <when test="category == 'ctgr_idx'">
+            ctgr_idx = #{searchTerm}
+        </when>
+        <when test="category == 'product_name'">
+            product_name = #{searchTerm}
+        </when>
+    </choose>
+</select>
+
 	 <update id="disableForeignKeyChecks">
         SET foreign_key_checks = 0
     </update>
@@ -28,7 +48,9 @@
     <update id="enableForeignKeyChecks">
         SET foreign_key_checks = 1
     </update>
-
+	<delete id="deleteBanner" parameterType="String">
+	 	Delete From banner where image_url= #{image_url}
+	</delete>
     <delete id="postDelete" parameterType="int">
         DELETE FROM products WHERE product_idx = #{product_idx}
     </delete>
@@ -37,10 +59,10 @@
     </select>  
 	<select id="donutList" resultType="com.ezen.buybuy.entity.AdminDonut">
 		SELECT
-    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_kakao') AS kakao,
-    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_google') AS google,
-    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_naver') AS naver,
-    (SELECT COUNT(*) FROM members WHERE member_id NOT LIKE '%_kakao' AND member_id NOT LIKE '%_google' AND member_id NOT LIKE '%_naver') AS normal;
+	    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_kakao') AS kakao,
+	    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_google') AS google,
+	    (SELECT COUNT(*) FROM members WHERE member_id LIKE '%_naver') AS naver,
+	    (SELECT COUNT(*) FROM members WHERE member_id NOT LIKE '%_kakao' AND member_id NOT LIKE '%_google' AND member_id NOT LIKE '%_naver') AS normal;
 	</select>
     <update id="updateMember" parameterType="com.ezen.buybuy.entity.Members">
 		UPDATE members 
@@ -48,53 +70,61 @@
 		WHERE  member_id = #{member_id}
 	</update>	
   	<update id="updateStatus" parameterType="com.ezen.buybuy.entity.Members">
-    UPDATE members
-    SET account_status = #{account_status}
-    WHERE member_id = #{member_id}
+	    UPDATE members
+	    SET account_status = #{account_status}
+	    WHERE member_id = #{member_id}
 	</update>
 	
 	<insert id="insertBannerImg" parameterType="com.ezen.buybuy.entity.Banner">
-    INSERT INTO banner (image_url, banner_text, banner_name, banner_url) 
-    VALUES (#{image_url}, #{banner_text}, #{banner_name}, #{banner_url})
-</insert>
+	    INSERT INTO banner (image_url, banner_text, banner_name, banner_url) 
+	    VALUES (#{image_url}, #{banner_text}, #{banner_name}, #{banner_url})
+	</insert>
+	
+	<select id="getbanner" resultType="com.ezen.buybuy.entity.Banner">
+		SELECT * FROM banner
+		ORDER BY 1 DESC
+	</select>
 	
 	 <select id="getHourlyTotal" resultType="com.ezen.buybuy.entity.AdminChart">
-    SELECT
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_0,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_1,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_2,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_3,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_4,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_5,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_6,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_7,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_8,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_9,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_10,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_11,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_12,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_13,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_14,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_15,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_16,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_17,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_18,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_19,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_20,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_21,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_22,
-        COALESCE(SUM(orders.order_pcs), 0) AS total_quantity_23
-    FROM
-        ( SELECT #{date} + INTERVAL (tens.ten + units.unit) HOUR AS hourly_time
-            FROM
-                (SELECT 0 AS unit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) units,
-                (SELECT 0 AS ten UNION ALL SELECT 10 UNION ALL SELECT 20) tens
-            WHERE #{date} + INTERVAL (tens.ten + units.unit) HOUR BETWEEN #{date} AND #{date} + INTERVAL 23 HOUR
-        ) all_hours
-    LEFT JOIN
-        orders ON DATE_FORMAT(orders.order_date, '%Y-%m-%d %H') = DATE_FORMAT(all_hours.hourly_time, '%Y-%m-%d %H')
-    GROUP BY #{date}, hourly_time
-    ORDER BY hourly_time;
-</select>
+		    SELECT
+		    
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 0 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_0,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 1 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_1,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 2 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_2,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 3 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_3,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 4 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_4,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 5 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_5,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 6 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_6,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 7 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_7,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 8 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_8,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 9 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_9,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 10 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_10,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 11 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_11,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 12 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_12,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 13 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_13,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 14 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_14,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 15 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_15,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 16 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_16,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 17 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_17,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 18 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_18,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 19 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_19,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 20 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_20,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 21 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_21,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 22 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_22,
+		    COALESCE(SUM(CASE WHEN HOUR(all_hours.hourly_time) = 23 THEN orders.order_pcs ELSE 0 END), 0) AS total_quantity_23
+			FROM
+			    (
+			        SELECT
+			            #{date} + INTERVAL (tens.ten + units.unit) HOUR AS hourly_time
+			        FROM
+			            (SELECT 0 AS unit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) units,
+			            (SELECT 0 AS ten UNION ALL SELECT 10 UNION ALL SELECT 20) tens
+			        WHERE #{date} + INTERVAL (tens.ten + units.unit) HOUR BETWEEN #{date} AND #{date} + INTERVAL 23 HOUR
+			    ) all_hours
+			LEFT JOIN
+		    orders ON DATE_FORMAT(orders.order_date, '%Y-%m-%d %H') = DATE_FORMAT(all_hours.hourly_time, '%Y-%m-%d %H')
+				GROUP BY #{date}
+				ORDER BY #{date};
+		</select>
 
 </mapper>
