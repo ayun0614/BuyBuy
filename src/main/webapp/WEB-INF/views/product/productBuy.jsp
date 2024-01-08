@@ -386,7 +386,7 @@ $(document).ready(function(){
 	<div class = "productInfoSubText">주문 상품 정보</div>  
 	<div class = "productInfoBox">
 		<div class = "productInfoImg">
-		<img src="" class = "myInfoImg""/>
+		<img src="${moo.thumbnail_img }" class = "myInfoImg""/>
 		</div>
 		<div class = "productInfoBox2"> 
 			<div style = "font-weight: 900; font-size: 22px;">${moo.product_name }</div>
