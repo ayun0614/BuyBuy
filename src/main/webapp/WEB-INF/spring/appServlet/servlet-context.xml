@@ -1,0 +1,67 @@
+<beans:beans xmlns="http://www.springframework.org/schema/mvc" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
+         xmlns:mvc="http://www.springframework.org/schema/mvc">
+
+	<beans:bean id="members" class="com.ezen.buybuy.entity.Members" />
+    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<mvc:interceptors>
+	    <mvc:interceptor>
+	        <mvc:mapping path="/account/myPage/**" />
+	        <beans:bean class="com.ezen.buybuy.interceptor.LoginInterceptor" />
+	    </mvc:interceptor>
+	    
+	    <mvc:interceptor>
+	        <mvc:mapping path="/admin/**" />
+	        <beans:bean class="com.ezen.buybuy.interceptor.AdminInterceptor" />
+	    </mvc:interceptor>
+	    
+	    <mvc:interceptor>
+	        <mvc:mapping path="/product/ProductListInsert/" />
+	        <beans:bean class="com.ezen.buybuy.interceptor.DealerInterceptor" />
+	    </mvc:interceptor>
+	</mvc:interceptors>
+		
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <annotation-driven />
+
+    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+    <resources mapping="/resources/**" location="/resources/" />
+
+    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/" />
+        <beans:property name="suffix" value=".jsp" />
+    </beans:bean>
+
+	<beans:bean id="naverLoginBO" class="com.ezen.buybuy.api.NaverLoginBO" />
+	<beans:bean id="kakaoLoginBO" class="com.ezen.buybuy.api.KakaoLoginBO" />
+	<beans:bean id="googleLoginBO" class="com.ezen.buybuy.api.GoogleLoginBO" />
+	<beans:bean id="imgurBO" class="com.ezen.buybuy.api.ImgurBO" />
+	
+	
+    <!-- Mail Sender Bean -->
+    <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <beans:property name="host" value="smtp.gmail.com"/>
+        <beans:property name="port" value="587"/>
+        <beans:property name="username" value="hoccoma@gmail.com"/>
+        <beans:property name="password" value="ktwe ymle zbgk nimz"/>
+        <beans:property name="javaMailProperties">
+            <beans:props>
+                <beans:prop key="mail.smtp.auth">true</beans:prop>
+                <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+                <beans:prop key="mail.smtps.checkserveridentity">true</beans:prop>
+                <beans:prop key="mail.transport.protocol">smtp</beans:prop>        
+                <beans:prop key="mail.debug">true</beans:prop>
+                <beans:prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+		
+		
+    <context:component-scan base-package="com.ezen.buybuy.controller" />
+</beans:beans>

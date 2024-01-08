@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.buybuy.mapper.MemberInfoMapper">
+
+	<select id="mypageInfo" resultType="com.ezen.buybuy.entity.Members">
+		select * from members where member_id='user01'
+	</select>
+
+	<select id="productInfo" resultType="com.ezen.buybuy.entity.Products">
+		select * from products where product_idx = #{product_idx}
+	</select>
+
+	<select id="dealerRequestInfo" resultType="com.ezen.buybuy.entity.MypageMain">
+		select * from applydealeraccount as a INNER JOIN members as m ON a.member_id = m.member_id where
+		a.member_id=#{member_id}
+	</select>
+
+	<select id="mypageCnt" resultType="com.ezen.buybuy.entity.MyPageCNT">
+		select count(case when o.status = '주문 완료' then o.status end) as count_orderend, count(case when o.status =
+		'배송중' then o.status end) as count_ing, count(case when o.status = '배송 완료' then o.status end) as count_end from orders as o INNER JOIN members as m
+		ON m.member_id = o.member_id where m.member_id = #{member_id}
+	</select>
+
+	<select id="mypageOrderInfo" resultType="com.ezen.buybuy.entity.OrderInfo" parameterType="map">
+		select * from orders as o INNER JOIN products as p ON o.product_idx = p.product_idx INNER JOIN members
+		as m ON m.member_id = o.member_id where o.order_num =#{order_num} and m.member_id = #{member_id}
+	</select>
+
+	<select id="mypageOrderList" resultType="com.ezen.buybuy.entity.MyPageOrder">
+      select * from orders as o INNER JOIN products as p ON o.product_idx = p.product_idx where o.member_id = #{member_id} order by o.order_num desc
+   </select>
+
+	<update id="deliStatusUpdate" parameterType="com.ezen.buybuy.entity.Orders">
+		update orders set status='주문 취소' where order_num=#{order_num}
+	</update>
+
+	<select id="mypagePostingList" resultType="com.ezen.buybuy.entity.MyPagePosting">
+		select p.product_name, sum(order_pcs) as cnt, p.member_id, p.product_idx, r.view_count, p.thumbnail_img, p.end_date, p.original_price, p.discount_price
+		from orders as o
+		RIGHT OUTER JOIN products as p ON p.product_idx = o.product_idx
+		LEFT OUTER JOIN reviewproducts as r ON p.product_idx = r.product_idx 
+		where p.member_id = #{member_id} group by o.product_idx
+	</select>
+
+	<insert id="dealerRequest" parameterType="com.ezen.buybuy.entity.ApplyDealerACT">
+		insert into applydealeraccount(member_id) values(#{member_id}) 
+	</insert>
+
+	<update id="deliUpdate" parameterType="com.ezen.buybuy.entity.Orders">
+		update orders set
+		deli_name=#{deli_name},deli_phone=#{deli_phone},deli_zipcode=#{deli_zipcode},deli_addr=#{deli_addr},deli_detailaddr=#{deli_detailaddr} where
+		member_id = #{member_id}
+	</update>
+	
+	<insert id="productBuy" parameterType="com.ezen.buybuy.entity.Orders">
+		INSERT INTO orders (product_idx, member_id, order_pcs, total_price, order_date,deli_name,deli_phone, deli_zipcode, deli_addr, deli_detailaddr, deli_memo, pay_type, status)
+		VALUES (#{product_idx}, #{member_id}, #{order_pcs}, #{total_price}, now(), #{deli_name}, #{deli_phone}, #{deli_zipcode}, #{deli_addr}, #{deli_detailaddr}, #{deli_memo}, #{pay_type}, '주문 완료')
+	</insert>
+	
+	
+	<select id="productBuyerList" resultType="com.ezen.buybuy.entity.Orders">
+		select * from orders where product_idx = #{product_idx}
+	</select>
+
+</mapper>
